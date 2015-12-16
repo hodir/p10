@@ -110,7 +110,7 @@
         var success = function (data) {
             $("#cartAmount").html(data);
         }
-        ajaxRequest("<c:url value="/cart/cartAmount.do"/>", {}, success, function () {
+        ajaxRequest("<%=PConst.HOSTNAME%>/cart/cartAmount.do", {}, success, function () {
         }, "post");
     });
 
