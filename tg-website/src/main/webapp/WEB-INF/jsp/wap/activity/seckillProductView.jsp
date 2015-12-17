@@ -13,7 +13,7 @@
 <!doctype html>
 <html class="no-js">
 <head>
-    <title>秒杀-详情页-已开始</title>
+    <title>秒杀</title>
 </head>
 <body>
 <header class="am-header custom-header">
