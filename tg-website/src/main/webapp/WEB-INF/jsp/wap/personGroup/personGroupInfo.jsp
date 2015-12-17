@@ -54,18 +54,30 @@
 <div class="my-pce ae">
     <div class="my-pic ae"><img src="<c:url value="/scripts/wap/upload/mypurchase01.png"/>"></div>
     <ul class="my-btn ae">
-        <li><a href="<c:url value="/person/joinGroupStatus.do"/>"><em>我&nbsp;的&nbsp;参&nbsp;团</em><i class="s-icon"></i></a></li>
-        <li><a href="<c:url value="/person/groupBuyStatus.do"/>"><em>我&nbsp;的&nbsp;开&nbsp;团</em><i class="s-icon"></i></a></li>
-        <li><a href="<c:url value="/person/myPurchaseOrder.do"/>"><em>我&nbsp;的&nbsp;订&nbsp;单</em><i class="s-icon"></i></a></li>
-        <li><a href="<c:url value="/person/returnGoods.do"/>"><em>申&nbsp;请&nbsp;退&nbsp;货</em><i class="s-icon"></i></a></li>
+        <li><a href="<c:url value="/person/joinGroupStatus.do"/>"><em>我&nbsp;的&nbsp;参&nbsp;团</em><i class="s-icon"></i></a>
+        </li>
+        <li><a href="<c:url value="/person/groupBuyStatus.do"/>"><em>我&nbsp;的&nbsp;开&nbsp;团</em><i
+                class="s-icon"></i></a></li>
+        <li><a href="<c:url value="/person/myPurchaseOrder.do"/>"><em>我&nbsp;的&nbsp;订&nbsp;单</em><i class="s-icon"></i></a>
+        </li>
+        <li><a href="<c:url value="/person/returnGoods.do"/>"><em>申&nbsp;请&nbsp;退&nbsp;货</em><i class="s-icon"></i></a>
+        </li>
     </ul>
 </div>
 <!--悬浮订单-->
 <div class="met-nav ae">
-    <a href="<c:url value="/tuan.do"/>"><p><i class="met-1con m-icon"></i></p><p>团购首页</p></a>
-    <a href="<c:url value="/person/joinGroupStatus.do"/>"><p><i class="met-2con m-icon"></i></p><p>我的团</p></a>
-    <a href="<c:url value="/person/myPurchaseOrder.do"/>"><p><i class="met-3con m-icon"></i></p><p>我的订单</p></a>
-    <a href="<c:url value="/person/personInfoView.do"/>"><p><i class="met-4con m-icon"></i></p><p>个人中心</p></a>
+    <a href="<c:url value="/tuan.do"/>"><p><i class="met-1con m-icon"></i></p>
+
+        <p>团购首页</p></a>
+    <a href="<c:url value="/person/joinGroupStatus.do"/>"><p><i class="met-2con m-icon"></i></p>
+
+        <p>我的团</p></a>
+    <a href="<c:url value="/person/myPurchaseOrder.do"/>"><p><i class="met-3con m-icon"></i></p>
+
+        <p>我的订单</p></a>
+    <a href="<c:url value="/person/personInfoView.do"/>"><p><i class="met-4con m-icon"></i></p>
+
+        <p>个人中心</p></a>
 </div>
 <!--//End--footer-->
 <!--[if (gte IE 9)|!(IE)]><!-->
@@ -83,7 +95,7 @@
 <!--自定义js--End-->
 <script>
     var _hmt = _hmt || [];
-    (function() {
+    (function () {
         var hm = document.createElement("script");
         hm.src = "//hm.baidu.com/hm.js?99fa5c9048e30c9dada20ea390329f89";
         var s = document.getElementsByTagName("script")[0];
@@ -92,10 +104,17 @@
 </script>
 
 <script>
-    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    (function (i, s, o, g, r, a, m) {
+        i['GoogleAnalyticsObject'] = r;
+        i[r] = i[r] || function () {
+                    (i[r].q = i[r].q || []).push(arguments)
+                }, i[r].l = 1 * new Date();
+        a = s.createElement(o),
+                m = s.getElementsByTagName(o)[0];
+        a.async = 1;
+        a.src = g;
+        m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
 
     ga('create', 'UA-70397028-1', 'auto');
     ga('send', 'pageview');

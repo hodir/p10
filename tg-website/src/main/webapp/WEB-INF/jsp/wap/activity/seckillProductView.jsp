@@ -256,11 +256,11 @@
         }, "post")
     }
 
-    function dateFormat(time){
+    function dateFormat(time) {
         var out = ""
-        if(time<10){
-            out = "0"+time;
-        }else{
+        if (time < 10) {
+            out = "0" + time;
+        } else {
             out = time;
         }
         return out;

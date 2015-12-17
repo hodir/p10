@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 public class DriverInterceptor extends HandlerInterceptorAdapter {
 
     public void postHandle(HttpServletRequest request,
-                            HttpServletResponse response, Object o, ModelAndView mav)
+                           HttpServletResponse response, Object o, ModelAndView mav)
             throws Exception {
         if (mav != null && mav.getViewName() != null && !mav.getViewName().startsWith("redirect") && !mav.getViewName().startsWith("forward")) {
 
@@ -23,11 +23,11 @@ public class DriverInterceptor extends HandlerInterceptorAdapter {
                 mav.setViewName("/wap" + mav.getViewName());
             }
         }
-        response.setHeader("X-Frame-Options","");
+        response.setHeader("X-Frame-Options", "");
     }
 
 
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception{
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 
         response.setCharacterEncoding("utf-8");
         response.setContentType("text/html;charset=utf-8");

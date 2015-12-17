@@ -62,38 +62,38 @@ public class GroupController {
     @RequestMapping(value = "/groupBuy.do")
     public String groupBuy(HttpServletRequest request, Model model) throws Exception {
         String userId = AuthorizationUtil.getMyUser().getId();
-        User currentUser = (User) baseManager.getObject(User.class.getName(),userId);
+        User currentUser = (User) baseManager.getObject(User.class.getName(), userId);
         String groupProductId = request.getParameter("groupProductId");
         String memberId = request.getParameter("memberId");
         String groupId = request.getParameter("groupId");
         String url = "";
         String callback = "";
-        GroupProduct groupProduct = (GroupProduct) baseManager.getObject(GroupProduct.class.getName(),groupProductId);
-        if(groupId==null&&memberId==null){
+        GroupProduct groupProduct = (GroupProduct) baseManager.getObject(GroupProduct.class.getName(), groupProductId);
+        if (groupId == null && memberId == null) {
 
             MyGroup group = new MyGroup();
             group.setManUser(currentUser);
             group.setStatus("2");
             group.setCreateDateTime(new Date());
             group.setGroupProduct(groupProduct);
-            baseManager.saveOrUpdate(MyGroup.class.getName(),group);
+            baseManager.saveOrUpdate(MyGroup.class.getName(), group);
             GroupMember member = new GroupMember();
             member.setStatus("2");
             member.setMyGroup(group);
             member.setLevel("0");
             member.setUser(currentUser);
-            baseManager.saveOrUpdate(GroupMember.class.getName(),member);
-            callback = "a.efeiyi.com/group/waitPay" + "?groupId=" + group.getId() + "&memberId=" + member.getId() +"&groupProductId=" +groupProductId;
-            String callback1 = java.net.URLEncoder.encode(callback,"UTF-8");
-            url = "http://www.efeiyi.com/order/saveOrUpdateOrder2.do" + "?productModelId="+groupProduct.getProductModel().getId()+"&amount="+1+"&price="+groupProduct.getGroupPrice()+"&orderType=4"+"&callback="+callback1;
+            baseManager.saveOrUpdate(GroupMember.class.getName(), member);
+            callback = "a.efeiyi.com/group/waitPay" + "?groupId=" + group.getId() + "&memberId=" + member.getId() + "&groupProductId=" + groupProductId;
+            String callback1 = java.net.URLEncoder.encode(callback, "UTF-8");
+            url = "http://www.efeiyi.com/order/saveOrUpdateOrder2.do" + "?productModelId=" + groupProduct.getProductModel().getId() + "&amount=" + 1 + "&price=" + groupProduct.getGroupPrice() + "&orderType=4" + "&callback=" + callback1;
             return "redirect:" + url;
-        }else {
-            MyGroup group = (MyGroup) baseManager.getObject(MyGroup.class.getName(),groupId);
-            GroupMember supMember = (GroupMember) baseManager.getObject(GroupMember.class.getName(),memberId);
-            String level = String.valueOf(Integer.parseInt(supMember.getLevel())+1);
+        } else {
+            MyGroup group = (MyGroup) baseManager.getObject(MyGroup.class.getName(), groupId);
+            GroupMember supMember = (GroupMember) baseManager.getObject(GroupMember.class.getName(), memberId);
+            String level = String.valueOf(Integer.parseInt(supMember.getLevel()) + 1);
 
-            for(GroupMember groupMember:group.getGroupMemberList()){
-                if(currentUser.getId().equals(groupMember.getUser().getId())){
+            for (GroupMember groupMember : group.getGroupMemberList()) {
+                if (currentUser.getId().equals(groupMember.getUser().getId())) {
                     url = "?groupProductId=" + groupProductId + "&groupId=" + groupId + "&memberId=" + memberId;
                     return "redirect:/group/shareGroup.do" + url;
                 }
@@ -103,25 +103,26 @@ public class GroupController {
             member.setLevel(level);
             member.setStatus("2");
             member.setSupGroupMember(supMember);
-            baseManager.saveOrUpdate(GroupMember.class.getName(),member);
+            baseManager.saveOrUpdate(GroupMember.class.getName(), member);
 
-            callback = "www2.efeiyi.com/tg-website/group/waitPay" + "?groupId=" + group.getId() + "&memberId=" + member.getId() +"&groupProductId=" +groupProductId;
+            callback = "www2.efeiyi.com/tg-website/group/waitPay" + "?groupId=" + group.getId() + "&memberId=" + member.getId() + "&groupProductId=" + groupProductId;
             //url = "?groupProductId="+groupProductId+"&groupId="+groupId+"&memberId="+memberId;
-            String callback1 = java.net.URLEncoder.encode(callback,"utf-8");
-            url = "http://www.efeiyi.com/order/saveOrUpdateOrder2.do" + "?productModelId="+groupProduct.getProductModel().getId()+"&amount="+1+"&price="+groupProduct.getGroupPrice()+"&orderType=4"+"&callback="+callback1;
+            String callback1 = java.net.URLEncoder.encode(callback, "utf-8");
+            url = "http://www.efeiyi.com/order/saveOrUpdateOrder2.do" + "?productModelId=" + groupProduct.getProductModel().getId() + "&amount=" + 1 + "&price=" + groupProduct.getGroupPrice() + "&orderType=4" + "&callback=" + callback1;
             return "redirect:" + url;
         }
     }
+
     @RequestMapping(value = "/waitPay")
-    public String waitPay(HttpServletRequest request, Model model) throws Exception{
+    public String waitPay(HttpServletRequest request, Model model) throws Exception {
         String purchaseOrderId = request.getParameter("purchaseOrderId");
         String groupProductId = request.getParameter("groupProductId");
         String groupId = request.getParameter("groupId");
         String memberId = request.getParameter("memberId");
-        model.addAttribute("groupProductId",groupProductId);
-        model.addAttribute("purchaseOrderId",purchaseOrderId);
-        model.addAttribute("groupId",groupId);
-        model.addAttribute("memberId",memberId);
+        model.addAttribute("groupProductId", groupProductId);
+        model.addAttribute("purchaseOrderId", purchaseOrderId);
+        model.addAttribute("groupId", groupId);
+        model.addAttribute("memberId", memberId);
         return "/orderDeal";
     }
 
@@ -134,8 +135,8 @@ public class GroupController {
         String groupId = request.getParameter("groupId");
         String memberId = request.getParameter("memberId");
         PurchaseOrder purchaseOrder = (PurchaseOrder) baseManager.getObject(PurchaseOrder.class.getName(), purchaseOrderId);
-        MyGroup myGroup = (MyGroup) baseManager.getObject(MyGroup.class.getName(),groupId);
-        GroupMember member = (GroupMember) baseManager.getObject(GroupMember.class.getName(),memberId);
+        MyGroup myGroup = (MyGroup) baseManager.getObject(MyGroup.class.getName(), groupId);
+        GroupMember member = (GroupMember) baseManager.getObject(GroupMember.class.getName(), memberId);
         GroupProduct groupProduct = (GroupProduct) baseManager.getObject(GroupProduct.class.getName(), groupProductId);
 
         PurchaseOrderGroup purchaseOrderGroup = new PurchaseOrderGroup();
@@ -145,32 +146,32 @@ public class GroupController {
         purchaseOrderGroup.setMyGroup(myGroup);
         purchaseOrderGroup.setGroupMember(member);
         //判断是否成团未关闭或者未开启
-        if(myGroup.getStatus().equals("2")||myGroup.getStatus().equals("1")){
+        if (myGroup.getStatus().equals("2") || myGroup.getStatus().equals("1")) {
             purchaseOrderGroup.setOrderStatus("3");
         }
-        baseManager.saveOrUpdate(PurchaseOrderGroup.class.getName(),purchaseOrderGroup);
+        baseManager.saveOrUpdate(PurchaseOrderGroup.class.getName(), purchaseOrderGroup);
 
-        if(myGroup!=null&&"2".equals(myGroup.getStatus())){
+        if (myGroup != null && "2".equals(myGroup.getStatus())) {
             myGroup.setStatus("1");
-            baseManager.saveOrUpdate(MyGroup.class.getName(),myGroup);
+            baseManager.saveOrUpdate(MyGroup.class.getName(), myGroup);
         }
-        if (member!=null&&"2".equals(member.getStatus())){
+        if (member != null && "2".equals(member.getStatus())) {
             member.setStatus("1");
             member.setMyGroup(myGroup);
             member.setCreateDateTime(new Date());
-            baseManager.saveOrUpdate(GroupMember.class.getName(),member);
+            baseManager.saveOrUpdate(GroupMember.class.getName(), member);
         }
         //人数够，成团操作
-        if(myGroup.getStatus().equals("1")&&(myGroup.getGroupMemberList().size()==myGroup.getGroupProduct().getMemberAmount())){
+        if (myGroup.getStatus().equals("1") && (myGroup.getGroupMemberList().size() == myGroup.getGroupProduct().getMemberAmount())) {
             myGroup.setStatus("4");
-            baseManager.saveOrUpdate(MyGroup.class.getName(),myGroup);
+            baseManager.saveOrUpdate(MyGroup.class.getName(), myGroup);
 
             XQuery xQuery = new XQuery("listPurchaseOrderGroup_default2", request);
             xQuery.put("myGroup_id", myGroup.getId());
             List<PurchaseOrderGroup> list1 = baseManager.listObject(xQuery);
-            for (PurchaseOrderGroup purchaseOrderGroup1:list1){
+            for (PurchaseOrderGroup purchaseOrderGroup1 : list1) {
                 purchaseOrderGroup1.setOrderStatus("5");
-                baseManager.saveOrUpdate(PurchaseOrderGroup.class.getName(),purchaseOrderGroup1);
+                baseManager.saveOrUpdate(PurchaseOrderGroup.class.getName(), purchaseOrderGroup1);
             }
         }
         model.addAttribute("groupId", myGroup.getId());
@@ -209,7 +210,7 @@ public class GroupController {
         } else {
             memberLeft = "0";
         }
-        if(myGroup!=null&&myGroup.getGroupMemberList().size()>1){
+        if (myGroup != null && myGroup.getGroupMemberList().size() > 1) {
             this.smsCheckManager.send(myGroup.getManUser().getUsername(), "#userName#=" + purchaseOrder.getReceiverName() + "&#timeLeft#=" + left + "&#memberLeft#=" + memberLeft, "1108985", PConst.TIANYI);
         }
         return "redirect:/group/shareGroup.do" + url + "&purchaseOrderId=" + purchaseOrderId;
@@ -226,29 +227,29 @@ public class GroupController {
         String show = request.getParameter("show");
         String purchaseOrderId = request.getParameter("purchaseOrderId");
         String supMan = "";
-        if (purchaseOrderId==null||purchaseOrderId==""){
-            XQuery xQuery = new XQuery("listPurchaseOrderGroup_default10",request);
-            xQuery.put("myGroup_id",groupId);
-            xQuery.put("groupMember_id",memberId);
+        if (purchaseOrderId == null || purchaseOrderId == "") {
+            XQuery xQuery = new XQuery("listPurchaseOrderGroup_default10", request);
+            xQuery.put("myGroup_id", groupId);
+            xQuery.put("groupMember_id", memberId);
             List<PurchaseOrderGroup> list = baseManager.listObject(xQuery);
             purchaseOrderId = list.get(0).getPurchaseOrder().getId();
 
-            PurchaseOrder purchaseOrder = (PurchaseOrder) baseManager.getObject(PurchaseOrder.class.getName(),purchaseOrderId);
+            PurchaseOrder purchaseOrder = (PurchaseOrder) baseManager.getObject(PurchaseOrder.class.getName(), purchaseOrderId);
             supMan = purchaseOrder.getReceiverName();
-        }else {
-            PurchaseOrder purchaseOrder = (PurchaseOrder) baseManager.getObject(PurchaseOrder.class.getName(),purchaseOrderId);
+        } else {
+            PurchaseOrder purchaseOrder = (PurchaseOrder) baseManager.getObject(PurchaseOrder.class.getName(), purchaseOrderId);
             supMan = purchaseOrder.getReceiverName();
         }
         MyGroup group = (MyGroup) baseManager.getObject(MyGroup.class.getName(), groupId);
 
         String url = "?groupProductId=" + groupProductId + "&groupId=" + groupId + "&memberId=" + memberId;
         int flag = 0;//0未参团 1 团长 2 团员
-        if(user!=null){
+        if (user != null) {
             for (GroupMember member : group.getGroupMemberList()) {
-                if (member.getUser().getId().equals(user.getId())&&member.getStatus().equals("1")) {
-                    if("0".equals(member.getLevel())){
+                if (member.getUser().getId().equals(user.getId()) && member.getStatus().equals("1")) {
+                    if ("0".equals(member.getLevel())) {
                         flag = 1;
-                    }else{
+                    } else {
                         flag = 2;
                     }
                     break;
@@ -256,20 +257,20 @@ public class GroupController {
             }
         }
 
-        if(group.getGroupProduct().getMemberAmount()-group.getGroupMemberList().size()>0){
-            model.addAttribute("number",group.getGroupProduct().getMemberAmount()-group.getGroupMemberList().size());
-        }else {
-            model.addAttribute("number",0);
+        if (group.getGroupProduct().getMemberAmount() - group.getGroupMemberList().size() > 0) {
+            model.addAttribute("number", group.getGroupProduct().getMemberAmount() - group.getGroupMemberList().size());
+        } else {
+            model.addAttribute("number", 0);
         }
-        model.addAttribute("memberId",memberId);
+        model.addAttribute("memberId", memberId);
         model.addAttribute("group", group);
         model.addAttribute("url", url);
-        model.addAttribute("flag",flag);
-        model.addAttribute("supMan",supMan);
-        model.addAttribute("purchaseOrderId",purchaseOrderId);
-        if(show!=null&&show.equals("1")){
-            return "forward:/group/joinGroup.do"+url+"&purchaseOrderId=" + purchaseOrderId;
-        }else {
+        model.addAttribute("flag", flag);
+        model.addAttribute("supMan", supMan);
+        model.addAttribute("purchaseOrderId", purchaseOrderId);
+        if (show != null && show.equals("1")) {
+            return "forward:/group/joinGroup.do" + url + "&purchaseOrderId=" + purchaseOrderId;
+        } else {
             return "/personGroup/shareGroup1";
         }
 

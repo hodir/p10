@@ -38,7 +38,7 @@ public class SeckillController {
      */
     @RequestMapping("/miao")
     public String listSeckillProduct(HttpServletRequest request, Model model) throws Exception {
-        XQuery seckillQuery = new XQuery("plistSeckillProduct_default", request,4);
+        XQuery seckillQuery = new XQuery("plistSeckillProduct_default", request, 4);
         PageInfo pageInfo = baseManager.listPageInfo(seckillQuery);
         Date currentDate = new Date();
         if (pageInfo != null && pageInfo.getList() != null && !pageInfo.getList().isEmpty()) {
@@ -182,7 +182,7 @@ public class SeckillController {
 
 
     @RequestMapping({"/miao/buy/{productId}/{amount}"})
-    public String miaoBuy(@PathVariable String productId, @PathVariable String amount,HttpServletRequest request) throws Exception {
+    public String miaoBuy(@PathVariable String productId, @PathVariable String amount, HttpServletRequest request) throws Exception {
         synchronized (this) {
 
             SeckillProduct seckillProduct = (SeckillProduct) baseManager.getObject(SeckillProduct.class.getName(), productId);
@@ -198,7 +198,7 @@ public class SeckillController {
                     recordStatus = "0";
                 }
             }
-            if (recordStatus.equals("0")){
+            if (recordStatus.equals("0")) {
                 return "redirect:/miao/" + productId;
             }
             Date currentDate = new Date();

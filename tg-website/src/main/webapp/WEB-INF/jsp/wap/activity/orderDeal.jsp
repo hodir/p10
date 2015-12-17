@@ -20,7 +20,10 @@
 <div class="packet ae">
     <div class="efeiyi-lod ae">
         <a class="efiyi-logo"></a>
-        <a class="eifyi-ld"><div class="ld-img"><img src="<c:url value="/scripts/wap/images/jazq2.gif"/>"></div></a>
+        <a class="eifyi-ld">
+            <div class="ld-img"><img src="<c:url value="/scripts/wap/images/jazq2.gif"/>"></div>
+        </a>
+
         <p>正在获取支付结果，请勿关闭当前页面。</p>
     </div>
 </div>
@@ -46,14 +49,14 @@
         $.ajax({
             type: "get",//设置get请求方式
             url: "<c:url value="/group/checkOrder.do"/>",//设置请求的脚本地址
-            data: {"purchaseOrderId":"${purchaseOrderId}"},//设置请求的数据
+            data: {"purchaseOrderId": "${purchaseOrderId}"},//设置请求的数据
             async: true,
             dataType: "json",//设置请求返回的数据格式
             success: function (data) {
-                if(data){
-                    window.location.href="<c:url value="${redirect}"/>";
-                }else{
-                    setTimeout("check()",1000);
+                if (data) {
+                    window.location.href = "<c:url value="${redirect}"/>";
+                } else {
+                    setTimeout("check()", 1000);
                 }
             }
         })
@@ -61,10 +64,10 @@
 
     check();
 
-    setTimeout("payError()",5000);
+    setTimeout("payError()", 5000);
 
-    function payError(){
-        showAlert("提示","支付失败请重新抢购！",function(){
+    function payError() {
+        showAlert("提示", "支付失败请重新抢购！", function () {
             window.location.href = "<c:url value="/miao/payError.do?productId=${productId}"/>";
         })
     }

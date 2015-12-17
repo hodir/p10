@@ -41,35 +41,44 @@
 <!--//End--header-->
 <ul class="offered ae" style="margin-bottom: 66px;">
     <c:forEach items="${myCreateProductList}" var="member" varStatus="rec">
-    <c:if test="${member.status!=2}">
-        <li>
-        <a href="<c:url value='/group/shareGroup.do'/>?groupProductId=${member.myGroup.groupProduct.id}&groupId=${member.myGroup.id}&memberId=${member.id}">
-            <p> ${member.myGroup.groupProduct.productModel.product.name} ${member.myGroup.groupProduct.productModel.name}</p>
-            <p>${member.myGroup.createDateTime}</p>
-            <c:if test="${member.myGroup.status==1}">
-                <p>${member.myGroup.groupMemberList.size()}人/${member.myGroup.groupProduct.memberAmount}人成团</p>
-                <span>进行中</span>
-            </c:if>
-            <c:if test="${member.myGroup.status==3}">
-                <p>组团成功</p>
-                <span>拼团结束</span>
-            </c:if>
-            <c:if test="${member.myGroup.status==5}">
-                <p>组团失败</p>
-                <span>拼团结束</span>
-            </c:if>
-        </a>
-    </li>
-     </c:if>
+        <c:if test="${member.status!=2}">
+            <li>
+                <a href="<c:url value='/group/shareGroup.do'/>?groupProductId=${member.myGroup.groupProduct.id}&groupId=${member.myGroup.id}&memberId=${member.id}">
+                    <p> ${member.myGroup.groupProduct.productModel.product.name} ${member.myGroup.groupProduct.productModel.name}</p>
+
+                    <p>${member.myGroup.createDateTime}</p>
+                    <c:if test="${member.myGroup.status==1}">
+                        <p>${member.myGroup.groupMemberList.size()}人/${member.myGroup.groupProduct.memberAmount}人成团</p>
+                        <span>进行中</span>
+                    </c:if>
+                    <c:if test="${member.myGroup.status==3}">
+                        <p>组团成功</p>
+                        <span>拼团结束</span>
+                    </c:if>
+                    <c:if test="${member.myGroup.status==5}">
+                        <p>组团失败</p>
+                        <span>拼团结束</span>
+                    </c:if>
+                </a>
+            </li>
+        </c:if>
     </c:forEach>
 </ul>
 <!--//End--footer-->
 <!--悬浮订单-->
 <div class="met-nav ae">
-    <a href="<c:url value="/tuan.do"/>"><p><i class="met-1con m-icon"></i></p><p>团购首页</p></a>
-    <a href="<c:url value="/person/myGroup.do"/>"><p><i class="met-2con m-icon"></i></p><p>我的团</p></a>
-    <a href="<c:url value="/person/myPurchaseOrder.do"/>"><p><i class="met-3con m-icon"></i></p><p>我的订单</p></a>
-    <a href="<c:url value="/person/personInfoView.do"/>"><p><i class="met-4con m-icon"></i></p><p>个人中心</p></a>
+    <a href="<c:url value="/tuan.do"/>"><p><i class="met-1con m-icon"></i></p>
+
+        <p>团购首页</p></a>
+    <a href="<c:url value="/person/myGroup.do"/>"><p><i class="met-2con m-icon"></i></p>
+
+        <p>我的团</p></a>
+    <a href="<c:url value="/person/myPurchaseOrder.do"/>"><p><i class="met-3con m-icon"></i></p>
+
+        <p>我的订单</p></a>
+    <a href="<c:url value="/person/personInfoView.do"/>"><p><i class="met-4con m-icon"></i></p>
+
+        <p>个人中心</p></a>
 </div>
 <!--[if (gte IE 9)|!(IE)]><!-->
 <script href="<c:url value="/scripts/wap/js/jquery.min.js"/>"></script>
@@ -86,7 +95,7 @@
 <!--自定义js--End-->
 <script>
     var _hmt = _hmt || [];
-    (function() {
+    (function () {
         var hm = document.createElement("script");
         hm.src = "//hm.baidu.com/hm.js?99fa5c9048e30c9dada20ea390329f89";
         var s = document.getElementsByTagName("script")[0];
@@ -95,10 +104,17 @@
 </script>
 
 <script>
-    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    (function (i, s, o, g, r, a, m) {
+        i['GoogleAnalyticsObject'] = r;
+        i[r] = i[r] || function () {
+                    (i[r].q = i[r].q || []).push(arguments)
+                }, i[r].l = 1 * new Date();
+        a = s.createElement(o),
+                m = s.getElementsByTagName(o)[0];
+        a.async = 1;
+        a.src = g;
+        m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
 
     ga('create', 'UA-70397028-1', 'auto');
     ga('send', 'pageview');

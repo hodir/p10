@@ -36,8 +36,8 @@ public class HomeController {
 
         //判断是否有需要重定向的页面
         String redirectUrl = request.getParameter("redirect");
-        if (redirectUrl!=null){
-            return "redirect:"+redirectUrl;
+        if (redirectUrl != null) {
+            return "redirect:" + redirectUrl;
         }
 
 
@@ -90,19 +90,19 @@ public class HomeController {
     }
 
     @RequestMapping({"/news"})
-    public String listNews(){
+    public String listNews() {
 
         return "/common/news";
 
     }
 
     @RequestMapping({"/500"})
-    public String show500(){
+    public String show500() {
         return "/common/500";
     }
 
     @RequestMapping({"/404"})
-    public String show404(){
+    public String show404() {
         return "/common/404";
     }
 
@@ -119,11 +119,9 @@ public class HomeController {
 
 
     @RequestMapping({"/test.do"})
-    public String test(){
+    public String test() {
         return "/test";
     }
-
-
 
 
 }

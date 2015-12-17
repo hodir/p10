@@ -65,7 +65,8 @@
             </c:if>
             <!-- //End--time-->
             <div class="bd bigimg">
-                <a href="<c:url value="/miao/${productList.get(0).id}"/>" ><img src="http://pro.efeiyi.com/${productList.get(0).productModel.productModel_url}@!miao-product-view"></a>
+                <a href="<c:url value="/miao/${productList.get(0).id}"/>"><img
+                        src="http://pro.efeiyi.com/${productList.get(0).productModel.productModel_url}@!miao-product-view"></a>
 
                 <p class="mask">关注度：${productList.get(0).attentionAmount}</p>
             </div>
@@ -98,7 +99,8 @@
                 </div>
                 <!-- //End--time-->
                 <div class="bd bigimg">
-                    <a href="<c:url value="/miao/${product.id}"/>" ><img src="http://pro.efeiyi.com/${product.productModel.productModel_url}@!miao-product-view"></a>
+                    <a href="<c:url value="/miao/${product.id}"/>"><img
+                            src="http://pro.efeiyi.com/${product.productModel.productModel_url}@!miao-product-view"></a>
 
                     <p class="mask">关注度：${product.attentionAmount}</p>
                 </div>

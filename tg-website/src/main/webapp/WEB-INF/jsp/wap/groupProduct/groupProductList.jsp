@@ -26,7 +26,7 @@
     <meta name="msapplication-TileImage" content="assets/i/app-icon72x72@2x.png">
     <meta name="msapplication-TileColor" content="#0e90d2">
     <link type="text/css" rel="stylesheet" href="<c:url value="/scripts/wap/css/amazeui.min.css?v=20150831"/>">
-    <link type="text/css" rel="stylesheet"  href="<c:url value="/scripts/wap/css/app.css?v=20150831"/>">
+    <link type="text/css" rel="stylesheet" href="<c:url value="/scripts/wap/css/app.css?v=20150831"/>">
     <link type="text/css" rel="stylesheet" href="<c:url value="/scripts/wap/css/myorder.css?v=20150831"/>">
 </head>
 <body>
@@ -51,31 +51,25 @@
 <!--//End--header-->
 <div class="all-bulk ae">
     <div class="one-bulk ae">
-        <ul class="ae" id = "productListId">
-            <%--<c:forEach items="${groupProductList}" var="groupProduct" varStatus="rec">--%>
-                <%--<li class="ae">--%>
-                    <%--<div class="colonel-pic ae"><a href="<c:url value="/product/groupProduct/${groupProduct.id}"/>"><img src="http://pro.efeiyi.com/${groupProduct.productModel.productModel_url}@!tg-efeiyi-view-list"></a>--%>
-                        <%--<div class="c-page"><span><a href="javascript:void(0)">${groupProduct.productModel.name}${groupProduct.productModel.product.subName}</a></span>--%>
-                        <%--</div>--%>
-                    <%--</div>--%>
-                    <%--<ul class="price ae">--%>
-                        <%--<li><s>原价:${groupProduct.productModel.price}元</s></li>--%>
-                        <%--<li>团购价:${groupProduct.groupPrice}元</li>--%>
-                        <%--<li>${groupProduct.memberAmount}人成团</li>--%>
-                    <%--</ul>--%>
-                <%--</li>--%>
-            <%--</c:forEach>--%>
+        <ul class="ae" id="productListId">
+
         </ul>
     </div>
-    <%--<div class="more ae"><a onclick="moreGroupProduct()"><span>下拉了解更多商品...</span><div class="icon"></div></a></div>--%>
 </div>
 <!--悬浮订单-->
-<!--悬浮订单-->
 <div class="met-nav ae">
-    <a href="<c:url value="/tuan.do"/>"><p><i class="met-1con m-icon"></i></p><p>团购首页</p></a>
-    <a href="<c:url value="/person/myGroup.do"/>"><p><i class="met-2con m-icon"></i></p><p>我的团</p></a>
-    <a href="<c:url value="/person/myPurchaseOrder.do"/>"><p><i class="met-3con m-icon"></i></p><p>我的订单</p></a>
-    <a href="<c:url value="/person/personInfoView.do"/>"><p><i class="met-4con m-icon"></i></p><p>个人中心</p></a>
+    <a href="<c:url value="/tuan.do"/>"><p><i class="met-1con m-icon"></i></p>
+
+        <p>团购首页</p></a>
+    <a href="<c:url value="/person/myGroup.do"/>"><p><i class="met-2con m-icon"></i></p>
+
+        <p>我的团</p></a>
+    <a href="<c:url value="/person/myPurchaseOrder.do"/>"><p><i class="met-3con m-icon"></i></p>
+
+        <p>我的订单</p></a>
+    <a href="<c:url value="/person/personInfoView.do"/>"><p><i class="met-4con m-icon"></i></p>
+
+        <p>个人中心</p></a>
 </div>
 <!--[if (gte IE 9)|!(IE)]><!-->
 <script src="<c:url value="/scripts/wap/js/jquery.min.js"/>"></script>
@@ -92,55 +86,35 @@
 <!--自定义js--Start-->
 
 
-<%--{{for(var i = 0 ; i<it.length ; i++) { }}--%>
-<%--<li class="ae">--%>
-    <%--<div class="colonel-pic ae"><a href="/product/groupProduct/{{=it[i].id}}"><img src="http://pro.efeiyi.com/{{=it[i].productModel.productModel_url}}@!tg-efeiyi-view-list"></a>--%>
-        <%--<div class="c-page"><span><a href="javascript:void(0)">{{=it[i].productModel.name}}{{=it[i].productModel.product.subName}}</a></span>--%>
-        <%--</div>--%>
-    <%--</div>--%>
-    <%--<ul class="price ae">--%>
-        <%--<li><s>原价:{{=it[i].productModel.price}}元</s></li>--%>
-        <%--<li>团购价:{{=it[i].groupPrice}}元</li>--%>
-        <%--<li>{{=it[i].memberAmount}}人成团</li>--%>
-    <%--</ul>--%>
-<%--</li>--%>
-<%--{{ } }}--%>
-
-
-
-
-
-
 <script>
     function htmlGenerater(it /**/) {
         var out = '';
         for (var i = 0; i < it.length; i++) {
-            out += '<li class="ae"> <div class="colonel-pic ae"><a href="<c:url value="/product/groupProduct/"/>' + (it[i].id) + '"><img src="http://pro.efeiyi.com/' + (it[i].productModel.productModel_url) + '@!wap-product-pic"></a> <div class="c-page"><span><a href="javascript:void(0)">' +it[i].productName + '[' + (it[i].productModel.name) + ']' + '</a></span> </div> </div> <ul class="price ae"> <li><s>原价:' + (it[i].productModel.price) + '元</s></li> <li>团购价:' + (it[i].groupPrice) + '元</li> <li>' + (it[i].memberAmount) + '人成团</li> </ul></li>';
+            out += '<li class="ae"> <div class="colonel-pic ae"><a href="<c:url value="/product/groupProduct/"/>' + (it[i].id) + '"><img src="http://pro.efeiyi.com/' + (it[i].productModel.productModel_url) + '@!wap-product-pic"></a> <div class="c-page"><span><a href="javascript:void(0)">' + it[i].productName + '[' + (it[i].productModel.name) + ']' + '</a></span> </div> </div> <ul class="price ae"> <li><s>原价:' + (it[i].productModel.price) + '元</s></li> <li>团购价:' + (it[i].groupPrice) + '元</li> <li>' + (it[i].memberAmount) + '人成团</li> </ul></li>';
         }
         return out;
     }
 
 
-
-    $(document).ready(function(){
+    $(document).ready(function () {
         getProductList("<c:url value='/product/groupProduct.do/'/>");
     })
     var count = 1;
-    function moreGroupProduct(){
+    function moreGroupProduct() {
         var url = "<c:url value='/product/groupProduct.do/'/>";
         getProductList(url);
     }
-    function getProductList(url){
+    function getProductList(url) {
         $.ajax({
             type: "get",//设置get请求方式
-            url: url+count,//设置请求的脚本地址
+            url: url + count,//设置请求的脚本地址
             data: "",//设置请求的数据
             async: true,
             dataType: "json",//设置请求返回的数据格式
             success: function (data) {
                 console.log(data);
                 count = count + 1;
-                if(data != null && data.length > 0) {
+                if (data != null && data.length > 0) {
                     var box = htmlGenerater(data);
                     $("#productListId").append(box);
                 }
@@ -151,7 +125,7 @@
 <!--自定义js--End-->
 <script>
     var _hmt = _hmt || [];
-    (function() {
+    (function () {
         var hm = document.createElement("script");
         hm.src = "//hm.baidu.com/hm.js?99fa5c9048e30c9dada20ea390329f89";
         var s = document.getElementsByTagName("script")[0];
@@ -159,17 +133,24 @@
     })();
 </script>
 <script>
-    $(function(){
-        $(document).ready(function(){
-            $(".all-bulk").css("margin-bottom","60px")
+    $(function () {
+        $(document).ready(function () {
+            $(".all-bulk").css("margin-bottom", "60px")
         });
     })
 </script>
 <script>
-    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    (function (i, s, o, g, r, a, m) {
+        i['GoogleAnalyticsObject'] = r;
+        i[r] = i[r] || function () {
+                    (i[r].q = i[r].q || []).push(arguments)
+                }, i[r].l = 1 * new Date();
+        a = s.createElement(o),
+                m = s.getElementsByTagName(o)[0];
+        a.async = 1;
+        a.src = g;
+        m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
 
     ga('create', 'UA-70397028-1', 'auto');
     ga('send', 'pageview');

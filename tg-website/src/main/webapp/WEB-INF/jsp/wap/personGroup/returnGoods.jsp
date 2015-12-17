@@ -41,14 +41,23 @@
 <!--//End--header-->
 <div class="sales-return ae">
     <p>申请退货请拨打客服电话</p>
+
     <p>400—876—8766</p>
 </div>
 <!--悬浮订单-->
 <div class="met-nav ae">
-    <a href="<c:url value="/tuan.do"/>"><p><i class="met-1con m-icon"></i></p><p>团购首页</p></a>
-    <a href="<c:url value="/person/myGroup.do"/>"><p><i class="met-2con m-icon"></i></p><p>我的团</p></a>
-    <a href="<c:url value="/person/myPurchaseOrder.do"/>"><p><i class="met-3con m-icon"></i></p><p>我的订单</p></a>
-    <a href="<c:url value="/person/personInfoView.do"/>"><p><i class="met-4con m-icon"></i></p><p>个人中心</p></a>
+    <a href="<c:url value="/tuan.do"/>"><p><i class="met-1con m-icon"></i></p>
+
+        <p>团购首页</p></a>
+    <a href="<c:url value="/person/myGroup.do"/>"><p><i class="met-2con m-icon"></i></p>
+
+        <p>我的团</p></a>
+    <a href="<c:url value="/person/myPurchaseOrder.do"/>"><p><i class="met-3con m-icon"></i></p>
+
+        <p>我的订单</p></a>
+    <a href="<c:url value="/person/personInfoView.do"/>"><p><i class="met-4con m-icon"></i></p>
+
+        <p>个人中心</p></a>
 </div>
 <!--//End--footer-->
 <!--[if (gte IE 9)|!(IE)]><!-->
@@ -66,40 +75,48 @@
 <!--自定义js--End-->
 <style type="text/css">
     #MEIQIA-BTN-HOLDER {
-        right: 0;bottom: 145px;}
+        right: 0;
+        bottom: 145px;
+    }
+
     #MEIQIA-BTN {
         background: #000;
         width: 33px;
-        height:53px;
+        height: 53px;
         -webkit-border-radius: 5px;
         -moz-border-radius: 5px;
         border-radius: 5px;
     }
+
     #MEIQIA-BTN-LINE {
-        display: none;}
-    #MEIQIA-BTN-TEXT {
-        width:48px;
-        font-size: 12px;
-        position: absolute;
-        left:-28px;
-        top:20px;
         display: none;
     }
-    .MEIQIA-ICON {
-        background:url(http://j.efeiyi.com/tg-website/scripts/wap/images/qq.png) no-repeat -176px -143px;
+
+    #MEIQIA-BTN-TEXT {
+        width: 48px;
+        font-size: 12px;
+        position: absolute;
+        left: -28px;
+        top: 20px;
+        display: none;
     }
+
+    .MEIQIA-ICON {
+        background: url(http://j.efeiyi.com/tg-website/scripts/wap/images/qq.png) no-repeat -176px -143px;
+    }
+
     #MEIQIA-BTN-ICON {
         width: 23px;
         height: 28px;
         margin: 0;
         float: left;
-        margin-left:5px;
+        margin-left: 5px;
         margin-top: 6px;
     }
 </style>
 <script type='text/javascript'>
-    (function(m, ei, q, i, a, j, s) {
-        m[a] = m[a] || function() {
+    (function (m, ei, q, i, a, j, s) {
+        m[a] = m[a] || function () {
                     (m[a].a = m[a].a || []).push(arguments)
                 };
         j = ei.createElement(q),
@@ -113,7 +130,7 @@
 
 <script>
     var _hmt = _hmt || [];
-    (function() {
+    (function () {
         var hm = document.createElement("script");
         hm.src = "//hm.baidu.com/hm.js?99fa5c9048e30c9dada20ea390329f89";
         var s = document.getElementsByTagName("script")[0];
@@ -122,10 +139,17 @@
 </script>
 
 <script>
-    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    (function (i, s, o, g, r, a, m) {
+        i['GoogleAnalyticsObject'] = r;
+        i[r] = i[r] || function () {
+                    (i[r].q = i[r].q || []).push(arguments)
+                }, i[r].l = 1 * new Date();
+        a = s.createElement(o),
+                m = s.getElementsByTagName(o)[0];
+        a.async = 1;
+        a.src = g;
+        m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
 
     ga('create', 'UA-70397028-1', 'auto');
     ga('send', 'pageview');

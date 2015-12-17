@@ -12,7 +12,9 @@
     <title>【秒杀】太high太暴力,匠人手作非遗品，尽享折上折！</title>
 </head>
 <body>
-<img src="http://pro.efeiyi.com/${product.productModel.productModel_url}@!miao-product-view" style="position: fixed;top: -840px;">
+<img src="http://pro.efeiyi.com/${product.productModel.productModel_url}@!miao-product-view"
+     style="position: fixed;top: -840px;">
+
 <div class="seckill-share">
     <div class="bd icon-s"></div>
     <div class="bd info">
