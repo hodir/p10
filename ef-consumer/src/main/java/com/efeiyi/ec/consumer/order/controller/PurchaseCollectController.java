@@ -48,10 +48,8 @@ public class PurchaseCollectController {
 
     @RequestMapping({"/unfollow.do"})
     public String addProductFavorite(HttpServletRequest request) throws Exception{
-        String productModelId =request.getParameter("id");
+
         XSaveOrUpdate xSaveOrUpdate = new XSaveOrUpdate("saveOrUpdateProductFavorite" ,request);
-//        xSaveOrUpdate.getParamMap().put("user_id", AuthorizationUtil.getMyUser().getId());
-//        xSaveOrUpdate.getParamMap().put("productModel_id", productModelId);
         xSaveOrUpdate.getParamMap().put("status",2);
         baseManager.saveOrUpdate(xSaveOrUpdate);
         return "redirect:/purchaseCollect/collectList.do";

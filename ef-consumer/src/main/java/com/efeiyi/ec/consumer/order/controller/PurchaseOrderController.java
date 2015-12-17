@@ -50,7 +50,7 @@ public class PurchaseOrderController {
     public String listPruchaseOrder(HttpServletRequest request, Model model) throws Exception {
         String orderStatus = request.getParameter("status");
         model.addAttribute("status", orderStatus);
-        XQuery xQuery = null;
+        XQuery xQuery;
 
         if (orderStatus == null || orderStatus == "" || orderStatus == "0") {
             xQuery = new XQuery("plistPurchaseOrder_default", request, 10);
@@ -200,9 +200,6 @@ public class PurchaseOrderController {
     @RequestMapping("/groupBuyView")
     public String getGroupBuy(HttpServletRequest request) throws Exception {
         String purchaseOrderId=request.getParameter("orderId");
-//        XQuery xQuery=new XQuery("PurchaseOrderGroup_default",request);
-//        xQuery.put("purchaseOrder_id",purchaseOrderId);
-//        PurchaseOrderGroup purchaseOrderGroup = (PurchaseOrderGroup) baseManager.listObject(xQuery).get(0);
         PurchaseOrderGroup purchaseOrderGroup = (PurchaseOrderGroup) baseManager.getObject(PurchaseOrderGroup.class.getName(),purchaseOrderId);
         String memberId = purchaseOrderGroup.getGroupMember().getId();
         String groupId = purchaseOrderGroup.getMyGroup().getId();
