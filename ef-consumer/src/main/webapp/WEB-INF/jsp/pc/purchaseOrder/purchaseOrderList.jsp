@@ -92,7 +92,7 @@
       <%--</div>--%>
     <div class="list-pro wh1" id="orderNum">
       <c:forEach items="${orderList}" var="order">
-        <c:if test="${order.orderStatus==1}">
+        <c:if test="${order.orderStatus==1 || order.orderStatus==17}">
           <table class="list-pro-table">
             <tr>
               <th colspan="6">
@@ -138,11 +138,16 @@
                   <p><a href="<c:url value="/order/cancelOrder/${order.id}"/>">取消订单</a></p>
                 </td>
               </c:if>
+              <c:if test="${order.orderStatus == 17}">
+                <td class="rowspan" width="139" rowspan='2' style="border-left:1px solid #ccc;border-right:1px solid #ccc">
+                  <p><a href="<c:url value="/order/myEfeiyi/view/${order.id}"/>">查看</a></p>
+                </td>
+              </c:if>
             </tr>
           </table>
         </c:if>
 
-        <c:if test="${ order.orderStatus!=1}">
+        <c:if test="${ order.orderStatus!=1 && order.orderStatus!=17}">
           <c:if test="${order.subPurchaseOrder==null || order.subPurchaseOrder.size()==0}">
             <table class="list-pro-table">
               <tr>
@@ -234,7 +239,7 @@
           </c:if>
         </c:if>
 
-        <c:if test="${order.orderStatus!=1}">
+        <c:if test="${order.orderStatus!=1 && order.orderStatus!=17}">
           <c:if test="${order.subPurchaseOrder!=null || order.subPurchaseOrder.size()>0}">
             <c:forEach items="${order.subPurchaseOrder}" var="spList">
 
