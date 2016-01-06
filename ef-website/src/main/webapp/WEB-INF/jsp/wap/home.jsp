@@ -6,37 +6,39 @@
 <html class="am-touch js cssanimations">
 <head>
     <title>e飞蚁-领先的非物质文化遗产电商平台</title>
-    <meta name="keywords" content="e飞蚁,非物质文化遗产,中国非物质文化遗产,非物质文化遗产网,非遗博览园,非遗节,非遗产品,非遗大师,传统工艺" />
-    <meta name="description" content="e飞蚁，中国领先的非物质文化遗产电商与交流平台，汇聚诸多传承人和各类传统工艺" />
+    <meta name="keywords" content="e飞蚁,非物质文化遗产,中国非物质文化遗产,非物质文化遗产网,非遗博览园,非遗节,非遗产品,非遗大师,传统工艺"/>
+    <meta name="description" content="e飞蚁，中国领先的非物质文化遗产电商与交流平台，汇聚诸多传承人和各类传统工艺"/>
 </head>
 <body>
 <!--//End--header-->
 <article class="custom newcustom">
-    <div data-am-widget="slider" class="am-slider am-slider-a1" data-am-slider='{&quot;directionNav&quot;:false}' >
+    <div data-am-widget="slider" class="am-slider am-slider-a1" data-am-slider='{&quot;directionNav&quot;:false}'>
         <ul class="am-slides">
             <c:forEach items="${bannerList}" var="banner">
-                <li><a href="<c:url value="${banner.wapUrl}"/> " ><img src="<c:url value="http://pro.efeiyi.com/${banner.imageUrl}@!home1-banner"/>"></a></li>
+                <li><a href="<c:url value="${banner.wapUrl}"/> "><img
+                        src="<c:url value="http://pro.efeiyi.com/${banner.imageUrl}@!home1-banner"/>"></a>
+                </li>
             </c:forEach>
         </ul>
     </div>
     <!--//End--am-slider-->
     <%--<div class="toolbar">--%>
-        <%--<a class="item asso" href="<c:url value="/productCategoryList.do"/> ">--%>
-            <%--<span><i class="newicon"></i></span>--%>
-            <%--<span>分&nbsp;类</span>--%>
-        <%--</a>--%>
-        <%--<a class="item sh" href="http://www.efeiyi.com/subject/ig8zlvonengegjk9">--%>
-            <%--<span><i class="newicon"></i></span>--%>
-            <%--<span>专&nbsp;题</span>--%>
-        <%--</a>--%>
-        <%--<a class="item user" href="http://master.efeiyi.com">--%>
-            <%--<span><i class="newicon"></i></span>--%>
-            <%--<span>大&nbsp;师</span>--%>
-        <%--</a>--%>
-        <%--<a class="item coupon" href="#coupon">--%>
-            <%--<span><i class="newicon"></i></span>--%>
-            <%--<span>工&nbsp;艺</span>--%>
-        <%--</a>--%>
+    <%--<a class="item asso" href="<c:url value="/productCategoryList.do"/> ">--%>
+    <%--<span><i class="newicon"></i></span>--%>
+    <%--<span>分&nbsp;类</span>--%>
+    <%--</a>--%>
+    <%--<a class="item sh" href="http://www.efeiyi.com/subject/ig8zlvonengegjk9">--%>
+    <%--<span><i class="newicon"></i></span>--%>
+    <%--<span>专&nbsp;题</span>--%>
+    <%--</a>--%>
+    <%--<a class="item user" href="http://master.efeiyi.com">--%>
+    <%--<span><i class="newicon"></i></span>--%>
+    <%--<span>大&nbsp;师</span>--%>
+    <%--</a>--%>
+    <%--<a class="item coupon" href="#coupon">--%>
+    <%--<span><i class="newicon"></i></span>--%>
+    <%--<span>工&nbsp;艺</span>--%>
+    <%--</a>--%>
     <%--</div>--%>
     <div class="toolbar">
         <a class="item asso" href="<c:url value="/productCategoryList.do"/> ">
@@ -70,7 +72,8 @@
         <ul class="list-top">
             <c:if test="${not empty marketingActivityQueryList&&fn:length(marketingActivityQueryList)>0}">
                 <c:forEach items="${marketingActivityQueryList}" var="marketingActivity">
-                    <li><a href="${marketingActivity.redirect}"><img src="http://pro.efeiyi.com/${marketingActivity.img}"></a></li>
+                    <li><a href="${marketingActivity.redirect}"><img
+                            data-original="http://pro.efeiyi.com/${marketingActivity.img}"></a></li>
                 </c:forEach>
             </c:if>
         </ul>
@@ -81,7 +84,7 @@
                     <li>
                         <a href="${hotSale.redirect}">
                             <em>${hotSale.name}</em>
-                            <img src="http://pro.efeiyi.com/${hotSale.img}">
+                            <img data-original="http://pro.efeiyi.com/${hotSale.img}">
                         </a>
                         <span class="price"><i>￥</i><strong>${hotSale.price}</strong></span>
                         <span class="heat"><font>热卖</font></span>
@@ -102,11 +105,12 @@
                 </div>
             </div>
             <ul class="cat-bottom ae">
-                <c:forEach items="${recommendMap.get(projectCategory.id)}" var="projectCategoryProductModel" varStatus="status" begin="0" end="7">
+                <c:forEach items="${recommendMap.get(projectCategory.id)}" var="projectCategoryProductModel"
+                           varStatus="status" begin="0" end="7">
                     <li>
                         <a href="<c:url value="/product/hot/${projectCategoryProductModel.productModel.id}"/>">
                             <em>${projectCategoryProductModel.productModel.product.name}</em>
-                            <img src="http://pro.efeiyi.com/${projectCategoryProductModel.productModel.product.getProductPicture().pictureUrl}">
+                            <img data-original="http://pro.efeiyi.com/${projectCategoryProductModel.productModel.product.getProductPicture().pictureUrl}">
                         </a>
                         <span class="price"><i>￥</i><strong>${projectCategoryProductModel.productModel.price.intValue()}</strong></span>
                     </li>
@@ -117,7 +121,12 @@
     <!--//End--一个max-cat-->
 </article>
 <!--//End--newcustom-->
-
+<script src="<c:url value="/scripts/wap/js/jquery.lazyload.min.js"/>"></script>
+<script>
+    $(function () {
+        $("img").lazyload();
+    });
+</script>
 </body>
 </html>
 </body>

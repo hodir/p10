@@ -51,16 +51,29 @@
             <version>4.4.1</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-redis</artifactId>
+            <version>1.6.2.RELEASE</version>
+        </dependency>
+
+        <dependency>
+            <groupId>redis.clients</groupId>
+            <artifactId>jedis</artifactId>
+            <version>2.8.0</version>
+        </dependency>
+
+
         <!--<dependency>-->
-            <!--<groupId>com.efeiyi.ec</groupId>-->
-            <!--<artifactId>jh-model</artifactId>-->
-            <!--<version>1.0-SNAPSHOT</version>-->
-            <!--<type>jar</type>-->
-            <!--<scope>compile</scope>-->
+        <!--<groupId>com.efeiyi.ec</groupId>-->
+        <!--<artifactId>jh-model</artifactId>-->
+        <!--<version>1.0-SNAPSHOT</version>-->
+        <!--<type>jar</type>-->
+        <!--<scope>compile</scope>-->
         <!--</dependency>-->
 
     </dependencies>
-    
+
 
     <build>
         <finalName>ef-website</finalName>
@@ -75,7 +88,7 @@
                             <goal>copy-dependencies</goal>
                         </goals>
                         <configuration>
-                            <outputDirectory> ${basedir}/WEB-INF/lib</outputDirectory>
+                            <outputDirectory>${basedir}/WEB-INF/lib</outputDirectory>
                             <overWriteReleases>false</overWriteReleases>
                             <overWriteSnapshots>false</overWriteSnapshots>
                             <overWriteIfNewer>true</overWriteIfNewer>
