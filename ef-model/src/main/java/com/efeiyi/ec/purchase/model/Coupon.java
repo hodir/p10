@@ -27,6 +27,39 @@ public class Coupon implements Serializable {
     private String whetherBind;//优惠券是否绑定 1-未绑定  2-已绑定
     private Date bindTime;//绑定时间
 
+
+    private String projectName;
+    private String tenantName;
+    private String productName;
+
+    @Transient
+    public String getProjectName() {
+        return projectName;
+    }
+
+    public void setProjectName(String projectName) {
+        this.projectName = projectName;
+    }
+
+    @Transient
+    public String getTenantName() {
+        return tenantName;
+    }
+
+    public void setTenantName(String tenantName) {
+        this.tenantName = tenantName;
+    }
+
+    @Transient
+    public String getProductName() {
+        return productName;
+    }
+
+    public void setProductName(String productName) {
+        this.productName = productName;
+    }
+
+
     @Column(name = "bind_time")
     public Date getBindTime() {
         return bindTime;

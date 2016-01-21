@@ -130,6 +130,15 @@ public class CouponController {
                     SimpleDateFormat simpleDateFormat2 = new SimpleDateFormat("yyyy-MM-dd");
                     coupon.setStartTimeL(simpleDateFormat2.format(coupon.getCouponBatch().getStartDate()));
                     coupon.setEndTimeL(simpleDateFormat2.format(coupon.getCouponBatch().getEndDate()));
+
+                    String range=coupon.getCouponBatch().getRange();
+                    if(range.equals("2")){
+                       coupon.setProjectName(coupon.getCouponBatch().getProject().getName());
+                    }else if(range.equals("3")){
+                        coupon.setTenantName(coupon.getCouponBatch().getTenant().getName());
+                    }else if(range.equals("4")){
+                         coupon.setProductName(coupon.getCouponBatch().getProduct().getName());
+                    }
                 }
             }
 

@@ -268,11 +268,11 @@ function exchangeCoupon() {
                 if(data.couponBatch.range==1){
                    sub += "全场通用";
                 }else if(data.couponBatch.range==2){
-                    sub += data.couponBatch.project.name+"类商品使用";
+                    sub += data.projectName+"类商品使用";
                 }else if(data.couponBatch.range==3){
-                    sub += data.couponBatch.tenant.name+"店铺使用";
+                    sub += data.tenantName+"店铺使用";
                 }else{
-                    sub +=  data.couponBatch.product.name+"商品使用";
+                    sub +=  data.productName+"商品使用";
                 }
                 sub +="</p>"+
                 "<p>有效时间:"+formatDate(data.couponBatch.startDate)+"至"+formatDate(data.couponBatch.endDate) +"</p>"+
