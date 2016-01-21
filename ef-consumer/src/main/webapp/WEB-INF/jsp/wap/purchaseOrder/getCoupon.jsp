@@ -89,7 +89,7 @@
 </div>
 </c:if>
 
-<c:if test="${sd>=td || td>=ed}">
+<c:if test="${sd>td || td>ed}">
   <div class="tab-convert ae tab-add tab-add1">
     <form>
       <h5>恭喜您，获得优惠券。</h5>
