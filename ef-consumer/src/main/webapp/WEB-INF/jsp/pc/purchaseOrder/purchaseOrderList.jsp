@@ -251,10 +251,10 @@
           </c:if>
         </c:if>
 
-        <c:if test="${order.orderStatus!=1 && order.orderStatus!=17}">
+        <c:if test="${order.orderStatus!=1}">
           <c:if test="${order.subPurchaseOrder!=null || order.subPurchaseOrder.size()>0}">
             <c:forEach items="${order.subPurchaseOrder}" var="spList">
-
+              <c:if test="${spList.orderStatus!=17}">
               <table class="list-pro-table">
                 <tr>
                   <th colspan="6">
@@ -349,6 +349,7 @@
                   </c:if>
                 </tr>
               </table>
+              </c:if>
             </c:forEach>
           </c:if>
         </c:if>

@@ -183,6 +183,7 @@
 			<c:if test="${purchaseOrder.orderStatus!=1}">
 				<c:if test="${purchaseOrder.subPurchaseOrder != null || purchaseOrder.subPurchaseOrder.size()>0 }">
 					<c:forEach items="${purchaseOrder.subPurchaseOrder}" var="spList">
+						<c:if test="${spList.orderStatus!=17}">
 						<div class="order-section ae">
 							<div class="shop-name"><span>${spList.tenant.name}</span>
 					<span><ming800:status name="orderStatus" dataType="PurchaseOrder.orderStatus"
@@ -258,6 +259,7 @@
 								</c:choose>
 							</div>
 						</div>
+						</c:if>
 					</c:forEach>
 
 				</c:if>
