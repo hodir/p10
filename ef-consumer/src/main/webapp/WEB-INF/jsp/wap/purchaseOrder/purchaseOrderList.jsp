@@ -101,7 +101,7 @@
 				</div>
 			</c:if>
 
-			<c:if test="${purchaseOrder.orderStatus!=1}">
+			<c:if test="${purchaseOrder.orderStatus!=1 && purchaseOrder.orderStatus!=17}">
 				<c:if test="${purchaseOrder.subPurchaseOrder==null || purchaseOrder.subPurchaseOrder.size()==0}">
 					<div class="order-section ae">
 						<div class="shop-name"><span>${purchaseOrder.tenant.name}</span>
@@ -180,7 +180,7 @@
 					</div>
 				</c:if>
 			</c:if>
-			<c:if test="${purchaseOrder.orderStatus!=1}">
+			<c:if test="${purchaseOrder.orderStatus!=1 && purchaseOrder.orderStatus!=17}">
 				<c:if test="${purchaseOrder.subPurchaseOrder != null || purchaseOrder.subPurchaseOrder.size()>0 }">
 					<c:forEach items="${purchaseOrder.subPurchaseOrder}" var="spList">
 						<c:if test="${spList.orderStatus!=17}">
