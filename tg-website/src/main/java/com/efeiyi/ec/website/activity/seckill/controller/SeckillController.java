@@ -255,25 +255,4 @@ public class SeckillController {
         return "redirect:/miao/" + productId;
     }
 
-    @RequestMapping({"/miao/share/{productId}"})
-    public String share(@PathVariable String productId, HttpServletRequest request, Model model) {
-        //支付成功的时候需要 +不可用库存 -订单库存
-        String currentUserId = request.getParameter("userId");
-        SeckillProduct seckillProduct = (SeckillProduct) baseManager.getObject(SeckillProduct.class.getName(), productId);
-        if (AuthorizationUtil.isAuthenticated() && currentUserId.equals(AuthorizationUtil.getUser().getId())) {
-            //创建秒杀记录 证明当前用户已经参与过该次秒杀
-            SeckillRecord seckillRecord = new SeckillRecord();
-            seckillRecord.setCreateDatetime(new Date());
-            seckillRecord.setUserId(AuthorizationUtil.getMyUser().getId());
-            seckillRecord.setSeckillProductId(seckillProduct.getId());
-            baseManager.saveOrUpdate(SeckillRecord.class.getName(), seckillRecord);
-            model.addAttribute("product", seckillProduct);
-            seckillProduct.setUnusefulAmount((seckillProduct.getUnusefulAmount() != null ? seckillProduct.getUnusefulAmount() : 0) + 1);
-            seckillProduct.setOrderAmount(seckillProduct.getOrderAmount() - 1);
-            baseManager.saveOrUpdate(SeckillProduct.class.getName(), seckillProduct);
-            return "/activity/seckillShare";
-        } else {
-            return "redirect:/miao/" + seckillProduct.getId();
-        }
-    }
 }

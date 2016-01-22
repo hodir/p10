@@ -142,7 +142,7 @@ public class BaseManagerImpl implements BaseManager {
     这里传入doQueryName的目的是直接得到DoQuery对象，该对象中包含了某个查询的所有信息，查询条件查询参数的种类和参数类型
      */
     @Override
-    public List listObject(XQuery xQuery) {
+    public List<Object> listObject(XQuery xQuery) {
         return xdoDao.getObjectList(xQuery.getHql(), xQuery.getQueryParamMap());
     }
 

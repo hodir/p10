@@ -42,7 +42,7 @@ public interface BaseManager {
     List listObject(String queryHql, Object... params);
 
 
-    List listObject(XQuery xQuery);
+    List<Object> listObject(XQuery xQuery);
 
     @Deprecated
     PageInfo listPageInfo(String queryHql, PageEntity pageEntity, LinkedHashMap<String, Object> queryParamMap);

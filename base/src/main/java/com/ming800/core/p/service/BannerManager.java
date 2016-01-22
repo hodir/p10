@@ -11,7 +11,7 @@ public interface BannerManager {
      * @param groupName
      * @return
      */
-    List getBannerList(String groupName) throws Exception;
+    List<Object> getBannerList(String groupName) throws Exception;
     /**
      * 保存轮播图
      * @param banner
