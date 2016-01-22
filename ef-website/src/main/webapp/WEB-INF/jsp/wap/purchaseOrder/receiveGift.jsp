@@ -32,12 +32,12 @@
         <div class="btb"><h5>礼物卡片</h5></div>
         <div class="pic-page ae">
             <div class="pic-img">
-                <c:if test="${purchaseOrderGift.showGiftNameStatus=='1'}">
+                <c:if test="${purchaseOrder.showGiftNameStatus=='1'}">
                    <a  href="<c:url value="/product/productModel/${purchaseOrder.purchaseOrderProductList.get(0).productModel.id}"/>">
                      <img src="http://pro.efeiyi.com/${purchaseOrder.purchaseOrderProductList.get(0).productModel.productModel_url}@!gift-card-picture" width="181">
                     </a>
                     </c:if>
-                        <c:if test="${purchaseOrderGift.showGiftNameStatus=='0'}">
+                        <c:if test="${purchaseOrder.showGiftNameStatus=='0'}">
                         <a>
                             <img src="http://pro.efeiyi.com/${purchaseOrder.purchaseOrderProductList.get(0).productModel.productModel_url}@!gift-card-picture" width="181">
                         </a>
@@ -45,13 +45,13 @@
             </div>
             <div class="pic-text">
                 <p>
-                    <c:if test="${purchaseOrderGift.showGiftNameStatus=='1'}">
+                    <c:if test="${purchaseOrder.showGiftNameStatus=='1'}">
                         <a  href="<c:url value="/product/productModel/${purchaseOrder.purchaseOrderProductList.get(0).productModel.id}"/>" style="color: #000">
                                 ${purchaseOrder.purchaseOrderProductList.get(0).productModel.product.name}
                         </a>
                     </c:if>
 
-                        <c:if test="${purchaseOrderGift.showGiftNameStatus=='0'}">
+                        <c:if test="${purchaseOrder.showGiftNameStatus=='0'}">
                         <a  style="color: #000">
                             ${purchaseOrder.purchaseOrderProductList.get(0).productModel.product.name}
                         </a>

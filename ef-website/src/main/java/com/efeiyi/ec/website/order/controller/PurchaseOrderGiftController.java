@@ -85,10 +85,7 @@ public class PurchaseOrderGiftController {
 
         try {
             PurchaseOrderGift purchaseOrderGift = (PurchaseOrderGift) baseManager.getObject(PurchaseOrderGift.class.getName(), orderId);
-            if (purchaseOrderGift.getOrderType().equals("3") && purchaseOrderGift.getOrderStatus().equals(PurchaseOrder.ORDER_STATUS_WRGIFT)) {
-                //判断是否是礼品订单 且可以被收礼
-                model.addAttribute("purchaseOrder", purchaseOrderGift);
-            }
+            model.addAttribute("purchaseOrder", purchaseOrderGift);
             String productName = purchaseOrderGift.getPurchaseOrderProductList().get(0).getProductModel().getProduct().getName();
             String projectName = purchaseOrderGift.getPurchaseOrderProductList().get(0).getProductModel().getProduct().getProject().getName();
             String giftMessage = purchaseOrderGift.getGiftMessage();
@@ -136,12 +133,10 @@ public class PurchaseOrderGiftController {
             }
             //优先判断是否是送礼人查看当前页面
             if (AuthorizationUtil.isAuthenticated() && AuthorizationUtil.getMyUser().getId().equals(purchaseOrderGift.getUser().getId())) {
-                model.addAttribute("order", purchaseOrderGift);
                 model.addAttribute("request", "/purchaseOrder/giftView");
                 return "/purchaseOrder/purchaseOrderGiftView";
             }
             if (!purchaseOrderGift.getOrderStatus().equals(PurchaseOrder.ORDER_STATUS_WPAY) && !purchaseOrderGift.getOrderStatus().equals(PurchaseOrder.ORDER_STATUS_WRGIFT)) {
-                model.addAttribute("purchaseOrder", purchaseOrderGift);
                 model.addAttribute("request", "/purchaseOrder/giftView");
                 return "/purchaseOrder/giftView";
             }
