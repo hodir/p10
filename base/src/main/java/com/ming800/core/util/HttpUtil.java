@@ -21,7 +21,9 @@ public class HttpUtil {
      * @return
      */
     public static boolean isPhone(String userAgent) {
-
+        if (userAgent == null) {
+            return false;
+        }
         if (userAgent.contains("Mozilla/") && userAgent.contains("iPhone")) {
             return true;
         } else return userAgent.contains("Android") && userAgent.contains("Linux");
@@ -31,15 +33,14 @@ public class HttpUtil {
         String serverName = request.getServerName();
         String cityName = "\\.".split(serverName)[0];
         String userAgent = request.getHeader("User-Agent");
+        if (userAgent == null) {
+            return false;
+        }
         if (userAgent.contains("Mozilla/") && userAgent.contains("iPhone")) {
             return true;
         } else if (userAgent.contains("Android") && userAgent.contains("Linux")) {
             return true;
-        } else if (cityName.equals("m")) {
-            return true;
-        } else {
-            return false;
-        }
+        } else return cityName.equals("m");
     }
 
 
