@@ -99,8 +99,6 @@ public class ProductController {
             }
         }
         Project project  = (Project)baseManager.getObject(Project.class.getName(),projectId);
-        String proName = project.getName();
-        model.addAttribute("proName",proName);
         model.addAttribute("project",project);
         model.addAttribute("map",map);
         model.addAttribute("str",str);
@@ -212,8 +210,8 @@ public class ProductController {
     @RequestMapping({"/productModel/{productModelId}"})
     public String productDetalis(@PathVariable String productModelId, HttpServletRequest request, Model model) throws Exception {
         ProductModel productModel = (ProductModel) baseManager.getObject(ProductModel.class.getName(), productModelId);
-        productModel.setPopularityAmount(productModel.getAmount()+1);
-        baseManager.saveOrUpdate(ProductModel.class.getName(),productModel);
+        productModel.setPopularityAmount(productModel.getPopularityAmount()==null?1:productModel.getPopularityAmount()+1);
+        baseManager.saveOrUpdate(ProductModel.class.getName(), productModel);
         Product product = productModel.getProduct();
         Project project = product.getProject();
         XQuery purchaseOrderProductQuery = new XQuery("listPurchaseOrderProduct_default",request);
@@ -276,9 +274,12 @@ public class ProductController {
             xQuery.put("user_id", currentUser.getId());
             xQuery.put("productModel_id", productModelId);
             List<ProductFavorite> productFavoriteList =  baseManager.listObject(xQuery);
-            if(productFavoriteList!=null&&"1".equals(productFavoriteList.get(0).getStatus())){
-                flag = true;
+            if(productFavoriteList!=null&&productFavoriteList.size()>0){
+                if("1".equals(productFavoriteList.get(0).getStatus())){
+                    flag = true;
+                }
             }
+
         }
         return flag;
     }
