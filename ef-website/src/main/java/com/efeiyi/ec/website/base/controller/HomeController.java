@@ -1,10 +1,16 @@
 package com.efeiyi.ec.website.base.controller;
 
+import com.efeiyi.ec.organization.model.MyUser;
 import com.efeiyi.ec.product.model.Advertisement;
+import com.efeiyi.ec.product.model.Product;
+import com.efeiyi.ec.product.model.ProductModel;
 import com.efeiyi.ec.product.model.ProductPicture;
 import com.efeiyi.ec.project.model.Project;
 import com.efeiyi.ec.project.model.ProjectCategory;
 import com.efeiyi.ec.project.model.ProjectCategoryProductModel;
+import com.efeiyi.ec.tenant.model.Tenant;
+import com.efeiyi.ec.tenant.model.TenantProject;
+import com.efeiyi.ec.website.organization.util.AuthorizationUtil;
 import com.ming800.core.base.service.BaseManager;
 import com.ming800.core.does.model.XQuery;
 import com.ming800.core.p.model.Banner;
@@ -12,12 +18,26 @@ import com.ming800.core.p.service.BannerManager;
 import com.ming800.core.p.service.ObjectRecommendedManager;
 import com.ming800.core.util.CookieTool;
 import com.ming800.core.util.RedisApi;
+import com.ming800.core.util.StringUtil;
+import com.sun.javafx.sg.prism.NGShape;
+import net.sf.ezmorph.bean.MorphDynaClass;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
+import org.apache.solr.common.util.Hash;
+import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import redis.clients.jedis.Jedis;
 
 import javax.servlet.http.HttpServletRequest;
@@ -25,6 +45,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.net.URLDecoder;
 import java.util.*;
 
+/**
+ * Created by Administrator on 2015/8/17.
+ */
 @Controller
 public class HomeController {
 
@@ -56,108 +79,120 @@ public class HomeController {
         model.addAttribute("bannerFlag", "true");
 
         //------------------------------------判断缓存的部分-------------------------------------
-        String homePageStr = "";
-        boolean isRedis;
-        try {
-            Jedis jedis = RedisApi.getPool().getResource();
-            homePageStr = jedis.get("homePage");
-            jedis.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        isRedis = homePageStr != null && !homePageStr.equals("");
-        if (isRedis) {
-            System.out.println("redis deal start = " + System.currentTimeMillis());
-
-            JSONObject homePageObject = JSONObject.fromObject(homePageStr); //从redis里拿出来的字符串
-//            System.out.println(homePageStr.toString());
-            Map<String, Class> classMap = new HashMap<>();
-            classMap.put("recommendedCategoryList", ProjectCategory.class);
-            classMap.put("bannerList", Banner.class);
-            classMap.put("marketingActivityQueryList", Advertisement.class);
-            classMap.put("bannerActivityList", Advertisement.class);
-            classMap.put("hotSaleList", Advertisement.class);
-            classMap.put("productPictureList", ProductPicture.class);
-            homePage = (HomePage) JSONObject.toBean(homePageObject, HomePage.class, classMap);
-
-            JSONObject projectMapObject = homePageObject.getJSONObject("projectMap");
-            HashMap<String, List<Object>> projectMapTemp = new HashMap<>();
-            for (Object key : projectMapObject.keySet()) {
-                JSONArray jsonObject = projectMapObject.getJSONArray(key.toString());
-                List<Object> projectObjectList = (List<Object>) JSONArray.toCollection(jsonObject, Project.class);
-                projectMapTemp.put(key.toString(), projectObjectList);
-            }
-            homePage.setProjectMap(projectMapTemp);
-            JSONObject recommendMapObject = homePageObject.getJSONObject("recommendMap");
-            HashMap<String, List<Object>> recommendMapTemp = new HashMap<>();
-            for (Object key : recommendMapObject.keySet()) {
-                JSONArray jsonObject = recommendMapObject.getJSONArray(key.toString());
-                List<Object> recommendMapObjectList = new ArrayList<>();
-                for (int i = 0; i < jsonObject.size(); i++) {
-                    JSONObject jsonObjectTemp = jsonObject.getJSONObject(i);
-                    ProjectCategoryProductModel projectCategoryProductModel = (ProjectCategoryProductModel) JSONObject.toBean(jsonObjectTemp, ProjectCategoryProductModel.class, classMap);
-                    recommendMapObjectList.add(projectCategoryProductModel);
-                }
-                recommendMapTemp.put(key.toString(), recommendMapObjectList);
-            }
-            homePage.setRecommendMap(recommendMapTemp);
-            System.out.println("redis deal end = " + System.currentTimeMillis());
-//  ----------------------------------------------------缓存判断结束，以下是正常获取数据库的数据------------------------------------------------------------
+        if (RedisApi.getDataFromCatch("homePage") != null) {
+            homePage = (HomePage) RedisApi.getDataFromCatch("homePage");
         } else {
-            System.out.println("mysql deal start = " + System.currentTimeMillis());
-
-            //判断是否有需要重定向的页面
-            //取得分类列表
-            XQuery projectCategoryxQuery = new XQuery("listProjectCategory_default", request);
-            projectCategoryxQuery.setSortHql("");
-            projectCategoryxQuery.updateHql();
-            List<Object> categoryList = baseManager.listObject(projectCategoryxQuery);
-            List<Object> recommendedCategoryList = objectRecommendedManager.getRecommendedList("categoryRecommended");
-            //店铺推荐
-//            List<Object> recommendedTenantList = objectRecommendedManager.getRecommendedList("tenantRecommended");
-            //tenant_project
-            HashMap<String, List<Object>> map = new HashMap<>();
-            HashMap<String, List<Object>> projectMap = new HashMap<>();
-            for (Object object : categoryList) {
-                //取得推荐分类下面商品
-                XQuery xQuery = new XQuery("listProjectCategoryProductModel_default", request);
-                xQuery.put("projectCategory_id", ((ProjectCategory) object).getId());
-                map.put(((ProjectCategory) object).getId(), baseManager.listObject(xQuery));
-                //首页
-                XQuery projectQuery = new XQuery("listProject_default", request);
-                projectQuery.put("projectCategory_id", ((ProjectCategory) object).getId());
-                projectQuery.setSortHql("");
-                projectQuery.updateHql();
-                projectMap.put(((ProjectCategory) object).getId(), baseManager.listObject(projectQuery));
-            }
-            homePage.setProjectMap2(projectMap);
-            homePage.setRecommendMap2(map);
-            homePage.setRecommendedCategoryList2(recommendedCategoryList);
-            //首页轮播图
-            List<Object> bannerList = bannerManager.getBannerList("ec.home.banner");
-            homePage.setBannerList(bannerList);
-            //广告区域 营销活动 热卖商品 广告区
-            XQuery marketingActivityQuery = new XQuery("listAdvertisement_default1", request);
-            XQuery hotSaleQuery = new XQuery("listAdvertisement_default3", request);
-            XQuery bannerQuery = new XQuery("listAdvertisement_default5", request);
-            List<Object> marketingActivityQueryList = baseManager.listObject(marketingActivityQuery);
-            List<Object> hotSaleList = baseManager.listObject(hotSaleQuery);
-            List<Object> bannerActivityList = baseManager.listObject(bannerQuery);
-            homePage.setMarketingActivityQueryList(marketingActivityQueryList);
-            homePage.setHotSaleList(hotSaleList);
-            homePage.setBannerActivityList(bannerActivityList);
-            //热卖商品
-            System.out.println("mysql deal end = " + System.currentTimeMillis());
-            JSONObject homePageObject = JSONObject.fromObject(homePage); //从redis里拿出来的字符串
+            String homePageStr = "";
+            boolean isRedis = false;
             try {
                 Jedis jedis = RedisApi.getPool().getResource();
-                jedis.set("homePage", homePageObject.toString());
-                jedis.set("projectMap", homePageObject.getJSONObject("projectMap").toString());
+                homePageStr = jedis.get("homePage");
                 jedis.close();
             } catch (Exception e) {
+                isRedis = false;
                 e.printStackTrace();
             }
+            if (homePageStr != null && !homePageStr.equals("")) {
+                isRedis = true;
+            } else {
+                isRedis = false;
+            }
+            if (isRedis) {
+                long start = System.currentTimeMillis();
 
+                JSONObject homePageObject = JSONObject.fromObject(homePageStr); //从redis里拿出来的字符串
+//            System.out.println(homePageStr.toString());
+                Map<String, Class> classMap = new HashMap<String, Class>();
+                classMap.put("recommendedCategoryList", ProjectCategory.class);
+                classMap.put("bannerList", Banner.class);
+                classMap.put("marketingActivityQueryList", Advertisement.class);
+                classMap.put("bannerActivityList", Advertisement.class);
+                classMap.put("hotSaleList", Advertisement.class);
+                classMap.put("productPictureList", ProductPicture.class);
+                homePage = (HomePage) JSONObject.toBean(homePageObject, HomePage.class, classMap);
+
+                JSONObject projectMapObject = homePageObject.getJSONObject("projectMap");
+                HashMap<String, List<Project>> projectMapTemp = new HashMap<>();
+                for (Object key : projectMapObject.keySet()) {
+                    JSONArray jsonObject = projectMapObject.getJSONArray(key.toString());
+                    List projectObjectList = (List) JSONArray.toCollection(jsonObject, Project.class);
+                    projectMapTemp.put(key.toString(), projectObjectList);
+                }
+                homePage.setProjectMap(projectMapTemp);
+                JSONObject recommendMapObject = homePageObject.getJSONObject("recommendMap");
+                HashMap<String, List<ProjectCategoryProductModel>> recommendMapTemp = new HashMap<>();
+                for (Object key : recommendMapObject.keySet()) {
+                    JSONArray jsonObject = recommendMapObject.getJSONArray(key.toString());
+                    List recommendMapObjectList = new ArrayList();
+                    for (int i = 0; i < jsonObject.size(); i++) {
+                        JSONObject jsonObjectTemp = jsonObject.getJSONObject(i);
+                        ProjectCategoryProductModel projectCategoryProductModel = (ProjectCategoryProductModel) JSONObject.toBean(jsonObjectTemp, ProjectCategoryProductModel.class, classMap);
+                        recommendMapObjectList.add(projectCategoryProductModel);
+                    }
+                    recommendMapTemp.put(key.toString(), recommendMapObjectList);
+                }
+                homePage.setRecommendMap(recommendMapTemp);
+                RedisApi.setDataToCatch("homePage", homePage);
+                long end = System.currentTimeMillis();
+                System.out.println(end - start);
+//            ----------------------------------------缓存判断结束，以下是正常获取数据库的数据
+            } else {
+                System.out.println("mysql deal start = " + System.currentTimeMillis());
+
+                //判断是否有需要重定向的页面
+                //取得分类列表
+                XQuery projectCategoryxQuery = new XQuery("listProjectCategory_default", request);
+                projectCategoryxQuery.setSortHql("");
+                projectCategoryxQuery.updateHql();
+                List<Object> categoryList = baseManager.listObject(projectCategoryxQuery);
+                List<ProjectCategory> recommendedCategoryList = objectRecommendedManager.getRecommendedList("categoryRecommended");
+                //店铺推荐
+                List<Object> recommendedTenantList = objectRecommendedManager.getRecommendedList("tenantRecommended");
+                //tenant_project
+                HashMap<String, List<ProjectCategoryProductModel>> map = new HashMap<>();
+                HashMap<String, List<Project>> projectMap = new HashMap<>();
+                for (Object object : categoryList) {
+                    //取得推荐分类下面商品
+                    XQuery xQuery = new XQuery("listProjectCategoryProductModel_default", request);
+                    xQuery.put("projectCategory_id", ((ProjectCategory) object).getId());
+                    map.put(((ProjectCategory) object).getId(), baseManager.listObject(xQuery));
+                    //首页
+                    XQuery projectQuery = new XQuery("listProject_default", request);
+                    projectQuery.put("projectCategory_id", ((ProjectCategory) object).getId());
+                    projectQuery.setSortHql("");
+                    projectQuery.updateHql();
+                    projectMap.put(((ProjectCategory) object).getId(), baseManager.listObject(projectQuery));
+                }
+                homePage.setProjectMap2(projectMap);
+                homePage.setRecommendMap2(map);
+                homePage.setRecommendedCategoryList2(recommendedCategoryList);
+                //首页轮播图
+                List<Banner> bannerList = bannerManager.getBannerList("ec.home.banner");
+                homePage.setBannerList(bannerList);
+                //广告区域 营销活动 热卖商品 广告区
+                XQuery marketingActivityQuery = new XQuery("listAdvertisement_default1", request);
+                XQuery hotSaleQuery = new XQuery("listAdvertisement_default3", request);
+                XQuery bannerQuery = new XQuery("listAdvertisement_default5", request);
+                List<Advertisement> marketingActivityQueryList = baseManager.listObject(marketingActivityQuery);
+                List<Advertisement> hotSaleList = baseManager.listObject(hotSaleQuery);
+                List<Advertisement> bannerActivityList = baseManager.listObject(bannerQuery);
+                homePage.setMarketingActivityQueryList(marketingActivityQueryList);
+                homePage.setHotSaleList(hotSaleList);
+                homePage.setBannerActivityList(bannerActivityList);
+                //热卖商品
+                System.out.println("mysql deal end = " + System.currentTimeMillis());
+                JSONObject homePageObject = JSONObject.fromObject(homePage); //从redis里拿出来的字符串
+                RedisApi.setDataToCatch("homePage", homePage);
+                try {
+                    Jedis jedis = RedisApi.getPool().getResource();
+                    jedis.set("homePage", homePageObject.toString());
+                    jedis.set("projectMap", homePageObject.getJSONObject("projectMap").toString());
+                    jedis.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+            }
         }
         if (homePage.getMarketingActivityQueryList() != null && homePage.getMarketingActivityQueryList().size() > 0) {
             model.addAttribute("marketingActivityQueryList", homePage.getMarketingActivityQueryList());
@@ -180,68 +215,73 @@ public class HomeController {
     @RequestMapping({"/productCategory.do"})
     public String listProductCategory(HttpServletRequest request, Model model) throws Exception {
         //取得分类列表
-        boolean isRedis;
-        String categoryListStr = "";
-        String projectMapStr = "";
-        long startTime = System.currentTimeMillis();
-        try {
-            Jedis jedis = RedisApi.getPool().getResource();
-            categoryListStr = jedis.get("categoryList");
-            projectMapStr = jedis.get("projectMap");
-            jedis.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        isRedis = categoryListStr != null && !categoryListStr.equals("") && projectMapStr != null && !projectMapStr.equals("");
-
-        if (isRedis) {
-            JSONObject projectMapObject = JSONObject.fromObject(projectMapStr);
-            HashMap<String, List<Object>> projectMapTemp = new HashMap<>();
-            for (Object key : projectMapObject.keySet()) {
-                JSONArray jsonObject = projectMapObject.getJSONArray(key.toString());
-                List<Object> projectObjectList = (List<Object>) JSONArray.toCollection(jsonObject, Project.class);
-                projectMapTemp.put(key.toString(), projectObjectList);
-            }
-
-            List<Object> projectCategoryList = (List<Object>) JSONArray.toCollection(JSONArray.fromObject(categoryListStr), ProjectCategory.class);
-
-            model.addAttribute("categoryList", projectCategoryList);
-            model.addAttribute("projectMap", projectMapTemp);
-            long endTime = System.currentTimeMillis();
-            System.out.println(endTime - startTime);
-        } else {
-            XQuery projectCategoryxQuery = new XQuery("listProjectCategory_default", request);
-            projectCategoryxQuery.setSortHql("");
-            projectCategoryxQuery.updateHql();
-            List<Object> categoryList = baseManager.listObject(projectCategoryxQuery);
-            HashMap<String, List> projectMap = new HashMap<>();
-            for (Object object : categoryList) {
-                XQuery projectQuery = new XQuery("listProject_default", request);
-                projectQuery.put("projectCategory_id", ((ProjectCategory) object).getId());
-                projectQuery.setSortHql("");
-                projectQuery.updateHql();
-                projectMap.put(((ProjectCategory) object).getId(), baseManager.listObject(projectQuery));
-            }
-            try {
-                Jedis jedis = RedisApi.getPool().getResource();
-
-                List<ProjectCategory> projectCategoryListTemp = new ArrayList<>();
-                for (Object object : categoryList) {
-                    ProjectCategory projectCategory = (ProjectCategory) object;
-                    ProjectCategory projectCategoryTemp = new ProjectCategory();
-                    projectCategoryTemp.setId(projectCategory.getId());
-                    projectCategoryTemp.setName(projectCategory.getName());
-                    projectCategoryListTemp.add(projectCategoryTemp);
-                }
-                jedis.set("categoryList", JSONArray.fromObject(projectCategoryListTemp).toString());
-                jedis.close();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+//        boolean isRedis = false;
+//        String categoryListStr = "";
+//        String projectMapStr = "";
+//        long startTime = System.currentTimeMillis();
+//        try {
+//            Jedis jedis = RedisApi.getPool().getResource();
+//            categoryListStr = jedis.get("categoryList");
+//            projectMapStr = jedis.get("projectMap");
+//            jedis.close();
+//        } catch (Exception e) {
+//            isRedis = false;
+//            e.printStackTrace();
+//        }
+//        if (categoryListStr != null && !categoryListStr.equals("") && projectMapStr != null && !projectMapStr.equals("")) {
+//            isRedis = true;
+//        } else {
+//            isRedis = false;
+//        }
+//
+//        if (isRedis) {
+//            JSONObject projectMapObject = JSONObject.fromObject(projectMapStr);
+//            HashMap<String, List<Project>> projectMapTemp = new HashMap<>();
+//            for (Object key : projectMapObject.keySet()) {
+//                JSONArray jsonObject = projectMapObject.getJSONArray(key.toString());
+//                List projectObjectList = (List) JSONArray.toCollection(jsonObject, Project.class);
+//                projectMapTemp.put(key.toString(), projectObjectList);
+//            }
+//
+//            List<ProjectCategory> projectCategoryList = (List) JSONArray.toCollection(JSONArray.fromObject(categoryListStr), ProjectCategory.class);
+//
+//            model.addAttribute("categoryList", projectCategoryList);
+//            model.addAttribute("projectMap", projectMapTemp);
+//            long endTime = System.currentTimeMillis();
+//            System.out.println(endTime - startTime);
+//        } else {
+        XQuery projectCategoryxQuery = new XQuery("listProjectCategory_default", request);
+        projectCategoryxQuery.setSortHql("");
+        projectCategoryxQuery.updateHql();
+        List<Object> categoryList = baseManager.listObject(projectCategoryxQuery);
+        HashMap<String, List> projectMap = new HashMap<>();
+        for (Object object : categoryList) {
+            XQuery projectQuery = new XQuery("listProject_default", request);
+            projectQuery.put("projectCategory_id", ((ProjectCategory) object).getId());
+            projectQuery.setSortHql("");
+            projectQuery.updateHql();
+            projectMap.put(((ProjectCategory) object).getId(), baseManager.listObject(projectQuery));
+//            }
+//            try {
+//                Jedis jedis = RedisApi.getPool().getResource();
+//
+//                List<ProjectCategory> projectCategoryListTemp = new ArrayList<>();
+//                for (Object object : categoryList) {
+//                    ProjectCategory projectCategory = (ProjectCategory) object;
+//                    ProjectCategory projectCategoryTemp = new ProjectCategory();
+//                    projectCategoryTemp.setId(projectCategory.getId());
+//                    projectCategoryTemp.setName(projectCategory.getName());
+//                    projectCategoryListTemp.add(projectCategoryTemp);
+//                }
+//                jedis.set("categoryList", JSONArray.fromObject(projectCategoryListTemp).toString());
+//                jedis.close();
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
             model.addAttribute("categoryList", categoryList);
             model.addAttribute("projectMap", projectMap);
             long endTime = System.currentTimeMillis();
-            System.out.println(endTime - startTime);
+//            System.out.println(endTime - startTime);
         }
         return "/common/productCategory";
     }
@@ -278,7 +318,7 @@ public class HomeController {
     }
 
     @RequestMapping("/401")
-    public String show401() throws Exception {
+    public String show401(HttpServletResponse response) throws Exception {
         return "redirect:/";
     }
 
