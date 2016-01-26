@@ -1,5 +1,6 @@
 package com.efeiyi.ec.website.base.controller;
 
+import com.efeiyi.ec.product.model.Advertisement;
 import com.efeiyi.ec.product.model.Product;
 import com.efeiyi.ec.product.model.ProductModel;
 import com.efeiyi.ec.product.model.ProductPicture;
@@ -12,43 +13,46 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+/**
+ * Created by Administrator on 2016/1/5 0005.
+ */
 public class HomePage {
-    private HashMap<String, List<Object>> recommendMap;
+    private HashMap<String, List<ProjectCategoryProductModel>> recommendMap;
     //        private List<Object> categoryList;
-    private List<Object> recommendedCategoryList;
-    private List<Object> bannerList;     //  ok
+    private List<ProjectCategory> recommendedCategoryList;
+    private List<Banner> bannerList;     //  ok
     //        private List<Object> masterList;
-    private List<Object> marketingActivityQueryList;
-    private List<Object> hotSaleList;
-    private List<Object> bannerActivityList;
-    private HashMap<String, List<Object>> projectMap;
+    private List<Advertisement> marketingActivityQueryList;
+    private List<Advertisement> hotSaleList;
+    private List<Advertisement> bannerActivityList;
+    private HashMap<String, List<Project>> projectMap;
 //        private List<Object> recommendedTenantList;
 
-    public HomePage() {
+    public HomePage(){
 
     }
 
-    public HashMap<String, List<Object>> getRecommendMap() {
+    public HashMap<String, List<ProjectCategoryProductModel>> getRecommendMap() {
         return recommendMap;
     }
 
-    public void setRecommendMap(HashMap<String, List<Object>> recommendMap) {
+    public void setRecommendMap(HashMap<String, List<ProjectCategoryProductModel>> recommendMap) {
         this.recommendMap = recommendMap;
     }
 
-    public void setRecommendedCategoryList(List<Object> recommendedCategoryList) {
+    public void setRecommendedCategoryList(List<ProjectCategory> recommendedCategoryList) {
         this.recommendedCategoryList = recommendedCategoryList;
     }
 
-    public void setProjectMap(HashMap<String, List<Object>> projectMap) {
+    public void setProjectMap(HashMap<String, List<Project>> projectMap) {
         this.projectMap = projectMap;
     }
 
-    public void setRecommendMap2(HashMap<String, List<Object>> recommendMap) {
-        HashMap<String, List<Object>> recommendMapTemp = new HashMap<>();
+    public void setRecommendMap2(HashMap<String, List<ProjectCategoryProductModel>> recommendMap) {
+        HashMap<String, List<ProjectCategoryProductModel>> recommendMapTemp = new HashMap<>();
         for (String key : recommendMap.keySet()) {
-            List<Object> projectCategoryProductModelList = recommendMap.get(key);
-            List<Object> projectCategoryProductModelListTemp = new ArrayList<>();
+            List<ProjectCategoryProductModel> projectCategoryProductModelList = recommendMap.get(key);
+            List<ProjectCategoryProductModel> projectCategoryProductModelListTemp = new ArrayList<>();
             for (Object product : projectCategoryProductModelList) {
                 ProjectCategoryProductModel projectCategoryProductModel = ((ProjectCategoryProductModel) product);
                 ProjectCategoryProductModel projectCategoryProductModelTemp = new ProjectCategoryProductModel();
@@ -74,13 +78,13 @@ public class HomePage {
         this.recommendMap = recommendMapTemp;
     }
 
-    public List<Object> getRecommendedCategoryList() {
+    public List<ProjectCategory> getRecommendedCategoryList() {
         return recommendedCategoryList;
     }
 
-    public void setRecommendedCategoryList2(List<Object> recommendedCategoryList) {
+    public void setRecommendedCategoryList2(List<ProjectCategory> recommendedCategoryList) {
 
-        List<Object> recommendedCategoryListTemp = new ArrayList<>();
+        List<ProjectCategory> recommendedCategoryListTemp = new ArrayList<>();
         for (Object object : recommendedCategoryList) {
             ProjectCategory projectCategory = (ProjectCategory) object;
             ProjectCategory projectCategoryTemp = new ProjectCategory();
@@ -93,53 +97,52 @@ public class HomePage {
         this.recommendedCategoryList = recommendedCategoryListTemp;
     }
 
-    public List<Object> getBannerList() {
+    public List<Banner> getBannerList() {
         return bannerList;
     }
 
-    public void setBannerList(List<Object> bannerList) {
+    public void setBannerList(List<Banner> bannerList) {
         this.bannerList = bannerList;
     }
 
 
-    public List<Object> getMarketingActivityQueryList() {
+    public List<Advertisement> getMarketingActivityQueryList() {
         return marketingActivityQueryList;
     }
 
-    public void setMarketingActivityQueryList(List<Object> marketingActivityQueryList) {
+    public void setMarketingActivityQueryList(List<Advertisement> marketingActivityQueryList) {
         this.marketingActivityQueryList = marketingActivityQueryList;
     }
 
-    public List<Object> getHotSaleList() {
+    public List<Advertisement> getHotSaleList() {
         return hotSaleList;
     }
 
-    public void setHotSaleList(List<Object> hotSaleList) {
+    public void setHotSaleList(List<Advertisement> hotSaleList) {
         this.hotSaleList = hotSaleList;
     }
 
-    public List<Object> getBannerActivityList() {
+    public List<Advertisement> getBannerActivityList() {
         return bannerActivityList;
     }
 
-    public void setBannerActivityList(List<Object> bannerActivityList) {
+    public void setBannerActivityList(List<Advertisement> bannerActivityList) {
         this.bannerActivityList = bannerActivityList;
     }
 
-    public HashMap<String, List<Object>> getProjectMap() {
+    public HashMap<String, List<Project>> getProjectMap() {
         return projectMap;
     }
 
-    public void setProjectMap2(HashMap<String, List<Object>> projectMap) {
-        HashMap<String, List<Object>> projectMapTemp = new HashMap<>();
+    public void setProjectMap2(HashMap<String, List<Project>> projectMap) {
+        HashMap<String, List<Project>> projectMapTemp = new HashMap<>();
         for (String key : projectMap.keySet()) {
-            List<Object> projectList = projectMap.get(key);
-            List<Object> projectListTemp = new ArrayList<>();
-            for (Object projectTemp : projectList) {
-                Project temp = (Project) projectTemp;
+            List<Project> projectList = projectMap.get(key);
+            List<Project> projectListTemp = new ArrayList<>();
+            for (Project projectTemp : projectList) {
                 Project project = new Project();
-                project.setId(temp.getId());
-                project.setName(temp.getName());
+                project.setId(projectTemp.getId());
+                project.setName(projectTemp.getName());
                 projectListTemp.add(project);
             }
             projectMapTemp.put(key, projectListTemp);

@@ -25,7 +25,7 @@ public interface ObjectRecommendedManager {
      * @return
      * @throws Exception
      */
-    List<Object> getRecommendedList(String group) throws Exception;
+    List getRecommendedList(String group) throws Exception;
 
     /**
      * 保存推荐对象
