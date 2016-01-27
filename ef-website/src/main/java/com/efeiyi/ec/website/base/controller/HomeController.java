@@ -108,6 +108,7 @@ public class HomeController {
                 projectQuery.updateHql();
                 projectMap.put(((ProjectCategory) object).getId(), baseManager.listObject(projectQuery));
             }
+            homePage.setCategoryList(categoryList);
             homePage.setProjectMap2(projectMap);
             homePage.setRecommendMap2(map);
             homePage.setRecommendedCategoryList2(recommendedCategoryList);
@@ -126,16 +127,16 @@ public class HomeController {
             homePage.setBannerActivityList(bannerActivityList);
             //热卖商品
             System.out.println("mysql deal end = " + System.currentTimeMillis());
-            JSONObject homePageObject = JSONObject.fromObject(homePage); //从redis里拿出来的字符串
+//            JSONObject homePageObject = JSONObject.fromObject(homePage); //从redis里拿出来的字符串
             RedisApi.setDataToCatch("homePage", homePage);
-            try {
-                Jedis jedis = RedisApi.getPool().getResource();
-                jedis.set("homePage", homePageObject.toString());
-                jedis.set("projectMap", homePageObject.getJSONObject("projectMap").toString());
-                jedis.close();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+//            try {
+//                Jedis jedis = RedisApi.getPool().getResource();
+//                jedis.set("homePage", homePageObject.toString());
+//                jedis.set("projectMap", homePageObject.getJSONObject("projectMap").toString());
+//                jedis.close();
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
         }
         if (homePage.getMarketingActivityQueryList() != null && homePage.getMarketingActivityQueryList().size() > 0) {
             model.addAttribute("marketingActivityQueryList", homePage.getMarketingActivityQueryList());
@@ -193,39 +194,32 @@ public class HomeController {
 //            long endTime = System.currentTimeMillis();
 //            System.out.println(endTime - startTime);
 //        } else {
-        XQuery projectCategoryxQuery = new XQuery("listProjectCategory_default", request);
-        projectCategoryxQuery.setSortHql("");
-        projectCategoryxQuery.updateHql();
-        List<Object> categoryList = baseManager.listObject(projectCategoryxQuery);
-        HashMap<String, List> projectMap = new HashMap<>();
-        for (Object object : categoryList) {
-            XQuery projectQuery = new XQuery("listProject_default", request);
-            projectQuery.put("projectCategory_id", ((ProjectCategory) object).getId());
-            projectQuery.setSortHql("");
-            projectQuery.updateHql();
-            projectMap.put(((ProjectCategory) object).getId(), baseManager.listObject(projectQuery));
-//            }
-//            try {
-//                Jedis jedis = RedisApi.getPool().getResource();
-//
-//                List<ProjectCategory> projectCategoryListTemp = new ArrayList<>();
-//                for (Object object : categoryList) {
-//                    ProjectCategory projectCategory = (ProjectCategory) object;
-//                    ProjectCategory projectCategoryTemp = new ProjectCategory();
-//                    projectCategoryTemp.setId(projectCategory.getId());
-//                    projectCategoryTemp.setName(projectCategory.getName());
-//                    projectCategoryListTemp.add(projectCategoryTemp);
-//                }
-//                jedis.set("categoryList", JSONArray.fromObject(projectCategoryListTemp).toString());
-//                jedis.close();
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
-            model.addAttribute("categoryList", categoryList);
-            model.addAttribute("projectMap", projectMap);
-            long endTime = System.currentTimeMillis();
+        HomePage homePage;
+        if (RedisApi.getDataFromCatch("homePage") != null) {
+            homePage = (HomePage) RedisApi.getDataFromCatch("homePage");
+        } else {
+            System.out.println("mysql deal start = " + System.currentTimeMillis());
+            homePage = new HomePage();
+            XQuery projectCategoryxQuery = new XQuery("listProjectCategory_default", request);
+            projectCategoryxQuery.setSortHql("");
+            projectCategoryxQuery.updateHql();
+            List<Object> categoryList = baseManager.listObject(projectCategoryxQuery);
+            HashMap<String, List<Project>> projectMap = new HashMap<>();
+            for (Object object : categoryList) {
+                XQuery projectQuery = new XQuery("listProject_default", request);
+                projectQuery.put("projectCategory_id", ((ProjectCategory) object).getId());
+                projectQuery.setSortHql("");
+                projectQuery.updateHql();
+                projectMap.put(((ProjectCategory) object).getId(), baseManager.listObject(projectQuery));
+
+                long endTime = System.currentTimeMillis();
 //            System.out.println(endTime - startTime);
+            }
+            homePage.setCategoryList(categoryList);
+            homePage.setProjectMap(projectMap);
         }
+        model.addAttribute("categoryList", homePage.getCategoryList());
+        model.addAttribute("projectMap", homePage.getProjectMap());
         return "/common/productCategory";
     }
 

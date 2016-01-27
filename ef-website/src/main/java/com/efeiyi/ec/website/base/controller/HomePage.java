@@ -18,7 +18,7 @@ import java.util.List;
  */
 public class HomePage {
     private HashMap<String, List<ProjectCategoryProductModel>> recommendMap;
-    //        private List<Object> categoryList;
+    private List<Object> categoryList;
     private List<ProjectCategory> recommendedCategoryList;
     private List<Banner> bannerList;     //  ok
     //        private List<Object> masterList;
@@ -28,8 +28,16 @@ public class HomePage {
     private HashMap<String, List<Project>> projectMap;
 //        private List<Object> recommendedTenantList;
 
-    public HomePage(){
+    public HomePage() {
 
+    }
+
+    public List<Object> getCategoryList() {
+        return categoryList;
+    }
+
+    public void setCategoryList(List<Object> categoryList) {
+        this.categoryList = categoryList;
     }
 
     public HashMap<String, List<ProjectCategoryProductModel>> getRecommendMap() {
