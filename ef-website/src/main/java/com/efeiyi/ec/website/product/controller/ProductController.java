@@ -3,6 +3,7 @@ package com.efeiyi.ec.website.product.controller;
 import com.efeiyi.ec.organization.model.MyUser;
 import com.efeiyi.ec.product.model.*;
 import com.efeiyi.ec.project.model.Project;
+import com.efeiyi.ec.project.model.ProjectCategory;
 import com.efeiyi.ec.purchase.model.Cart;
 import com.efeiyi.ec.purchase.model.PurchaseOrder;
 import com.efeiyi.ec.purchase.model.PurchaseOrderProduct;
@@ -10,6 +11,7 @@ import com.efeiyi.ec.website.organization.util.AuthorizationUtil;
 import com.ming800.core.base.service.BaseManager;
 import com.ming800.core.does.model.XQuery;
 import com.ming800.core.does.model.XSaveOrUpdate;
+import com.ming800.core.taglib.PageEntity;
 import org.jboss.marshalling.util.BooleanReadField;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -282,5 +284,22 @@ public class ProductController {
 
         }
         return flag;
+    }
+
+
+    /**
+     * 根据projectId取推荐商品
+     * @param request
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping({"/recommend/listProductModel.do"})
+    @ResponseBody
+    public List<Object> listProjectProduct(HttpServletRequest request) throws Exception{
+        String projectId = request.getParameter("projectId");
+        XQuery xQuery = new XQuery("listProductModel_projectIdRecommend",request);
+        xQuery.put("product_project_id",projectId);
+        List<Object> productModelList = baseManager.listObject(xQuery);
+        return productModelList;
     }
 }
