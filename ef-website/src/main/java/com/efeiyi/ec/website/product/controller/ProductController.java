@@ -1,5 +1,6 @@
 package com.efeiyi.ec.website.product.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.efeiyi.ec.organization.model.MyUser;
 import com.efeiyi.ec.product.model.*;
 import com.efeiyi.ec.project.model.Project;
@@ -12,6 +13,8 @@ import com.ming800.core.base.service.BaseManager;
 import com.ming800.core.does.model.XQuery;
 import com.ming800.core.does.model.XSaveOrUpdate;
 import com.ming800.core.taglib.PageEntity;
+import net.sf.json.JSONObject;
+import org.glassfish.jersey.server.JSONP;
 import org.jboss.marshalling.util.BooleanReadField;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,6 +26,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.*;
 
 /**
@@ -294,12 +298,16 @@ public class ProductController {
      * @throws Exception
      */
     @RequestMapping({"/recommend/listProductModel.do"})
-    @ResponseBody
-    public List<Object> listProjectProduct(HttpServletRequest request) throws Exception{
+    public void listProjectProduct(HttpServletRequest request,HttpServletResponse response) throws Exception{
+        response.setContentType("text/html");
+        response.setHeader("Pragma", "No-cache");
+        response.setHeader("Cache-Control", "no-cache");
         String projectId = request.getParameter("projectId");
+        String jsonpcallback = request.getParameter("jsonpcallback");
         XQuery xQuery = new XQuery("listProductModel_projectIdRecommend",request);
         xQuery.put("product_project_id",projectId);
         List<Object> productModelList = baseManager.listObject(xQuery);
-        return productModelList;
+        String renderStr = jsonpcallback + "("+JSON.toJSONString(productModelList)+")";
+        response.getWriter().write(renderStr);
     }
 }
