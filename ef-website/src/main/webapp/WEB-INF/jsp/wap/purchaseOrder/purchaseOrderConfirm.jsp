@@ -196,9 +196,9 @@
 </div>
 <!--Start--弹出地址-->
 <div id="order-address" class="alert-delete or-address" style="display:none;">
-    <div class="bd cart-address">
-        <div class="bd list-adress" id="list-order">
-            <ul class="ul-list" id="address">
+    <div class="bd cart-address" style="height:500px;  top:35%">
+        <div class="bd list-adress" id="list-order" style="height:100%">
+            <ul class="ul-list" id="address" style="height: 90%;">
                 <c:forEach items="${addressList}" var="address">
 
                     <li class="cart-btn acd"
@@ -219,14 +219,14 @@
             </div>
         </div>
         <div class="bd list-adress" id="adddiv" style="display: none;">
-            <div class="pop-up" style="position: relative">
+            <div class="pop-up" style="position: relative;height:100%">
                 <a class="add-ress-icon" href="#" onclick="closeAll()"></a>
 
                 <div class="pop-h">新增收货人信息
                     <i class="clase" title="关闭"></i>
                 </div>
                 <div class="m-form">
-                    <form id="newAddress" style="height:276px;overflow-y:scroll" method="post"
+                    <form id="newAddress" style="height: 100%;overflow-y:scroll" method="post"
                           class="am-form">
 
                         <input type="hidden" name="productModel" value="${productModel.id}">
