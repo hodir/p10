@@ -223,10 +223,11 @@
                 <c:if test="${order.orderStatus == 7}">
                   <td class="rowspan" width="139" rowspan='2' style="border-left:1px solid #ccc;border-right:1px solid #ccc">
                     <p><a href="<c:url value="/order/myEfeiyi/view/${order.id}"/>">查看</a></p>
-
+                      <c:if test="${order.orderType != 3}">
                     <p><a href="#" onclick="showConfirm('提示','是否确定收货',function(){
                             window.location.href='<c:url value="/order/confirmGet/${order.id}"/>';
                             })">确定收货</a></p>
+                      </c:if>
                   </td>
                 </c:if>
 
@@ -254,7 +255,7 @@
         <c:if test="${order.orderStatus!=1 && order.orderStatus!=17}">
           <c:if test="${order.subPurchaseOrder!=null || order.subPurchaseOrder.size()>0}">
             <c:forEach items="${order.subPurchaseOrder}" var="spList">
-
+              <c:if test="${spList.orderStatus!=17}">
               <table class="list-pro-table">
                 <tr>
                   <th colspan="6">
@@ -324,10 +325,11 @@
                   <c:if test="${spList.orderStatus == 7}">
                     <td class="rowspan" width="139" rowspan='2' style="border-left:1px solid #ccc;border-right:1px solid #ccc">
                       <p><a href="<c:url value="/order/myEfeiyi/view/${spList.id}"/>">查看</a></p>
-
+                      <c:if test="${spList.orderType != 3}">
                       <p><a href="#" onclick="showConfirm('提示','是否确定收货',function(){
                               window.location.href='<c:url value="/order/confirmGet/${spList.id}"/>';
                               })">确定收货</a></p>
+                      </c:if>
                     </td>
                   </c:if>
 
@@ -349,6 +351,7 @@
                   </c:if>
                 </tr>
               </table>
+              </c:if>
             </c:forEach>
           </c:if>
         </c:if>

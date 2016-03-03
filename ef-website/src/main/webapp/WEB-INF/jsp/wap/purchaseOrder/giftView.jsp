@@ -35,10 +35,10 @@
         <div class="btb"><h5>礼物卡片</h5></div>
         <div class="pic-page ae">
             <div class="pic-img">
-                <c:if test="${purchaseOrderGift.showGiftNameStatus=='1'}">
+                <c:if test="${purchaseOrder.showGiftNameStatus=='1'}">
                 <a href="<c:url value="/product/productModel/${purchaseOrder.purchaseOrderProductList.get(0).productModel.id}"/>">
                     </c:if>
-                    <c:if test="${purchaseOrderGift.showGiftNameStatus=='0'}">
+                    <c:if test="${purchaseOrder.showGiftNameStatus=='0'}">
                     <a>
                         </c:if>
                         <img
@@ -48,11 +48,11 @@
             </div>
             <div class="pic-text">
                 <p>
-                    <c:if test="${purchaseOrderGift.showGiftNameStatus=='1'}">
+                    <c:if test="${purchaseOrder.showGiftNameStatus=='1'}">
                     <a href="<c:url value="/product/productModel/${purchaseOrder.purchaseOrderProductList.get(0).productModel.id}"/>"
                        style="color: #000">
                         </c:if>
-                        <c:if test="${purchaseOrderGift.showGiftNameStatus=='0'}">
+                        <c:if test="${purchaseOrder.showGiftNameStatus=='0'}">
                         <a style="color: #000">
                             </c:if>
                             ${purchaseOrder.purchaseOrderProductList.get(0).productModel.product.name}</a></p>
@@ -132,7 +132,7 @@
     <div class="login-reg">
         <a href="<c:url value="/sso.do"/>" class="btn-login" title="登录">登&nbsp;&nbsp;&nbsp;&nbsp;录</a>
         <a id="signin"
-           href="http://passport.efeiyi.com/register?service=http://www.efeiyi.com/sso.do?registeSuccess=/registerSuccess.do"
+           href="http://passport.efeiyi.com/register?service=http://www.efeiyi.com/sso.do?registeSuccess=/createCoupon.do"
            class="btn-reg"
            onclick="register()">注&nbsp;&nbsp;&nbsp;&nbsp;册</a>
     </div>

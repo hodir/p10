@@ -51,10 +51,6 @@
             <span><i class="newicon"></i></span>
             <span>礼&nbsp;品</span>
         </a>
-        <a class="item gift-bag" href="http://www.efeiyi.com/subject/iibegant1zwnlnby">
-            <span><i class="newicon"></i></span>
-            <span class="red-col">春节大礼包</span>
-        </a>
         <!--<a class="item user" href="#user">-->
         <!--<span><i class="newicon"></i></span>-->
         <!--<span>大&nbsp;师</span>-->
@@ -70,7 +66,7 @@
         <ul class="list-top">
             <c:if test="${not empty marketingActivityQueryList&&fn:length(marketingActivityQueryList)>0}">
                 <c:forEach items="${marketingActivityQueryList}" var="marketingActivity">
-                    <li><a href="${marketingActivity.redirect}"><img src="http://pro.efeiyi.com/${marketingActivity.img}"></a></li>
+                    <li><a href="${marketingActivity.redirect}"><img src="http://pro.efeiyi.com/${marketingActivity.img}@!home-activity-picture"></a></li>
                 </c:forEach>
             </c:if>
         </ul>
@@ -81,7 +77,7 @@
                     <li>
                         <a href="${hotSale.redirect}">
                             <em>${hotSale.name}</em>
-                            <img src="http://pro.efeiyi.com/${hotSale.img}">
+                            <img src="http://pro.efeiyi.com/${hotSale.img}@!home-hot-picture">
                         </a>
                         <span class="price"><i>￥</i><strong>${hotSale.price}</strong></span>
                         <span class="heat"><font>热卖</font></span>
@@ -106,7 +102,7 @@
                     <li>
                         <a href="<c:url value="/product/hot/${projectCategoryProductModel.productModel.id}"/>">
                             <em>${projectCategoryProductModel.productModel.product.name}</em>
-                            <img src="http://pro.efeiyi.com/${projectCategoryProductModel.productModel.product.getProductPicture().pictureUrl}">
+                            <img src="http://pro.efeiyi.com/${projectCategoryProductModel.productModel.product.getProductPicture().pictureUrl}@!home-project-picture">
                         </a>
                         <span class="price"><i>￥</i><strong>${projectCategoryProductModel.productModel.price.intValue()}</strong></span>
                     </li>
@@ -117,7 +113,11 @@
     <!--//End--一个max-cat-->
 </article>
 <!--//End--newcustom-->
-
+<style type="text/css">
+    .newcustom .toolbar .item {
+        width: 36%;
+    }
+</style>
 </body>
 </html>
 </body>

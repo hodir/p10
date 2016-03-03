@@ -65,7 +65,8 @@
 
             <div class="btb"><h5>礼物详情</h5></div>
             <div class="chandise ae">
-                <div class="cha-pic"><img src="http://pro.efeiyi.com/${productModel.productModel_url}" height="90px"></div>
+                <div class="cha-pic"><img src="http://pro.efeiyi.com/${productModel.productModel_url}" height="90px">
+                </div>
                 <div class="cha-box">
                     <c:if test="${productModel.product.productModelList.size()==1}">
                         <strong>${productModel.name}</strong>
@@ -354,6 +355,7 @@
         });
     })
     function yhq() {
+        $("#order-total").hide();
         var couponid = null;
         $("input:radio").each(function () {
             if (this.checked) {
@@ -378,12 +380,11 @@
                     for (var i = 0; i < chkobjs.length; i++) {
                         if (chkobjs[i].checked) {
                             t_price = t_price - parseFloat(chkobjs[i].value);
-                            $("#couponPrice").html("<em>-￥</em>"+chkobjs[i].value);
+                            $("#couponPrice").html("<em>-￥</em>" + chkobjs[i].value);
                         }
                     }
                     $("#change").text(t_price);
-                    $("#order-total").hide();
-                    $("body").css("overflow","scroll")
+                    $("body").css("overflow", "scroll")
                 }
             },
 

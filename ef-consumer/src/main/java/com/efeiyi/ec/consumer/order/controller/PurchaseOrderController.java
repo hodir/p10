@@ -182,6 +182,13 @@ public class PurchaseOrderController {
     @RequestMapping({"/deleteOrder/{orderId}"})
     public String deleteOrder(@PathVariable String orderId) {
        PurchaseOrder purchaseOrder = (PurchaseOrder) baseManager.getObject(PurchaseOrder.class.getName(), orderId);
+        if(purchaseOrder.getSubPurchaseOrder()!=null && purchaseOrder.getSubPurchaseOrder().size()>0){
+            for(PurchaseOrder subPurchaseOrder:purchaseOrder.getSubPurchaseOrder()){
+                subPurchaseOrder.setStatus("0");
+                baseManager.saveOrUpdate(PurchaseOrder.class.getName(),subPurchaseOrder);
+
+            }
+        }
         purchaseOrder.setStatus("0");
         baseManager.saveOrUpdate(PurchaseOrder.class.getName(),purchaseOrder);
 

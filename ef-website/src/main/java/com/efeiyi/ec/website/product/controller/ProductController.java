@@ -1,8 +1,10 @@
 package com.efeiyi.ec.website.product.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.efeiyi.ec.organization.model.MyUser;
 import com.efeiyi.ec.product.model.*;
 import com.efeiyi.ec.project.model.Project;
+import com.efeiyi.ec.project.model.ProjectCategory;
 import com.efeiyi.ec.purchase.model.Cart;
 import com.efeiyi.ec.purchase.model.PurchaseOrder;
 import com.efeiyi.ec.purchase.model.PurchaseOrderProduct;
@@ -10,6 +12,9 @@ import com.efeiyi.ec.website.organization.util.AuthorizationUtil;
 import com.ming800.core.base.service.BaseManager;
 import com.ming800.core.does.model.XQuery;
 import com.ming800.core.does.model.XSaveOrUpdate;
+import com.ming800.core.taglib.PageEntity;
+import net.sf.json.JSONObject;
+import org.glassfish.jersey.server.JSONP;
 import org.jboss.marshalling.util.BooleanReadField;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,6 +26,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.*;
 
 /**
@@ -99,8 +105,6 @@ public class ProductController {
             }
         }
         Project project  = (Project)baseManager.getObject(Project.class.getName(),projectId);
-        String proName = project.getName();
-        model.addAttribute("proName",proName);
         model.addAttribute("project",project);
         model.addAttribute("map",map);
         model.addAttribute("str",str);
@@ -212,8 +216,8 @@ public class ProductController {
     @RequestMapping({"/productModel/{productModelId}"})
     public String productDetalis(@PathVariable String productModelId, HttpServletRequest request, Model model) throws Exception {
         ProductModel productModel = (ProductModel) baseManager.getObject(ProductModel.class.getName(), productModelId);
-        productModel.setPopularityAmount(productModel.getAmount()+1);
-        baseManager.saveOrUpdate(ProductModel.class.getName(),productModel);
+        productModel.setPopularityAmount(productModel.getPopularityAmount()==null?1:productModel.getPopularityAmount()+1);
+        baseManager.saveOrUpdate(ProductModel.class.getName(), productModel);
         Product product = productModel.getProduct();
         Project project = product.getProject();
         XQuery purchaseOrderProductQuery = new XQuery("listPurchaseOrderProduct_default",request);
@@ -276,10 +280,33 @@ public class ProductController {
             xQuery.put("user_id", currentUser.getId());
             xQuery.put("productModel_id", productModelId);
             List<ProductFavorite> productFavoriteList =  baseManager.listObject(xQuery);
-            if(productFavoriteList!=null&&"1".equals(productFavoriteList.get(0).getStatus())){
-                flag = true;
+            if(productFavoriteList!=null&&productFavoriteList.size()>0){
+                if("1".equals(productFavoriteList.get(0).getStatus())){
+                    flag = true;
+                }
             }
+
         }
         return flag;
+    }
+
+
+    /**
+     * 根据projectId取推荐商品
+     * @param request
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping({"/recommend/listProductModel.do"})
+    public void listProjectProduct(HttpServletRequest request,HttpServletResponse response) throws Exception{
+        response.setContentType("application/JavaScript");
+        response.addHeader("Access-Control-Allow-Origin","*");
+        String projectId = request.getParameter("projectId");
+        String jsonpcallback = request.getParameter("jsonpcallback");
+        XQuery xQuery = new XQuery("listProductModel_projectIdRecommend",request);
+        xQuery.put("product_project_id",projectId);
+        List<Object> productModelList = baseManager.listObject(xQuery);
+        String renderStr = jsonpcallback + "("+JSON.toJSONString(productModelList)+")";
+        response.getWriter().write(renderStr);
     }
 }

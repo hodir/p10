@@ -144,8 +144,7 @@
                         </dt>
                         <dd>
                           <input type="button" class="btn" value="评&nbsp&nbsp&nbsp&nbsp价" onclick="comment(this)">
-                                 <span style="margin-left: 44px;font-size: 12px;">
-                                 <input type="checkbox" class="btn" value="评&nbsp&nbsp&nbsp&nbsp价">匿名评价</span>
+
                         </dd>
                       </dl>
                     </li>

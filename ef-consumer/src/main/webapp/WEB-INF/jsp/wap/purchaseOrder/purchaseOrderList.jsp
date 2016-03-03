@@ -101,7 +101,7 @@
 				</div>
 			</c:if>
 
-			<c:if test="${purchaseOrder.orderStatus!=1}">
+			<c:if test="${purchaseOrder.orderStatus!=1 && purchaseOrder.orderStatus!=17}">
 				<c:if test="${purchaseOrder.subPurchaseOrder==null || purchaseOrder.subPurchaseOrder.size()==0}">
 					<div class="order-section ae">
 						<div class="shop-name"><span>${purchaseOrder.tenant.name}</span>
@@ -147,7 +147,7 @@
 								<c:when test="${purchaseOrder.orderStatus == '5'}">
 									<a href="<c:url value="/order/myEfeiyi/view/${purchaseOrder.id}"/>">查看详情</a>
 								</c:when>
-								<c:when test="${purchaseOrder.orderStatus == '7'}">
+								<c:when test="${purchaseOrder.orderStatus == '7' && purchaseOrder.orderType != '3' }">
 									<a href="<c:url value="/order/myEfeiyi/view/${purchaseOrder.id}"/>">查看物流</a>
 									<a href="#" onclick="showConfirm('提示','是否确定收货',function(){
 											window.location.href='<c:url
@@ -180,9 +180,10 @@
 					</div>
 				</c:if>
 			</c:if>
-			<c:if test="${purchaseOrder.orderStatus!=1}">
+			<c:if test="${purchaseOrder.orderStatus!=1 && purchaseOrder.orderStatus!=17}">
 				<c:if test="${purchaseOrder.subPurchaseOrder != null || purchaseOrder.subPurchaseOrder.size()>0 }">
 					<c:forEach items="${purchaseOrder.subPurchaseOrder}" var="spList">
+						<c:if test="${spList.orderStatus!=17}">
 						<div class="order-section ae">
 							<div class="shop-name"><span>${spList.tenant.name}</span>
 					<span><ming800:status name="orderStatus" dataType="PurchaseOrder.orderStatus"
@@ -228,7 +229,7 @@
 									<c:when test="${spList.orderStatus == '5'}">
 										<a href="<c:url value="/order/myEfeiyi/view/${spList.id}"/>">查看详情</a>
 									</c:when>
-									<c:when test="${spList.orderStatus == '7'}">
+									<c:when test="${spList.orderStatus == '7' && spList.orderType != '3' }">
 										<a href="<c:url value="/order/myEfeiyi/view/${spList.id}"/>">查看物流</a>
 										<a href="#" onclick="showConfirm('提示','是否确定收货',function(){
 												window.location.href='<c:url value="/order/confirmGet/${spList.id}"/>';
@@ -258,6 +259,7 @@
 								</c:choose>
 							</div>
 						</div>
+						</c:if>
 					</c:forEach>
 
 				</c:if>

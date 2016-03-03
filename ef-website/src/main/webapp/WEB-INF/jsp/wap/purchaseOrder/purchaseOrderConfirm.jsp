@@ -101,12 +101,12 @@
                                     <c:if test="${product.productModel.product.productModelList.size()>1}">
                                         [${product.productModel.name}]
                                     </c:if>
-                                    <%--<c:if test="${product.productModel.productPropertyValueList.size()>1}">--%>
+                                        <%--<c:if test="${product.productModel.productPropertyValueList.size()>1}">--%>
                                         <%--[--%>
                                         <%--<c:forEach items="${product.productModel.productPropertyValueList}"--%>
-                                                   <%--var="ppv">${ppv.projectPropertyValue.value}</c:forEach>--%>
+                                        <%--var="ppv">${ppv.projectPropertyValue.value}</c:forEach>--%>
                                         <%--]--%>
-                                    <%--</c:if>--%>
+                                        <%--</c:if>--%>
                                 </p>
 
                                 <p class="price"><em>￥</em><span>${product.purchasePrice}</span></p>
@@ -173,7 +173,7 @@
                     </div>
                     <span class="add-zfb"></span>
                 </a></li>
-                <li class="add-btn1"  id="weixin">
+                <li class="add-btn1" id="weixin">
                     <a href="#微信支付" onclick="weixin(this)" title="微信支付">
                         <i class="icon icon-wechat"></i>
 
@@ -188,7 +188,7 @@
             </ul>
         </div>
         <div class="bd payment-total-bar newpayment-total-bar">
-            <span class="txt" >总金额<span id="change">${purchaseOrder.total}</span>元</span>
+            <span class="txt">总金额<span id="change">${purchaseOrder.total}</span>元</span>
             <a href="#btn-right" class="btn-right btn-red" onclick="submitOrder('${purchaseOrder.id}')">结&nbsp;算</a>
         </div>
 
@@ -196,9 +196,9 @@
 </div>
 <!--Start--弹出地址-->
 <div id="order-address" class="alert-delete or-address" style="display:none;">
-    <div class="bd cart-address">
-        <div class="bd list-adress" id="list-order">
-            <ul class="ul-list" id="address">
+    <div class="bd cart-address" style="height:500px;  top:35%">
+        <div class="bd list-adress" id="list-order" style="height:100%">
+            <ul class="ul-list" id="address" style="height: 90%;">
                 <c:forEach items="${addressList}" var="address">
 
                     <li class="cart-btn acd"
@@ -219,14 +219,14 @@
             </div>
         </div>
         <div class="bd list-adress" id="adddiv" style="display: none;">
-            <div class="pop-up" style="position: relative">
+            <div class="pop-up" style="position: relative;height:100%">
                 <a class="add-ress-icon" href="#" onclick="closeAll()"></a>
 
                 <div class="pop-h">新增收货人信息
                     <i class="clase" title="关闭"></i>
                 </div>
                 <div class="m-form">
-                    <form id="newAddress" style="height:276px;overflow-y:scroll" method="post"
+                    <form id="newAddress" style="height: 100%;overflow-y:scroll" method="post"
                           class="am-form">
 
                         <input type="hidden" name="productModel" value="${productModel.id}">
@@ -260,7 +260,9 @@
                         <label></label>
 
                         <p>
-                            <button onclick="submitNewAddress()" type="button" class="am-btn am-btn-default add-btn">保存收货人信息</button>
+                            <button onclick="submitNewAddress()" type="button" class="am-btn am-btn-default add-btn">
+                                保存收货人信息
+                            </button>
                             <input type="reset" id="reset" style="display: none">
                         </p>
                         <span id="ts" style="border: 0"></span>
@@ -275,19 +277,19 @@
 <!--//End--弹出地址-->
 <!--Start--弹出地址-->
 <div id="order-total" class="alert-delete yhq" style="display:none;">
-    <div class="bd cart-coupons addtop"<%-- style="position: fixed;--%>">
-        <div class="title">
-            <h2>优惠券</h2>
-        </div>
-        <!--//ENd-->
-        <ul class="ul-list" id="ul-list">
-        </ul>
-
-        <div class="bd add-new-btn">
-            <a onclick="yhq();" class="cart-btn" id="yhq-btn" title="确定">确定</a>
-        </div>
+    <div class="bd cart-coupons addtop">
+    <div class="title">
+        <h2>优惠券</h2>
     </div>
-    <div class="overbg"></div>
+    <!--//ENd-->
+    <ul class="ul-list" id="ul-list">
+    </ul>
+
+    <div class="bd add-new-btn">
+        <a onclick="yhq();" class="cart-btn" id="yhq-btn" title="确定">确定</a>
+    </div>
+</div>
+<div class="overbg"></div>
 </div>
 
 <script>
@@ -298,7 +300,7 @@
 
     $(function () {
 
-        $("#yhq").click(function(){
+        $("#yhq").click(function () {
             $("#order-total").show();
 
         });
@@ -339,10 +341,10 @@
                             out += '<p>适用范围：单品专用</p> </li>';
                         }
                     }
-                   /* for (var i = 0; i < data.length; i++) {
-                        out += '<li>' + '<input type="radio" name="radio"' + 'value="' + data[i]["couponBatch"]["price"] + '"' + 'id="cbox' + data[i]["id"] + '">' + '<p>满' + data[i]["couponBatch"]["priceLimit"] + '元减' + data[i]["couponBatch"]["price"] + "元" + '</p>'
-                                + '<p>有效期：' + data[i]["couponBatch"]["startDateString"] + '至' + data[i]["couponBatch"]["endDateString"] + '</p>' + '<p>适用范围：全网通用</p> </li>';
-                    }*/
+                    /* for (var i = 0; i < data.length; i++) {
+                     out += '<li>' + '<input type="radio" name="radio"' + 'value="' + data[i]["couponBatch"]["price"] + '"' + 'id="cbox' + data[i]["id"] + '">' + '<p>满' + data[i]["couponBatch"]["priceLimit"] + '元减' + data[i]["couponBatch"]["price"] + "元" + '</p>'
+                     + '<p>有效期：' + data[i]["couponBatch"]["startDateString"] + '至' + data[i]["couponBatch"]["endDateString"] + '</p>' + '<p>适用范围：全网通用</p> </li>';
+                     }*/
                     $("#ul-list").html(out);
                 }
             },
@@ -381,13 +383,14 @@
     }
 
     function yhq() {
+        $(".yhq").hide();
         var couponid = null;
         $("input:radio").each(function () {
             if (this.checked) {
                 couponid = $(this).attr("id");
             }
         })
-        if(couponid!=null){
+        if (couponid != null) {
             var couponId = couponid.substring(4, couponid.length);
             $.ajax({
                 type: 'post',
@@ -410,13 +413,12 @@
                             }
                         }
                         $("#change").text(t_price);
-                        $(".yhq").hide();
                     }
                 },
 
             });
 
-        }else{
+        } else {
             $(".yhq").hide();
         }
 
@@ -436,7 +438,7 @@
     function zhifubao(element) {
         $("#zhifubao").attr("class", "add-btn1");
 //        if (isWeiXin()) {
-            $("#weixin").attr("class", "");
+        $("#weixin").attr("class", "");
 //        }
 
         payment = "1";
@@ -532,7 +534,7 @@
     }
 
     function newAddress(it) {
-        var out2 = '<li id="'+it.id+'" class="cart-btn acd" onclick="chooseAddress(\'' + it.id + '\',\'' + it.consignee + '\',\'' + it.phone + '\',\'' + it.province.name + '\',\'' + it.city.name + '\',\'' + it.details + '\')"><p class="bd title">' + it.consignee + '  ' + it.phone + '</p><p class="bd des">' + it.province.name + it.city.name + it.details + '</p><p class="bd btns"></p></li><br>';
+        var out2 = '<li id="' + it.id + '" class="cart-btn acd" onclick="chooseAddress(\'' + it.id + '\',\'' + it.consignee + '\',\'' + it.phone + '\',\'' + it.province.name + '\',\'' + it.city.name + '\',\'' + it.details + '\')"><p class="bd title">' + it.consignee + '  ' + it.phone + '</p><p class="bd des">' + it.province.name + it.city.name + it.details + '</p><p class="bd btns"></p></li><br>';
         return out2;
     }
 
