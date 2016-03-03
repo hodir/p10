@@ -299,9 +299,8 @@ public class ProductController {
      */
     @RequestMapping({"/recommend/listProductModel.do"})
     public void listProjectProduct(HttpServletRequest request,HttpServletResponse response) throws Exception{
-        response.setContentType("text/html");
-        response.setHeader("Pragma", "No-cache");
-        response.setHeader("Cache-Control", "no-cache");
+        response.setContentType("application/JavaScript");
+        response.addHeader("Access-Control-Allow-Origin","*");
         String projectId = request.getParameter("projectId");
         String jsonpcallback = request.getParameter("jsonpcallback");
         XQuery xQuery = new XQuery("listProductModel_projectIdRecommend",request);
