@@ -7,7 +7,7 @@ $(function(){
     //购物车
     (function(){
         $('.icon-delete').click(function(){
-           $('.alert-delete').fadeIn('fast');
+            $('.alert-delete').fadeIn('fast');
         })
 
         $('.edit-dete').click(function(){
@@ -61,19 +61,19 @@ $(function(){
         $("#nobtn").removeAttr('href');
         $("#nobtn").removeAttr('onclick');
 
-   /*     $('.balance').each(function(){
-            var $input=$(this).find('input');
-            $(this).click(function(){
-                $input.removeAttr('checked');
-                $(this).find('input').prop('checked','checked');
-            })
-        })*/
+        /*     $('.balance').each(function(){
+         var $input=$(this).find('input');
+         $(this).click(function(){
+         $input.removeAttr('checked');
+         $(this).find('input').prop('checked','checked');
+         })
+         })*/
 
 
 
 
     })
-    //商品评价
+        //商品评价
     (function(){
 
         $('.my-evaluate .score .score-star .star li').click(function(){
@@ -224,23 +224,23 @@ $(function(){
     //订单
     (function(){
         $('#btn-coupon').click(function(){
-            $('body,document').css('overflow','hidden');
+            $('body,html').css('overflow','hidden');
             $('#order-total').each(function(){
                 $(this).show();
                 $(this).find('.overbg').click(function(){
                     $(this).parent('#order-total').hide();
-                    $('body,document').css('overflow','');
+                    $('body,html').css('overflow','');
                 })
             })
 
         });
 
         $('.btn-edit-addres').click(function(){
-            $('body,document').css('overflow','hidden');
+            $('body,html').css('overflow','hidden');
             $('#order-address').show();
             $('.cart-btn').click(function(){
                 $(this).parents('#order-address').hide();
-                $('body,document').css('overflow','visible');
+                $('body,html').css('overflow','visible');
             })
 
 
@@ -339,7 +339,7 @@ $(function(){
         $(".weachat-tab .wea-tab .wea-icon").click(function(){
             var _index = $(this).index();
             $(this).addClass("active").siblings().removeClass("active");
-           $(".wea-box .fiy-box").eq(_index).show().siblings().hide();
+            $(".wea-box .fiy-box").eq(_index).show().siblings().hide();
 
         })
     })();
