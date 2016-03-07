@@ -3,7 +3,7 @@
 <!doctype html>
 <html class="no-js">
 <head>
-    <title>【 精选专题 】 -e飞蚁</title>
+    <title>【 ${subject.name} 】 -e飞蚁</title>
     <meta name="description" content="">
     <style>
         .list-class .ul-list-img p {
@@ -64,7 +64,7 @@
 
 
     $(function(){
-        $("title").html("“华韵礼遇·中国年”大礼包");$("meta[name=description]").attr("content","e飞蚁为中国传统文化打造系列礼物，为您送上原汁原味的节庆文化。");
+        $("meta[name=description]").attr("content","e飞蚁为中国传统文化打造系列礼物，为您送上原汁原味的节庆文化。");
         $('#btn-buy').on('click',function(){
             $('.dialog').each(function(){
                 $(this).show();
