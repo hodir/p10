@@ -9,7 +9,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-  <title>【 精选专题 】 -e飞蚁</title>
+  <title>【 ${subject.name} 】 -e飞蚁</title>
   <meta name="description" content="">
 </head>
 <body>
@@ -18,7 +18,7 @@ ${subject.subjectDescription.content}
 
 <script type="text/javascript">
   $(function(){
-    $("title").html("“华韵礼遇·中国年”大礼包");$("meta[name=description]").attr("content","e飞蚁为中国传统文化打造系列礼物，为您送上原汁原味的节庆文化。");
+    $("meta[name=description]").attr("content","e飞蚁为中国传统文化打造系列礼物，为您送上原汁原味的节庆文化。");
     $('#btn-buy').on('click',function(){
       $('.dialog').each(function(){
         $(this).show();
@@ -85,6 +85,12 @@ ${subject.subjectDescription.content}
     }
   })
 </script>
-
+<script>
+  $().ready(function () {
+    $("img").each(function () {
+      $(this).css("width", "100%");
+    })
+  });
+</script>
 </body>
 </html>
