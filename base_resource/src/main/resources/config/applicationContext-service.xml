@@ -23,10 +23,20 @@
     <context:component-scan base-package="com.efeiyi.ec"/>
 
     <!-- 定义切面 -->
+    <bean id="aspectBean" class="com.efeiyi.ec.website.base.model.TestAspect"></bean>
     <aop:config>
         <aop:advisor id="managerTx" advice-ref="txAdvice" pointcut="execution(* com.ming800.core.base..*.delete*(..))||execution(* com.ming800.core.base..*.remove*(..))||execution(* com.ming800.core.base..*.saveOrUpdate*(..))"/>
         <!--<aop:advisor id="managerTx" advice-ref="txAdvice" pointcut="execution(* com.efeiyi.ec.website.organization.service.*.*(..))"/>-->
+
+        <aop:aspect id="TestAspect" ref="aspectBean">
+            <!--配置com.spring.service包下所有类或接口的所有方法-->
+            <aop:pointcut id="businessService"
+                          expression="execution(* com.ming800.core.base.service.*.*(..))"/>
+            <aop:around pointcut-ref="businessService" method="doAround"/>
+        </aop:aspect>
     </aop:config>
+
+
 
     <tx:annotation-driven/>
 
