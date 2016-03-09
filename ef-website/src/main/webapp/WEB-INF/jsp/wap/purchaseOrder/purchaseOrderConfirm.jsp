@@ -373,7 +373,7 @@
                 $("#reset").click();
                 $("#order-address").hide();
                 $("#adddiv").hide();
-                $("#list-order").show();
+                $("#list-order").show().attr("style","height:100%");
                 $("#" + data.id).click();
             }
             ajaxRequest("<c:url value="/order/addAddress.do"/>", param, success, function () {
@@ -432,7 +432,7 @@
     function closeAll() {
         $(".or-address").attr("style", "display:none");
         $("#adddiv").attr("style", "display:none");
-        $("#list-order").attr("style", "");
+        $("#list-order").attr("style", "height:100%");
     }
 
     function zhifubao(element) {
