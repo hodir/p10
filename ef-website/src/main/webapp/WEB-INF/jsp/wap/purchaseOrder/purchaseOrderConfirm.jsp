@@ -427,12 +427,16 @@
     function add_Address() {
         $("#adddiv").attr("style", "display:block;background: #fff;z-index:9999;width: 90%;left: 5%");
         $("#list-order").attr("style", "display:none");
+        $("body").attr("style","");
+        $("html").attr("style","")
     }
 
     function closeAll() {
         $(".or-address").attr("style", "display:none");
         $("#adddiv").attr("style", "display:none");
         $("#list-order").attr("style", "height:100%");
+        $("body").attr("style","");
+        $("html").attr("style","")
     }
 
     function zhifubao(element) {
