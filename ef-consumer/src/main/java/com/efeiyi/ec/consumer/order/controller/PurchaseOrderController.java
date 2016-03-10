@@ -204,14 +204,11 @@ public class PurchaseOrderController {
     @RequestMapping("/groupBuyView")
     public String getGroupBuy(HttpServletRequest request) throws Exception {
         String purchaseOrderId = request.getParameter("orderId");
-//        XQuery xQuery=new XQuery("PurchaseOrderGroup_default",request);
-//        xQuery.put("purchaseOrder_id",purchaseOrderId);
-//        PurchaseOrderGroup purchaseOrderGroup = (PurchaseOrderGroup) baseManager.listObject(xQuery).get(0);
         PurchaseOrderGroup purchaseOrderGroup = (PurchaseOrderGroup) baseManager.getObject(PurchaseOrderGroup.class.getName(), purchaseOrderId);
         String memberId = purchaseOrderGroup.getGroupMember().getId();
         String groupId = purchaseOrderGroup.getMyGroup().getId();
         String groupProductId = purchaseOrderGroup.getMyGroup().getGroupProduct().getId();
-        return "redirect:Http://a.efeiyi.com/group/shareGroup?memberId=" + memberId + "&groupId=" + groupId + "&groupProductId=" + groupProductId + "&purchaseOrderId=" + purchaseOrderId + "";
+        return "redirect:Http://a.efeiyi.com/group/shareGroup.do?memberId=" + memberId + "&groupId=" + groupId + "&groupProductId=" + groupProductId + "&purchaseOrderId=" + purchaseOrderId + "";
     }
 
     /**
