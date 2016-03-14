@@ -38,12 +38,11 @@ public class BaseManagerImpl implements BaseManager {
     public Object getObject(String model, String id) {
         Object object = xdoDao.getObject(model, id);
         try {
-//            checkField(object);
             WebServiceHandlerManagerImpl.dealObject(object);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return xdoDao.getObject(model, id);
+        return object;
     }
 
     /**
