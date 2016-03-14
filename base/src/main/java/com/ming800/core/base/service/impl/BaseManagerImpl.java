@@ -7,12 +7,14 @@ import com.ming800.core.does.service.impl.ModuleManagerImpl;
 import com.ming800.core.base.dao.XdoDao;
 import com.ming800.core.base.service.BaseManager;
 import com.ming800.core.does.service.ModuleManager;
+import com.ming800.core.does.service.impl.WebServiceHandlerManagerImpl;
 import com.ming800.core.taglib.PageEntity;
 import com.ming800.core.does.model.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
+import java.lang.reflect.Method;
 import java.util.*;
 
 /**
@@ -34,6 +36,13 @@ public class BaseManagerImpl implements BaseManager {
 
     @Override
     public Object getObject(String model, String id) {
+        Object object = xdoDao.getObject(model, id);
+        try {
+//            checkField(object);
+            WebServiceHandlerManagerImpl.dealObject(object);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return xdoDao.getObject(model, id);
     }
 
@@ -44,14 +53,17 @@ public class BaseManagerImpl implements BaseManager {
     public void saveOrUpdate(String model, Object object) {
         xdoDao.saveOrUpdateObject(model, object);
     }
+
     /***
      * 临时添加测试使用
+     *
      * @param object
      */
     @Override
     public void saveOrUpdateObject(Object object) {
         xdoDao.saveOrUpdateObject(object);
     }
+
     /**
      * 保存
      */
@@ -253,6 +265,24 @@ public class BaseManagerImpl implements BaseManager {
         this.listStatusType(entityName, Arrays.asList(fieldName));
         return statusTypeItemList;
     }
+
+//    private void checkField(Object object) throws Exception {
+//        String className = "com.efeiyi.ec.website.base.model.TestAspect";
+//        Class proxyClass = Class.forName(className);
+//        Object proxy = proxyClass.newInstance();
+//        Method setHttpInvokerValueMethod = proxyClass.getDeclaredMethod("setValue", Object.class);
+//        setHttpInvokerValueMethod.invoke(proxy, object);
+//    }
+//
+//    private void checkListField(List list) throws Exception {
+//        String className = "com.efeiyi.ec.website.base.model.TestAspect";
+//        Class proxyClass = Class.forName(className);
+//        Object proxy = proxyClass.newInstance();
+//        Method setHttpInvokerValueMethod = proxyClass.getDeclaredMethod("setValue", Object.class);
+//        for (Object obj : list) {
+//            setHttpInvokerValueMethod.invoke(proxy, obj);
+//        }
+//    }
 
 
 }

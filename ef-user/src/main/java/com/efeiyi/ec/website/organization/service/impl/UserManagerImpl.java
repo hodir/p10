@@ -1,9 +1,6 @@
 package com.efeiyi.ec.website.organization.service.impl;
 
-import com.efeiyi.ec.organization.model.BigUser;
-import com.efeiyi.ec.organization.model.Consumer;
-import com.efeiyi.ec.organization.model.ConsumerAddress;
-import com.efeiyi.ec.organization.model.MyUser;
+import com.efeiyi.ec.organization.model.*;
 import com.efeiyi.ec.website.organization.service.UserManager;
 import com.ming800.core.base.service.BaseManager;
 import com.ming800.core.does.model.XQuery;
@@ -30,13 +27,13 @@ public class UserManagerImpl implements UserManager ,UserDetailsService {
     }
 
     @Override
-    public MyUser getUserByUsername(String username) {
+    public User getUserByUsername(String username) {
         return null;
     }
 
     @Override
-    public MyUser getUserByUserId(String userId) {
-        MyUser myUser = (MyUser) baseManager.getObject(MyUser.class.getName(), userId);
+    public User getUserByUserId(String userId) {
+        User myUser = (User) baseManager.getObject(User.class.getName(), userId);
         return myUser;
     }
 

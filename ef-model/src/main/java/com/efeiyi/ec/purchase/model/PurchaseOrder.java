@@ -1,5 +1,6 @@
 package com.efeiyi.ec.purchase.model;
 
+import com.efeiyi.ec.annotation.HttpServiceModel;
 import com.efeiyi.ec.organization.model.*;
 import com.efeiyi.ec.tenant.model.BigTenant;
 import com.efeiyi.ec.tenant.model.Tenant;
@@ -55,6 +56,8 @@ public class PurchaseOrder {
     private String callback; //回调
     private String orderType; // 1.普通类型 2.秒杀类型 3.礼品卷类型 4.团购类型 5.企业礼品卡类型
     private String source;//来源推广渠道
+
+    @HttpServiceModel(httpServiceName = "user")
     private User user;                                              //订单所属用户
 
     //复杂属性

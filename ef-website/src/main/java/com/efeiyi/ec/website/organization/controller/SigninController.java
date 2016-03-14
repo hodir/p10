@@ -5,12 +5,18 @@ package com.efeiyi.ec.website.organization.controller;
  */
 
 import com.efeiyi.ec.organization.model.Consumer;
+import com.efeiyi.ec.organization.model.ConsumerAddress;
 import com.efeiyi.ec.organization.model.MyUser;
+import com.efeiyi.ec.organization.model.User;
 import com.efeiyi.ec.purchase.model.Coupon;
 import com.efeiyi.ec.purchase.model.CouponBatch;
+import com.efeiyi.ec.purchase.model.PurchaseOrder;
+import com.efeiyi.ec.website.base.authentication.ContextUtils;
 import com.efeiyi.ec.website.organization.model.SmsProvider;
 import com.efeiyi.ec.website.organization.model.YunPianSmsProvider;
 import com.efeiyi.ec.website.base.util.AuthorizationUtil;
+import com.efeiyi.ec.website.organization.service.AddressManager;
+import com.efeiyi.ec.website.organization.service.UserManager;
 import com.ming800.core.base.controller.BaseController;
 import com.ming800.core.base.service.BaseManager;
 import com.ming800.core.does.model.XQuery;
@@ -49,21 +55,29 @@ public class SigninController extends BaseController {
     @Autowired
     private AutoSerialManager autoSerialManager;
 
-//    @RequestMapping({"userServiceTest.do"})
-//    @ResponseBody
-//    public String userServiceTest() throws Exception {
-//        UserManager userManager = (UserManager) ContextUtils.getBean("userServiceProxy");
-//        MyUser myUser = userManager.getUserByUserId(AuthorizationUtil.getMyUser().getId());
-//        return myUser.getUsername();
-//    }
-//
-//    @RequestMapping({"addressServiceTest.do"})
-//    @ResponseBody
-//    public List<ConsumerAddress> addressServiceTest() throws Exception {
-//        AddressManager addressManager = (AddressManager) ContextUtils.getBean("addressServiceProxy");
-//        List<ConsumerAddress> consumerAddressList = addressManager.listConsumerAddressByUserId(AuthorizationUtil.getMyUser().getId());
-//        return consumerAddressList;
-//    }
+    @RequestMapping({"userServiceTest.do"})
+    @ResponseBody
+    public String userServiceTest() throws Exception {
+        UserManager userManager = (UserManager) ContextUtils.getBean("userServiceProxy");
+        User myUser = userManager.getUserByUserId(AuthorizationUtil.getMyUser().getId());
+        return myUser.getUsername();
+    }
+
+    @RequestMapping({"addressServiceTest.do"})
+    @ResponseBody
+    public List<ConsumerAddress> addressServiceTest() throws Exception {
+        AddressManager addressManager = (AddressManager) ContextUtils.getBean("addressServiceProxy");
+        List<ConsumerAddress> consumerAddressList = addressManager.listConsumerAddressByUserId(AuthorizationUtil.getMyUser().getId());
+        return consumerAddressList;
+    }
+
+    @RequestMapping({"testAspect.do"})
+    @ResponseBody
+    public String testAspect() {
+        String order = "ie86ug7qxnujeidw";
+        PurchaseOrder purchaseOrder = (PurchaseOrder) baseManager.getObject(PurchaseOrder.class.getName(), order);
+        return "";
+    }
 
 
     @RequestMapping("/sso.do")
