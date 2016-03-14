@@ -1,0 +1,3 @@
+<web-services>
+    <service name="com.efeiyi.ec.organization.model.User" handler="com.efeiyi.ec.website.base.model.UserServiceHandler"/>
+</web-services>
