@@ -141,7 +141,13 @@ public class BaseManagerImpl implements BaseManager {
      */
     @Override
     public List listObject(String queryHql, LinkedHashMap<String, Object> queryParamMap) {
-        return xdoDao.getObjectList(queryHql, queryParamMap);
+        List list = xdoDao.getObjectList(queryHql, queryParamMap);
+        try {
+            WebServiceHandlerManagerImpl.dealList(list);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
     }
 
     @Override

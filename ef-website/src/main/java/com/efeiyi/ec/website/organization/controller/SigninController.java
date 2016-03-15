@@ -75,6 +75,11 @@ public class SigninController extends BaseController {
     @ResponseBody
     public String testAspect() {
         String order = "ie86ug7qxnujeidw";
+        String userName = "ih33g5t18ge151fg";
+        String hql = "select obj from " + PurchaseOrder.class.getName() + " obj where obj.user.id=:username";
+        LinkedHashMap<String, Object> param = new LinkedHashMap<>();
+        param.put("username", userName);
+        baseManager.listObject(hql, param);
         PurchaseOrder purchaseOrder = (PurchaseOrder) baseManager.getObject(PurchaseOrder.class.getName(), order);
         return "";
     }

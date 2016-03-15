@@ -56,15 +56,26 @@ public class WebServiceHandlerManagerImpl implements WebServiceHandlerManager {
     }
 
     public static void dealObject(Object object) throws Exception {
-        Field[] fields = object.getClass().getDeclaredFields();
-        for (Field field : fields) {
-            Class classType = field.getType();
-            if (getServiceHandlerByClassTypes(classType.getName()) != null) {
-                String handlerName = getServiceHandlerByClassTypes(classType.getName());
-                WebServiceHandler handler = (WebServiceHandler) Class.forName(handlerName).newInstance();
-                handler.setValue(object, field.getName());
+        String className = object.getClass().getName();
+        String handler = getServiceHandlerByClassTypes(className);
+        if (handler != null) {
+            String[] handlerGroup = handler.split(":");
+            if (handlerGroup.length != 2) {
+                throw new Exception();
+            } else {
+                String propertyName = handlerGroup[0];
+                String propertyHandler = handlerGroup[1];
+                WebServiceHandler webServiceHandler = (WebServiceHandler) Class.forName(propertyHandler).newInstance();
+                webServiceHandler.setValue(object, propertyName);
             }
         }
+    }
+
+    public static void dealList(List<Object> objectList) throws Exception {
+        for (Object object : objectList) {
+            dealObject(object);
+        }
+
     }
 
 

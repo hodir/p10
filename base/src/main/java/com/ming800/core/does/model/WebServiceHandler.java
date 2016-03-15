@@ -5,6 +5,6 @@ package com.ming800.core.does.model;
  */
 public interface WebServiceHandler {
 
-    public void setValue(Object object, String propertyName);
+    void setValue(Object object, String propertyName);
 
 }
