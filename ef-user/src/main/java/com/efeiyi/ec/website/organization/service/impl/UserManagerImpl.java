@@ -38,6 +38,16 @@ public class UserManagerImpl implements UserManager ,UserDetailsService {
     }
 
     @Override
+    public MyUser getMyUserByUserId(String userId) {
+        return null;
+    }
+
+    @Override
+    public MyUser getMyUserByUsername(String username) {
+        return null;
+    }
+
+    @Override
     public Consumer getConsumerByUserId(String userId) {
         return null;
     }
