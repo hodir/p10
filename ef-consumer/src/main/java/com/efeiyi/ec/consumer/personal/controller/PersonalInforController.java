@@ -194,7 +194,7 @@ public class PersonalInforController {
 
 
     /**
-     * 获取余额明细
+     * 获取余额明
      *
      * @param request
      * @param model
