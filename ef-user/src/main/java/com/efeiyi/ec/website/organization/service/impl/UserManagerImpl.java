@@ -1,5 +1,6 @@
 package com.efeiyi.ec.website.organization.service.impl;
 
+import com.efeiyi.ec.consumer.organization.dao.UserDao;
 import com.efeiyi.ec.organization.model.BigUser;
 import com.efeiyi.ec.organization.model.Consumer;
 import com.efeiyi.ec.organization.model.ConsumerAddress;
@@ -23,15 +24,27 @@ public class UserManagerImpl implements UserManager ,UserDetailsService {
 
     @Autowired
     private BaseManager baseManager;
+    @Autowired
+    private UserDao userDao;
 
-    @Override
+    public void setUserDao(UserDao userDao) {
+        this.userDao = userDao;
+    };
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return null;
     }
-
     @Override
     public MyUser getUserByUsername(String username) {
-        return null;
+        String queryStr = "SELECT u FROM MyUser u WHERE u.username=:username AND u.status != 0";
+        LinkedHashMap<String, Object> queryParamMap = new LinkedHashMap<>();
+        queryParamMap.put("username", username);
+        MyUser myUser = userDao.getUniqueMyUserByConditions(username, queryStr, queryParamMap);
+        if (myUser == null) {
+            throw new UsernameNotFoundException("user '" + username + "' not found...");
+        } else {
+            return myUser;
+        }
+
     }
 
     @Override
