@@ -1,9 +1,6 @@
 package com.efeiyi.ec.website.organization.service;
 
-import com.efeiyi.ec.organization.model.BigUser;
-import com.efeiyi.ec.organization.model.Consumer;
-import com.efeiyi.ec.organization.model.ConsumerAddress;
-import com.efeiyi.ec.organization.model.MyUser;
+import com.efeiyi.ec.organization.model.*;
 import com.ming800.core.does.model.XQuery;
 import com.ming800.core.taglib.PageEntity;
 
@@ -19,9 +16,9 @@ import java.util.List;
  */
 public interface UserManager {
 
-    MyUser getUserByUsername(String username);
+    User getUserByUsername(String username);
 
-    MyUser getUserByUserId(String userId);
+    User getUserByUserId(String userId);
 
     Consumer getConsumerByUserId(String userId);
 
@@ -42,3 +39,4 @@ public interface UserManager {
     List<Consumer> plistConsumer(XQuery xQuery);
 
 }
+

@@ -53,5 +53,9 @@
         <property name="properties" ref="configProperties" />
     </bean>
 
+    <bean id="userServiceProxy" class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
+        <property name="serviceUrl" value="http://192.168.1.57/ef-user/service/userService"/>
+        <property name="serviceInterface" value="com.efeiyi.ec.website.organization.service.UserManager"/>
+    </bean>
 
 </beans>
