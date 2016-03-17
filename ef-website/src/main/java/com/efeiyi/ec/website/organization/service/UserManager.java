@@ -20,6 +20,10 @@ public interface UserManager {
 
     User getUserByUserId(String userId);
 
+    MyUser getMyUserByUserId(String userId);
+
+    MyUser getMyUserByUsername(String username);
+
     Consumer getConsumerByUserId(String userId);
 
     BigUser getBigUserByUserId(String userId);
@@ -39,4 +43,3 @@ public interface UserManager {
     List<Consumer> plistConsumer(XQuery xQuery);
 
 }
-

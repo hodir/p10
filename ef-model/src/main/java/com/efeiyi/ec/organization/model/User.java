@@ -5,7 +5,9 @@ package com.efeiyi.ec.organization.model;
 //import com.efeiyi.ec.zero.promotion.model.PromotionPlan;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.ming800.core.base.model.BaseUser;
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -15,7 +17,7 @@ import java.util.Date;
 @JsonIgnoreProperties(value = {"hibernateLazyInitializer", "handler"})
 @Entity
 @Table(name = "organization_user")
-public class User implements Serializable{
+public class User implements Serializable {
 
     private String id;
     private String username;
