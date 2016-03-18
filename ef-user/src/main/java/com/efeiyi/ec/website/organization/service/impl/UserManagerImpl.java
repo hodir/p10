@@ -1,11 +1,9 @@
 package com.efeiyi.ec.website.organization.service.impl;
 
-import com.efeiyi.ec.consumer.organization.dao.UserDao;
-import com.efeiyi.ec.organization.model.BigUser;
-import com.efeiyi.ec.organization.model.Consumer;
-import com.efeiyi.ec.organization.model.ConsumerAddress;
-import com.efeiyi.ec.organization.model.MyUser;
+
+import com.efeiyi.ec.organization.model.*;
 import com.efeiyi.ec.website.organization.service.UserManager;
+import com.efeiyi.ec.website.organization.service.dao.UserDao;
 import com.ming800.core.base.service.BaseManager;
 import com.ming800.core.does.model.XQuery;
 import com.ming800.core.taglib.PageEntity;
@@ -27,14 +25,8 @@ public class UserManagerImpl implements UserManager ,UserDetailsService {
     @Autowired
     private UserDao userDao;
 
-    public void setUserDao(UserDao userDao) {
-        this.userDao = userDao;
-    };
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return null;
-    }
     @Override
-    public MyUser getUserByUsername(String username) {
+    public MyUser getMyUserByUsername(String username) {
         String queryStr = "SELECT u FROM MyUser u WHERE u.username=:username AND u.status != 0";
         LinkedHashMap<String, Object> queryParamMap = new LinkedHashMap<>();
         queryParamMap.put("username", username);
@@ -48,9 +40,19 @@ public class UserManagerImpl implements UserManager ,UserDetailsService {
     }
 
     @Override
-    public MyUser getUserByUserId(String userId) {
-        MyUser myUser = (MyUser) baseManager.getObject(MyUser.class.getName(), userId);
-        return myUser;
+    public User getUserByUsername(String username) {
+        return null;
+    }
+
+    @Override
+    public User getUserByUserId(String userId) {
+        User user = (User) baseManager.getObject(User.class.getName(), userId);
+        return user;
+    }
+
+    @Override
+    public MyUser getMyUserByUserId(String userId) {
+        return null;
     }
 
     @Override
@@ -98,4 +100,8 @@ public class UserManagerImpl implements UserManager ,UserDetailsService {
         return null;
     }
 
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        return null;
+    }
 }
