@@ -1,6 +1,8 @@
 package com.efeiyi.ec.website.organization.service.impl;
 
 import com.efeiyi.ec.organization.model.MyUser;
+import com.efeiyi.ec.organization.model.User;
+import com.efeiyi.ec.website.base.authentication.ContextUtils;
 import com.efeiyi.ec.website.organization.service.UserManager;
 import com.ming800.core.base.service.BaseManager;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,10 +33,13 @@ public class UserManagerImpl implements  UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException, DataAccessException {
-        String queryStr = "SELECT u FROM MyUser u WHERE u.username=:username AND u.status != 0";
-        LinkedHashMap<String, Object> queryParamMap = new LinkedHashMap<>();
-        queryParamMap.put("username", username);
-        MyUser myUser = (MyUser) baseManager.getUniqueObjectByConditions(queryStr, queryParamMap);
+        UserManager userManager = null;
+        try {
+            userManager = (UserManager) ContextUtils.getBean("userServiceProxy");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        MyUser myUser = userManager.getMyUserByUsername(username);
         if (myUser == null) {
             throw new UsernameNotFoundException("user '" + username + "' not found...");
         } else {
