@@ -1,14 +1,18 @@
 package com.efeiyi.ec.consumer.personal.controller;
 
 
+
+import com.efeiyi.ec.consumer.organization.service.UserManager;
 import com.efeiyi.ec.consumer.organization.util.AuthorizationUtil;
 import com.efeiyi.ec.organization.model.BigUser;
 import com.efeiyi.ec.organization.model.Consumer;
 import com.efeiyi.ec.organization.model.MyUser;
+import com.efeiyi.ec.organization.model.User;
 import com.ming800.core.base.service.BaseManager;
 import com.ming800.core.does.model.XQuery;
 import com.ming800.core.does.model.XSaveOrUpdate;
 import com.ming800.core.p.service.AliOssUploadManager;
+import com.ming800.core.util.ApplicationContextUtil;
 import com.ming800.core.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -71,7 +75,8 @@ public class PersonalInforController {
     @RequestMapping({"personalInfoOfMobile.do"})
     public String getPersonalInfoOfMobile(ModelMap modelMap) {
         String id = AuthorizationUtil.getMyUser().getId();
-        BigUser user = (BigUser) baseManager.getObject(BigUser.class.getName(), id);
+        UserManager userManager = (UserManager) ApplicationContextUtil.getApplicationContext().getBean("userServiceProxy");
+        BigUser user=userManager.getBigUserByUserId(id);
         modelMap.addAttribute("user", user);
         return "/personalInfo/updateUser";
     }
@@ -104,7 +109,8 @@ public class PersonalInforController {
     @RequestMapping({"getPassword.do"})
     public String getPassword(ModelMap modelMap) {
         String id = AuthorizationUtil.getMyUser().getId();
-        BigUser user = (BigUser) baseManager.getObject(BigUser.class.getName(), id);
+        UserManager userManager = (UserManager) ApplicationContextUtil.getApplicationContext().getBean("userServiceProxy");
+        BigUser user=userManager.getBigUserByUserId(id);
         modelMap.addAttribute("user", user);
         return "/personalInfo/securityAccount";
     }
@@ -166,8 +172,9 @@ public class PersonalInforController {
     @ResponseBody
     public String getUserAvatar() {
         String id = AuthorizationUtil.getMyUser().getId();
-        BigUser user = (BigUser) baseManager.getObject(BigUser.class.getName(), id);
-        String avatar = user.getPictureUrl();
+        UserManager userManager = (UserManager) ApplicationContextUtil.getApplicationContext().getBean("userServiceProxy");
+        BigUser user=userManager.getBigUserByUserId(id);
+        String avatar =user.getPictureUrl();
         if (avatar == null || "".equals(avatar)) {
             avatar = "false";
         }
@@ -183,7 +190,9 @@ public class PersonalInforController {
     @ResponseBody
     public String getBalance() {
         String consumerId = AuthorizationUtil.getMyUser().getId();
-        Consumer consumer = (Consumer) baseManager.getObject(Consumer.class.getName(), consumerId);
+        UserManager userManager = (UserManager) ApplicationContextUtil.getApplicationContext().getBean("userServiceProxy");
+         Consumer consumer= userManager.getConsumerByUserId(consumerId);
+//        Consumer consumer = (Consumer) baseManager.getObject(Consumer.class.getName(), consumerId);
         if (consumer.getBalance() != null) {
 
             return consumer.getBalance().toString();
@@ -194,7 +203,7 @@ public class PersonalInforController {
 
 
     /**
-     * 获取余额明
+     * 获取余额明细
      *
      * @param request
      * @param model
@@ -204,6 +213,7 @@ public class PersonalInforController {
     @RequestMapping("/getBalanceDetailsList.do")
     public String getBalanceDetailList(HttpServletRequest request, Model model) throws Exception {
         String consumerId = AuthorizationUtil.getMyUser().getId();
+
         Consumer consumer = (Consumer) baseManager.getObject(Consumer.class.getName(), consumerId);
         if (consumer.getBalance() == null) {
             model.addAttribute("balance", "0.00");
@@ -217,5 +227,6 @@ public class PersonalInforController {
         return "/personalBalance/balanceDetailList";
 
     }
+
 
 }

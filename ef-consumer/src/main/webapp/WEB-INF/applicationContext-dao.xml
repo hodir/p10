@@ -30,7 +30,11 @@
     <bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
-
+    <!--用于个人中心获取远程用户-->
+    <bean id="userServiceProxy" class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
+        <property name="serviceUrl" value="http://192.168.1.57/ef-user/service/userService"/>
+        <property name="serviceInterface" value="com.efeiyi.ec.consumer.organization.service.UserManager"/>
+    </bean>
     <!--userDao用于spring security-->
     <bean id="userDao" class="com.efeiyi.ec.consumer.organization.dao.hibernate.UserDaoHibernate">
         <property name="sessionFactory" ref="sessionFactory"/>
