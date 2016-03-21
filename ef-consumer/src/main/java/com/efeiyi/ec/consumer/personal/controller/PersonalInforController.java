@@ -214,7 +214,8 @@ public class PersonalInforController {
     public String getBalanceDetailList(HttpServletRequest request, Model model) throws Exception {
         String consumerId = AuthorizationUtil.getMyUser().getId();
 
-        Consumer consumer = (Consumer) baseManager.getObject(Consumer.class.getName(), consumerId);
+        UserManager userManager = (UserManager) ApplicationContextUtil.getApplicationContext().getBean("userServiceProxy");
+        Consumer consumer= userManager.getConsumerByUserId(consumerId);
         if (consumer.getBalance() == null) {
             model.addAttribute("balance", "0.00");
         } else {
