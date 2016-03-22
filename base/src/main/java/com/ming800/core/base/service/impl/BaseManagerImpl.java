@@ -10,6 +10,7 @@ import com.ming800.core.does.service.ModuleManager;
 import com.ming800.core.does.service.impl.WebServiceHandlerManagerImpl;
 import com.ming800.core.taglib.PageEntity;
 import com.ming800.core.does.model.PageInfo;
+import com.ming800.core.util.SystemIdUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -167,7 +168,12 @@ public class BaseManagerImpl implements BaseManager {
     public List listObject(XQuery xQuery) {
         List objectList = xdoDao.getObjectList(xQuery.getHql(), xQuery.getQueryParamMap());
         try {
+            long start = System.currentTimeMillis();
             WebServiceHandlerManagerImpl.dealList(objectList, xQuery.getRemoteConfig());
+            long end = System.currentTimeMillis();
+            System.out.println("-----------------------------------------------");
+            System.out.println(end - start);
+            System.out.println("-----------------------------------------------");
         } catch (Exception e) {
             e.printStackTrace();
         }

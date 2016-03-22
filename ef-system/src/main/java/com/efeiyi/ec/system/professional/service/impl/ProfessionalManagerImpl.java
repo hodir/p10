@@ -47,25 +47,25 @@ public class ProfessionalManagerImpl implements ProfessionalManager{
         }else {
             tempProfessional =(Professional)xdoDao.getObject(Professional.class.getName(), professional.getId());
         }
-        if(!"".equals(professional.getPassword())){
-
-            tempProfessional.setPassword(StringUtil.encodePassword(professional.getPassword(), "SHA"));
-        }
-        tempProfessional.setBigTenant(professional.getBigTenant());
-        tempProfessional.setName(professional.getName());
-        tempProfessional.setUsername(professional.getUsername());
-        tempProfessional.setPhone(professional.getPhone());
-        tempProfessional.setSex(professional.getSex());
-        tempProfessional.setEmail(professional.getEmail());
-        tempProfessional.setStatus("1");
-        tempProfessional.setEnabled(true);
-        tempProfessional.setAccountExpired(false);
-        tempProfessional.setAccountLocked(false);
-        tempProfessional.setCredentialsExpired(false);
-
-        if(professional.getCreateDatetime()==null){
-            tempProfessional.setCreateDatetime(sdf.parse(date));
-        }
+//        if(!"".equals(professional.getPassword())){
+//
+//            tempProfessional.setPassword(StringUtil.encodePassword(professional.getPassword(), "SHA"));
+//        }
+//        tempProfessional.setBigTenant(professional.getBigTenant());
+//        tempProfessional.setName(professional.getName());
+//        tempProfessional.setUsername(professional.getUsername());
+//        tempProfessional.setPhone(professional.getPhone());
+//        tempProfessional.setSex(professional.getSex());
+//        tempProfessional.setEmail(professional.getEmail());
+//        tempProfessional.setStatus("1");
+//        tempProfessional.setEnabled(true);
+//        tempProfessional.setAccountExpired(false);
+//        tempProfessional.setAccountLocked(false);
+//        tempProfessional.setCredentialsExpired(false);
+//
+//        if(professional.getCreateDatetime()==null){
+//            tempProfessional.setCreateDatetime(sdf.parse(date));
+//        }
         xdoDao.saveOrUpdateObject(tempProfessional);
         return tempProfessional.getId();
     }

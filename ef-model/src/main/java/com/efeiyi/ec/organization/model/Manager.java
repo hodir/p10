@@ -1,16 +1,29 @@
 package com.efeiyi.ec.organization.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import org.hibernate.annotations.GenericGenerator;
+
+import javax.persistence.*;
 
 /**
  * Created by Administrator on 2015/6/26.
  */
 @Entity
 @Table(name="organization_manager")
-public class Manager extends BigUser{
+public class Manager {
+
+    private String id;
     private String temp;
+
+    @Id
+    @GenericGenerator(name = "id", strategy = "com.ming800.core.p.model.M8idGenerator")
+    @GeneratedValue(generator = "id")
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     @Column(name="temp")
     public String getTemp() {

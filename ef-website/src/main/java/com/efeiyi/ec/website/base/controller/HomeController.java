@@ -1,6 +1,6 @@
 package com.efeiyi.ec.website.base.controller;
 
-import com.efeiyi.ec.organization.model.MyUser;
+import com.efeiyi.ec.organization.model.*;
 import com.efeiyi.ec.project.model.ProjectCategory;
 import com.efeiyi.ec.website.base.util.AuthorizationUtil;
 import com.efeiyi.ec.zero.promotion.model.PromotionPlan;
@@ -216,5 +216,66 @@ public class HomeController {
         }
         return "recorded";
     }
+
+
+    @RequestMapping({"/dataDeal.do"})
+    public String dataDealController(HttpServletRequest request) {
+        //将子表当中的数据转移到主表上
+        //Consumer
+        String consumerhql = "select obj from " + Consumer.class.getName() + " obj ";
+        List<Consumer> consumers = baseManager.listObject(consumerhql);
+        int i = 0;
+        for (Consumer consumer : consumers) {
+            i++;
+            try {
+
+                if (consumer.getId() != null) {
+                    BigUser bigUser = (BigUser) baseManager.getObject(BigUser.class.getName(), consumer.getId());
+                    bigUser.setBalance(consumer.getBalance());
+                    bigUser.setDeposit(consumer.getDeposit());
+                    bigUser.setScore(consumer.getScore());
+                    bigUser.setUnionid(consumer.getUnionid());
+                    baseManager.saveOrUpdate(BigUser.class.getName(), bigUser);
+                    System.out.println(i + ". [userId:" + bigUser.getId() + "] and [username:" + bigUser.getUsername());
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        String managerhql = "select obj from " + Manager.class.getName() + " obj";
+        List<Manager> managers = baseManager.listObject(managerhql);
+        for (Manager manager : managers) {
+            i++;
+            try {
+                if (manager.getId() != null) {
+                    BigUser bigUser = (BigUser) baseManager.getObject(BigUser.class.getName(), manager.getId());
+                    bigUser.setTemp(manager.getTemp());
+                    baseManager.saveOrUpdate(BigUser.class.getName(), bigUser);
+                    System.out.println(i + ". [userId:" + bigUser.getId() + "] and [username:" + bigUser.getUsername());
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        String professionalhql = "select obj from " + Professional.class.getName() + " obj";
+        List<Professional> professionals = baseManager.listObject(professionalhql);
+        for (Professional professional : professionals) {
+            i++;
+            try {
+                if (professional.getId() != null) {
+                    BigUser bigUser = (BigUser) baseManager.getObject(BigUser.class.getName(), professional.getId());
+                    bigUser.setTemp(professional.getTemp());
+                    baseManager.saveOrUpdate(BigUser.class.getName(), bigUser);
+                    System.out.println(i + ". [userId:" + bigUser.getId() + "] and [username:" + bigUser.getUsername());
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return "";
+    }
+
 
 }

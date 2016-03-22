@@ -65,6 +65,59 @@ public class BigUser {
     protected Date lastLoginDatetime; //最后一次登陆时间
     protected BigDecimal redPacket;//红包（相当于钱包）
 
+    private BigDecimal deposit;
+    private Integer score;
+    private String unionid;
+    private BigDecimal balance;
+
+    private String temp;
+
+    @Column(name = "temp")
+    public String getTemp() {
+        return temp;
+    }
+
+    public void setTemp(String temp) {
+        this.temp = temp;
+    }
+
+    @Column(name = "deposit")
+    public BigDecimal getDeposit() {
+        return deposit;
+    }
+
+    public void setDeposit(BigDecimal deposit) {
+        this.deposit = deposit;
+    }
+
+    @Column(name = "score")
+    public Integer getScore() {
+        return score;
+    }
+
+    public void setScore(Integer score) {
+        this.score = score;
+    }
+
+    @Column(name = "unionid")
+    public String getUnionid() {
+        return unionid;
+    }
+
+    public void setUnionid(String unionid) {
+        this.unionid = unionid;
+    }
+
+    @Column(name = "balance")
+    public BigDecimal getBalance() {
+        return balance;
+    }
+
+    public void setBalance(BigDecimal balance) {
+        this.balance = balance;
+    }
+
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "province_id", updatable = false, insertable = false)
     public AddressProvince getAddressProvince() {

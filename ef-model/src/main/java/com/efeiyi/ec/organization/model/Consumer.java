@@ -1,6 +1,7 @@
 package com.efeiyi.ec.organization.model;
 
 import com.efeiyi.ec.wiki.model.ProjectContent;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -11,12 +12,25 @@ import java.util.List;
  */
 @Entity
 @Table(name = "organization_consumer")
-public class Consumer extends BigUser {
+public class Consumer  {
+
+    private String id;
     private BigDecimal deposit;
     private Integer score;
     private String unionid;
     private BigDecimal balance;
     //private List<ProjectContent> projectContents;
+
+    @Id
+    @GenericGenerator(name = "id", strategy = "com.ming800.core.p.model.M8idGenerator")
+    @GeneratedValue(generator = "id")
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     @Column(name = "deposit")
     public BigDecimal getDeposit() {

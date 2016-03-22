@@ -73,7 +73,7 @@ public class ScoreboardController {
             scoreboard.setNickname(wxRecord.getRequestSource());//微信昵称
             //电商用户
             Consumer consumer = (Consumer) baseManager.getObject(Consumer.class.getName(), wxRecord.getConsumerId());
-            scoreboard.setUsername(consumer.getUsername());//e飞蚁用户名
+//            scoreboard.setUsername(consumer.getUsername());//e飞蚁用户名
             //consumer答题次数[0]/开始时间[1]/结束时间[2]
             Object[] objects = scoreboardManager.getAnswerCountAndDate(wxRecord, selStartDate, selEndDate);
             Integer answerCount = objects == null ? 0 : Integer.valueOf((objects[0] == null ? 0 : objects[0]).toString());

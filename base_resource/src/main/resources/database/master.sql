@@ -758,3 +758,12 @@ PRIMARY KEY (`id`)
 ------------订单增加运费字段-----------------
 ALTER TABLE `purchase_order`
 ADD COLUMN `freight`  decimal(10,2) NULL AFTER `address_city_id`;
+
+
+----------------------未执行--------------------------------
+ALTER TABLE `organization_user`
+ADD COLUMN `deposit`  decimal NULL AFTER `rd_end_day`,
+ADD COLUMN `score`  int(11) NULL AFTER `deposit`,
+ADD COLUMN `unionid`  char(64) NULL AFTER `score`,
+ADD COLUMN `balance`  decimal NULL AFTER `unionid`,
+ADD COLUMN `temp`  varchar(8) NULL AFTER `balance`;

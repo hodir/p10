@@ -67,7 +67,7 @@ public class ProfessionalController extends BaseController {
 
         try{
             Professional professional = (Professional)baseManager.getObject(Professional.class.getName(), id);
-            professional.setStatus("0");
+//            professional.setStatus("0");
             baseManager.saveOrUpdate(Professional.class.getName(),professional);
         }catch (Exception e){
             e.printStackTrace();

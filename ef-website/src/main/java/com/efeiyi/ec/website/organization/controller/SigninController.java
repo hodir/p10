@@ -134,9 +134,9 @@ public class SigninController extends BaseController {
                 }
             }
             SmsProvider smsProvider = new YunPianSmsProvider();
-            String phoneNumber = consumer.getUsername();
+//            String phoneNumber = consumer.getUsername();
             HashMap map = null;
-            smsProvider.post(phoneNumber, map, "1186309");
+//            smsProvider.post(phoneNumber, map, "1186309");
         }
         return true;
     }
