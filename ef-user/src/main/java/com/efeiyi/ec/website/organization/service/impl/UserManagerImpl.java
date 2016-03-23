@@ -52,17 +52,21 @@ public class UserManagerImpl implements UserManager ,UserDetailsService {
 
     @Override
     public MyUser getMyUserByUserId(String userId) {
-        return null;
+        MyUser myUser = (MyUser) baseManager.getObject(MyUser.class.getName(), userId);
+        return myUser;
     }
 
     @Override
     public Consumer getConsumerByUserId(String userId) {
-        return null;
+        Consumer consumer = (Consumer) baseManager.getObject(Consumer.class.getName(),userId);
+        return consumer;
     }
 
     @Override
     public BigUser getBigUserByUserId(String userId) {
-        return null;
+        BigUser bigUser = (BigUser) baseManager.getObject(BigUser.class.getName(),userId);
+        return bigUser;
+
     }
 
     @Override
@@ -73,6 +77,17 @@ public class UserManagerImpl implements UserManager ,UserDetailsService {
     @Override
     public void saveOrUpdateConsumer(Consumer consumer) {
 
+    }
+
+    @Override
+    public void saveOrUpdateConsumer(BigUser bigUser) {
+        baseManager.saveOrUpdate(BigUser.class.getName(),bigUser);
+
+    }
+
+    @Override
+    public void saveOrUpdateMyUser(MyUser myUser) {
+        baseManager.saveOrUpdate(MyUser.class.getName(),myUser);
     }
 
     @Override

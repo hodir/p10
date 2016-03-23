@@ -7,10 +7,12 @@ import com.efeiyi.ec.product.model.ProductModel;
 import com.efeiyi.ec.purchase.model.CouponBatch;
 import com.efeiyi.ec.purchase.model.PurchaseOrder;
 import com.efeiyi.ec.rebate.model.Rebate;
+import com.efeiyi.ec.website.organization.service.UserManager;
 import com.ming800.core.base.service.BaseManager;
 import com.ming800.core.does.model.XQuery;
 import com.ming800.core.p.model.WxCalledRecord;
 import com.ming800.core.p.service.AutoSerialManager;
+import com.ming800.core.util.ApplicationContextUtil;
 import com.ming800.core.util.HttpUtil;
 import com.ming800.core.util.JsonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -75,7 +77,8 @@ public class ShareController {
     public Boolean sharerProfits(HttpServletRequest request,Model model) throws Exception{
         BalanceRecord balanceRecord = new BalanceRecord();
         String userId = request.getParameter("userId");
-        Consumer consumer = (Consumer) baseManager.getObject(Consumer.class.getName(),userId);
+        UserManager userManager = (UserManager) ApplicationContextUtil.getApplicationContext().getBean("userServiceProxy");
+        Consumer consumer = userManager.getConsumerByUserId(userId);
         BigDecimal  currentBalance = consumer.getBalance();
         if(currentBalance==null){
             currentBalance = new BigDecimal("0");
@@ -107,7 +110,8 @@ public class ShareController {
         String userId = purchaseOrder.getUser().getId();
         Rebate rebate = new Rebate();
         ProductModel productModel = purchaseOrder.getPurchaseOrderProductList().get(0).getProductModel();
-        User sharerUser = (User) baseManager.getObject(User.class.getName(),userId);
+        UserManager userManager = (UserManager) ApplicationContextUtil.getApplicationContext().getBean("userServiceProxy");
+        User sharerUser = userManager.getUserByUserId(userId);
         CouponBatch couponBatch = (CouponBatch) baseManager.getObject(CouponBatch.class.getName(),"iilsik60373zsqx4");
         String nickname = URLDecoder.decode(request.getParameter("nickname"),"UTF-8");
         String unionid = URLDecoder.decode(request.getParameter("unionid"),"UTF-8");

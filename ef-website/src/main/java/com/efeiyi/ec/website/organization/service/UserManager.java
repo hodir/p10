@@ -32,6 +32,8 @@ public interface UserManager {
 
     void saveOrUpdateConsumer(Consumer consumer);
 
+    void saveOrUpdateMyUser(MyUser myUser);
+
     void removeUser(String userId);
 
     List<Consumer> listConsumer(XQuery xQuery); //需要服务端客户端有相同的配置

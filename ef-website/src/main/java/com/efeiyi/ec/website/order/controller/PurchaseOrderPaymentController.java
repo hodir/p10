@@ -7,7 +7,9 @@ import com.efeiyi.ec.website.order.service.PaymentManager;
 import com.efeiyi.ec.website.order.model.WxPayConfig;
 import com.efeiyi.ec.website.organization.service.SmsCheckManager;
 import com.efeiyi.ec.website.base.util.AuthorizationUtil;
+import com.efeiyi.ec.website.organization.service.UserManager;
 import com.ming800.core.base.service.BaseManager;
+import com.ming800.core.util.ApplicationContextUtil;
 import com.ming800.core.util.HttpUtil;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -322,7 +324,9 @@ public class PurchaseOrderPaymentController {
     public boolean checkBalance(HttpServletRequest request) {
         BigDecimal balance = new BigDecimal(request.getParameter("balance"));
         String consumerId = AuthorizationUtil.getMyUser().getId();
-        Consumer consumer = (Consumer) baseManager.getObject(Consumer.class.getName(), consumerId);
+        //远程调用httpinvoker接口
+        UserManager userManager = (UserManager) ApplicationContextUtil.getApplicationContext().getBean("userServiceProxy");
+        Consumer consumer = (Consumer) userManager.getConsumerByUserId(consumerId);
         int result = balance.compareTo(consumer.getBalance());
         if (result == 1) {
             return false;

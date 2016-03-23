@@ -10,11 +10,13 @@ import com.efeiyi.ec.purchase.model.PurchaseOrderProduct;
 import com.efeiyi.ec.tenant.model.Tenant;
 import com.efeiyi.ec.website.order.service.*;
 import com.efeiyi.ec.website.base.util.AuthorizationUtil;
+import com.efeiyi.ec.website.organization.service.UserManager;
 import com.ming800.core.base.controller.BaseController;
 import com.ming800.core.base.service.BaseManager;
 import com.ming800.core.does.model.XQuery;
 import com.ming800.core.does.model.XSaveOrUpdate;
 import com.ming800.core.p.service.AutoSerialManager;
+import com.ming800.core.util.ApplicationContextUtil;
 import com.ming800.core.util.HttpUtil;
 import com.ming800.core.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -272,7 +274,9 @@ public class PurchaseOrderController extends BaseController {
         }
 
         String consumerId = AuthorizationUtil.getMyUser().getId();
-        Consumer consumer = (Consumer) baseManager.getObject(Consumer.class.getName(), consumerId);
+        //远程调用httpinvoker接口
+        UserManager userManager = (UserManager) ApplicationContextUtil.getApplicationContext().getBean("userServiceProxy");
+        Consumer consumer = (Consumer) userManager.getConsumerByUserId(consumerId);
         if (null == consumer.getBalance()) {
             consumer.setBalance(new BigDecimal(0));
             baseManager.saveOrUpdate(Consumer.class.getName(), consumer);
@@ -325,7 +329,9 @@ public class PurchaseOrderController extends BaseController {
         }
 
         String consumerId = AuthorizationUtil.getMyUser().getId();
-        Consumer consumer = (Consumer) baseManager.getObject(Consumer.class.getName(), consumerId);
+        //远程调用httpinvoker接口
+        UserManager userManager = (UserManager) ApplicationContextUtil.getApplicationContext().getBean("userServiceProxy");
+        Consumer consumer = (Consumer) userManager.getConsumerByUserId(consumerId);
         if (null == consumer.getBalance()) {
             consumer.setBalance(new BigDecimal(0));
             baseManager.saveOrUpdate(Consumer.class.getName(), consumer);
@@ -351,7 +357,9 @@ public class PurchaseOrderController extends BaseController {
         }
 
         String consumerId = AuthorizationUtil.getMyUser().getId();
-        Consumer consumer = (Consumer) baseManager.getObject(Consumer.class.getName(), consumerId);
+        //远程调用httpinvoker接口
+        UserManager userManager = (UserManager) ApplicationContextUtil.getApplicationContext().getBean("userServiceProxy");
+        Consumer consumer = (Consumer) userManager.getConsumerByUserId(consumerId);
         if (null == consumer.getBalance()) {
             consumer.setBalance(new BigDecimal(0));
             baseManager.saveOrUpdate(Consumer.class.getName(), consumer);

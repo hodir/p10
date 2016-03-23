@@ -63,7 +63,7 @@
 
 
     <build>
-        <finalName>ef-website</finalName>
+        <finalName>ef-user</finalName>
         <plugins>
             <plugin>
                 <artifactId>maven-dependency-plugin</artifactId>

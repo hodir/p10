@@ -4,7 +4,9 @@ import com.efeiyi.ec.balance.model.BalanceRecord;
 import com.efeiyi.ec.organization.model.Consumer;
 import com.efeiyi.ec.website.base.util.AuthorizationUtil;
 import com.efeiyi.ec.website.order.service.BalanceManager;
+import com.efeiyi.ec.website.organization.service.UserManager;
 import com.ming800.core.base.service.BaseManager;
+import com.ming800.core.util.ApplicationContextUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,7 +26,9 @@ public class BalanceManagerImpl implements BalanceManager {
     @Override
     public boolean checkBalance(Float banlance) {
         String userid = AuthorizationUtil.getMyUser().getId();
-        Consumer consumer = (Consumer) baseManager.getObject(Consumer.class.getName(),userid);
+        //远程调用httpinvoker接口
+        UserManager userManager = (UserManager) ApplicationContextUtil.getApplicationContext().getBean("userServiceProxy");
+        Consumer consumer = userManager.getConsumerByUserId(userid);
         int r = new BigDecimal(banlance).compareTo(consumer.getBalance());
         if(r == -1 || r == 0){
             return true;
@@ -36,10 +40,11 @@ public class BalanceManagerImpl implements BalanceManager {
     @Override
     public BalanceRecord useBalance(Float balance) {
         String userId = AuthorizationUtil.getMyUser().getId();
-        Consumer consumer = (Consumer) baseManager.getObject(Consumer.class.getName(),userId);
+        UserManager userManager = (UserManager) ApplicationContextUtil.getApplicationContext().getBean("userServiceProxy");
+        Consumer consumer = userManager.getConsumerByUserId(userId);
         BigDecimal currentBalance = consumer.getBalance();
         consumer.setBalance(currentBalance.subtract(new BigDecimal(balance)));
-        baseManager.saveOrUpdate(Consumer.class.getName(), consumer);
+        userManager.saveOrUpdateConsumer(consumer);
 
         BalanceRecord balanceRecord = new BalanceRecord();
         balanceRecord.setCreateDateTime(new Date());

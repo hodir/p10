@@ -16,8 +16,10 @@ import com.efeiyi.ec.website.order.service.BalanceManager;
 import com.efeiyi.ec.website.order.service.CouponManager;
 import com.efeiyi.ec.website.order.service.PaymentManager;
 import com.efeiyi.ec.website.base.util.AuthorizationUtil;
+import com.efeiyi.ec.website.organization.service.UserManager;
 import com.ming800.core.base.service.BaseManager;
 import com.ming800.core.p.service.AutoSerialManager;
+import com.ming800.core.util.ApplicationContextUtil;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -160,7 +162,8 @@ public class PaymentManagerImpl implements PaymentManager {
         purchaseOrderPayment.setPayWay(purchaseOrder.getPayWay());
         purchaseOrderPayment.setSerial(autoSerialManager.nextSerial("payment"));
         String userid = AuthorizationUtil.getMyUser().getId();
-        User user = (User) baseManager.getObject(User.class.getName(), userid);
+        UserManager userManager = (UserManager) ApplicationContextUtil.getApplicationContext().getBean("userServiceProxy");
+        User user = userManager.getUserByUserId(userid);
         purchaseOrderPayment.setUser(user);
         baseManager.saveOrUpdate(PurchaseOrderPayment.class.getName(), purchaseOrderPayment);
         //支付详情
@@ -200,7 +203,8 @@ public class PaymentManagerImpl implements PaymentManager {
         //purchaseOrderPayment.setPayWay(purchaseOrder.getPayWay());
         purchaseOrderPayment.setSerial(autoSerialManager.nextSerial("payment"));
         String userid = AuthorizationUtil.getMyUser().getId();
-        User user = (User) baseManager.getObject(User.class.getName(), userid);
+        UserManager userManager = (UserManager) ApplicationContextUtil.getApplicationContext().getBean("userServiceProxy");
+        User user = userManager.getUserByUserId(userid);
         purchaseOrderPayment.setUser(user);
         baseManager.saveOrUpdate(PurchaseOrderPayment.class.getName(), purchaseOrderPayment);
         //支付详情

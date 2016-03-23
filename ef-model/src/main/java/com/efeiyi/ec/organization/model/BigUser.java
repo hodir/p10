@@ -7,13 +7,14 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
 @Entity
 @Table(name = "organization_user")
 @Inheritance(strategy = InheritanceType.JOINED)
-public class BigUser {
+public class BigUser implements Serializable {
 
     protected String id;
     protected String username;

@@ -1,8 +1,10 @@
 package com.efeiyi.ec.website.base.interceptor;
 
 import com.efeiyi.ec.organization.model.MyUser;
+import com.efeiyi.ec.website.organization.service.UserManager;
 import com.efeiyi.ec.zero.promotion.model.PromotionUserRecord;
 import com.ming800.core.base.service.BaseManager;
+import com.ming800.core.util.ApplicationContextUtil;
 import com.ming800.core.util.CookieTool;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.ModelAndView;
@@ -36,9 +38,11 @@ public class PromotionRegisterSuccessPersistenceInterceptor extends HandlerInter
             if (request.getParameter("userId") == null) {
                 return;
             }
-            MyUser user = (MyUser) baseManager.getObject(MyUser.class.getName(), request.getParameter("userId"));
+            //远程调用httpinvoker接口
+            UserManager userManager = (UserManager) ApplicationContextUtil.getApplicationContext().getBean("userServiceProxy");
+            MyUser user = userManager.getMyUserByUserId(request.getParameter("userId"));
             user.setSource(promotionSource);
-            baseManager.saveOrUpdate(MyUser.class.getName(), user);
+            userManager.saveOrUpdateMyUser(user);
 
             //生成一条返利注册记录日志
             PromotionUserRecord promotionUserRecord = new PromotionUserRecord();

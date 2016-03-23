@@ -3,9 +3,11 @@ package com.efeiyi.ec.website.order.controller;
 import com.efeiyi.ec.organization.model.Consumer;
 import com.efeiyi.ec.purchase.model.*;
 import com.efeiyi.ec.website.base.util.AuthorizationUtil;
+import com.efeiyi.ec.website.organization.service.UserManager;
 import com.ming800.core.base.service.BaseManager;
 import com.ming800.core.does.model.XQuery;
 import com.ming800.core.p.service.AutoSerialManager;
+import com.ming800.core.util.ApplicationContextUtil;
 import com.ming800.core.util.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -257,7 +259,10 @@ public class CouponController {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd");
         String currentDateStr = simpleDateFormat.format(currentDate);
         coupon.setUniqueKey(currentDateStr + coupon.getSerial());
-        Consumer consumer = (Consumer) baseManager.getObject(Consumer.class.getName(), AuthorizationUtil.getMyUser().getId());
+        String userId = AuthorizationUtil.getMyUser().getId();
+        //远程调用httpinvoker接口
+        UserManager userManager = (UserManager) ApplicationContextUtil.getApplicationContext().getBean("userServiceProxy");
+        Consumer consumer = (Consumer) userManager.getConsumerByUserId(userId);
         coupon.setConsumer(consumer);
         baseManager.saveOrUpdate(Coupon.class.getName(), coupon);
         return true;
@@ -293,7 +298,9 @@ public class CouponController {
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd");
                 String currentDateStr = simpleDateFormat.format(currentDate);
                 coupon.setUniqueKey(currentDateStr + coupon.getSerial());
-                Consumer consumer = (Consumer) baseManager.getObject(Consumer.class.getName(), AuthorizationUtil.getMyUser().getId());
+                String userId = AuthorizationUtil.getMyUser().getId();
+                UserManager userManager = (UserManager) ApplicationContextUtil.getApplicationContext().getBean("userServiceProxy");
+                Consumer consumer = (Consumer) userManager.getConsumerByUserId(userId);
                 coupon.setConsumer(consumer);
                 baseManager.saveOrUpdate(Coupon.class.getName(), coupon);
                 SimpleDateFormat simpleDateFormat2 = new SimpleDateFormat("yyyy-MM-dd");
@@ -312,7 +319,9 @@ public class CouponController {
                     if (coupon.getStatus().equals("2") || coupon.getWhetherBind().equals("2")) {
                         return "null";
                     }
-                    Consumer consumer = (Consumer) baseManager.getObject(Consumer.class.getName(), AuthorizationUtil.getMyUser().getId());
+                    String userId = AuthorizationUtil.getMyUser().getId();
+                    UserManager userManager = (UserManager) ApplicationContextUtil.getApplicationContext().getBean("userServiceProxy");
+                    Consumer consumer = (Consumer) userManager.getConsumerByUserId(userId);
                     coupon.setConsumer(consumer);
                     coupon.setWhetherBind("2");
                     baseManager.saveOrUpdate(Coupon.class.getName(), coupon);

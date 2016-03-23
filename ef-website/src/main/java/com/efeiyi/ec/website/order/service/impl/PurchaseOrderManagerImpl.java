@@ -7,8 +7,10 @@ import com.efeiyi.ec.purchase.model.*;
 import com.efeiyi.ec.tenant.model.Tenant;
 import com.efeiyi.ec.website.order.service.PurchaseOrderManager;
 import com.efeiyi.ec.website.base.util.AuthorizationUtil;
+import com.efeiyi.ec.website.organization.service.UserManager;
 import com.ming800.core.base.service.BaseManager;
 import com.ming800.core.p.service.AutoSerialManager;
+import com.ming800.core.util.ApplicationContextUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
@@ -101,7 +103,8 @@ public class PurchaseOrderManagerImpl implements PurchaseOrderManager {
 
     private PurchaseOrder createNewPurchaseOrder(List<CartProduct> cartProductList) throws Exception {
         PurchaseOrder purchaseOrder = new PurchaseOrder();
-        User user = (User) baseManager.getObject(User.class.getName(), AuthorizationUtil.getMyUser().getId());
+        UserManager userManager = (UserManager) ApplicationContextUtil.getApplicationContext().getBean("userServiceProxy");
+        User user = userManager.getUserByUserId(AuthorizationUtil.getMyUser().getId());
         purchaseOrder.setUser(user);
         purchaseOrder.setSerial(autoSerialManager.nextSerial("orderSerial"));
         purchaseOrder.setCreateDatetime(new Date());
@@ -129,7 +132,8 @@ public class PurchaseOrderManagerImpl implements PurchaseOrderManager {
     private PurchaseOrder createNewPurchaseOrder2(List<PurchaseOrderProduct> purchaseOrderProductList) throws Exception {
 
         PurchaseOrder purchaseOrder = new PurchaseOrder();
-        User user = (User) baseManager.getObject(User.class.getName(), AuthorizationUtil.getMyUser().getId());
+        UserManager userManager = (UserManager) ApplicationContextUtil.getApplicationContext().getBean("userServiceProxy");
+        User user = userManager.getUserByUserId(AuthorizationUtil.getMyUser().getId());
         purchaseOrder.setUser(user);
         purchaseOrder.setSerial(autoSerialManager.nextSerial("orderSerial"));
         purchaseOrder.setCreateDatetime(new Date());
@@ -152,7 +156,8 @@ public class PurchaseOrderManagerImpl implements PurchaseOrderManager {
 
     private PurchaseOrder createNewPurchaseOrder(ProductModel productModel, BigDecimal price, int amount) throws Exception {
         PurchaseOrder purchaseOrder = new PurchaseOrder();
-        User user = (User) baseManager.getObject(User.class.getName(), AuthorizationUtil.getMyUser().getId());
+        UserManager userManager = (UserManager) ApplicationContextUtil.getApplicationContext().getBean("userServiceProxy");
+        User user = userManager.getUserByUserId(AuthorizationUtil.getMyUser().getId());
         purchaseOrder.setUser(user);
         purchaseOrder.setSerial(autoSerialManager.nextSerial("orderSerial"));
         purchaseOrder.setCreateDatetime(new Date());
@@ -172,7 +177,8 @@ public class PurchaseOrderManagerImpl implements PurchaseOrderManager {
     }
 
     private PurchaseOrder createNewPurchaseOrder(PurchaseOrder purchaseOrder) throws Exception {
-        User user = (User) baseManager.getObject(User.class.getName(), AuthorizationUtil.getMyUser().getId());
+        UserManager userManager = (UserManager) ApplicationContextUtil.getApplicationContext().getBean("userServiceProxy");
+        User user = userManager.getUserByUserId(AuthorizationUtil.getMyUser().getId());
         purchaseOrder.setUser(user);
         purchaseOrder.setSerial(autoSerialManager.nextSerial("orderSerial"));
         purchaseOrder.setCreateDatetime(new Date());

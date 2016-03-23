@@ -11,10 +11,12 @@ import com.efeiyi.ec.purchase.model.CouponBatch;
 import com.efeiyi.ec.website.organization.model.SmsProvider;
 import com.efeiyi.ec.website.organization.model.YunPianSmsProvider;
 import com.efeiyi.ec.website.base.util.AuthorizationUtil;
+import com.efeiyi.ec.website.organization.service.UserManager;
 import com.ming800.core.base.controller.BaseController;
 import com.ming800.core.base.service.BaseManager;
 import com.ming800.core.does.model.XQuery;
 import com.ming800.core.p.service.AutoSerialManager;
+import com.ming800.core.util.ApplicationContextUtil;
 import com.ming800.core.util.CookieTool;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -91,7 +93,9 @@ public class SigninController extends BaseController {
     public boolean transitPage(HttpServletRequest request) throws Exception {
         String userId = request.getParameter("userId");
         if (userId != null && !"".equals(userId)) {
-            Consumer consumer = (Consumer) baseManager.getObject(Consumer.class.getName(), userId);
+            //远程调用httpinvoker接口
+            UserManager userManager = (UserManager) ApplicationContextUtil.getApplicationContext().getBean("userServiceProxy");
+            Consumer consumer = userManager.getConsumerByUserId(userId);
             XQuery xQuery = new XQuery("listCouponBatch_defaultFlag", request);
             List<Object> couponBatchList = baseManager.listObject(xQuery);
             for (Object couponBatchTemp : couponBatchList) {

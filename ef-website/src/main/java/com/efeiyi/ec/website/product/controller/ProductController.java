@@ -1,15 +1,18 @@
 package com.efeiyi.ec.website.product.controller;
 
 import com.efeiyi.ec.organization.model.MyUser;
+import com.efeiyi.ec.organization.model.User;
 import com.efeiyi.ec.product.model.*;
 import com.efeiyi.ec.project.model.Project;
 import com.efeiyi.ec.purchase.model.PurchaseOrder;
 import com.efeiyi.ec.purchase.model.PurchaseOrderProduct;
 import com.efeiyi.ec.website.base.util.NormalUtil;
 import com.efeiyi.ec.website.base.util.AuthorizationUtil;
+import com.efeiyi.ec.website.organization.service.UserManager;
 import com.ming800.core.base.service.BaseManager;
 import com.ming800.core.does.model.XQuery;
 import com.ming800.core.does.model.XSaveOrUpdate;
+import com.ming800.core.util.ApplicationContextUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -187,7 +190,10 @@ public class ProductController {
             if(purchaseOrderProductList!=null&&purchaseOrderProductList.size()>0){
                 for(int i=0;i<purchaseOrderProductList.size();i++){
                     PurchaseOrder purchaseOrder = ((PurchaseOrderProduct)purchaseOrderProductList.get(i)).getPurchaseOrder();
-                    if(purchaseOrder.getId()==null||purchaseOrder.getUser()==null||purchaseOrder.getUser().getUsername()==null){
+                    String userId = purchaseOrder.getUser().getId();
+                    UserManager userManager = (UserManager) ApplicationContextUtil.getApplicationContext().getBean("userServiceProxy");
+                    User user = userManager.getUserByUserId(userId);
+                    if(purchaseOrder.getId()==null||purchaseOrder.getUser()==null||user.getUsername()==null){
                         purchaseOrderProductList.remove(i);
                     }
                 }
@@ -261,5 +267,15 @@ public class ProductController {
         xQuery.put("product_project_id",projectId);
         List<Object> productModelList = baseManager.listObject(xQuery);
         return productModelList;
+    }
+    @RequestMapping({"/httpinvoke.do"})
+    @ResponseBody
+    public void httpinvokeTest(){
+        UserManager userManager = (UserManager) ApplicationContextUtil.getApplicationContext().getBean("userServiceProxy");
+        MyUser myUser = userManager.getMyUserByUserId("id5qowuv0000f7lt");
+        MyUser myuser = userManager.getMyUserByUsername("18600415281");
+        System.out.print(myUser.getName());
+        System.out.print(myuser.getName());
+
     }
 }
