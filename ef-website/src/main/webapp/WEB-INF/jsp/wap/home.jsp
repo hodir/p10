@@ -66,7 +66,7 @@
         <ul class="list-top">
             <c:if test="${not empty marketingActivityQueryList&&fn:length(marketingActivityQueryList)>0}">
                 <c:forEach items="${marketingActivityQueryList}" var="marketingActivity" begin="0" end="3">
-                    <li><a href="${marketingActivity.redirect}"><img src="http://pro.efeiyi.com/${marketingActivity.img}@!home-activity-picture"></a></li>
+                    <li style="width: 100%;;"><a href="${marketingActivity.redirect}"><img src="http://pro.efeiyi.com/${marketingActivity.img}@!pc-home-marketing-activity"></a></li>
                 </c:forEach>
             </c:if>
         </ul>
