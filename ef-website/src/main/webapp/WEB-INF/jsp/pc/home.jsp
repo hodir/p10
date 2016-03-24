@@ -49,27 +49,26 @@
 </div>
 <div class="homenew hd">
     <div class="deduce ae">
-        <ul class="list-top ae">
+        <ul class="list-top">
             <c:if test="${not empty marketingActivityQueryList&&fn:length(marketingActivityQueryList)>0}">
-                <c:forEach items="${marketingActivityQueryList}" var="marketingActivity">
-                    <li><a href="${marketingActivity.redirect}" target="_blank"><img class="imgfilter" src="http://pro.efeiyi.com/${marketingActivity.img}@!pc-home-marketing-activity"></a></li>
+                <c:forEach items="${marketingActivityQueryList}" var="marketingActivity" begin="0" end="3">
+               <li><a href="${marketingActivity.redirect}" target="_blank"><img class="imgfilter" src="http://pro.efeiyi.com/${marketingActivity.img}@!pc-home-marketing-activity"></a></li>
                 </c:forEach>
             </c:if>
         </ul>
         <ul class="list-bottom ae">
             <c:if test="${not empty hotSaleList&&fn:length(hotSaleList)>0}">
-            <c:forEach items="${hotSaleList}" var="hotSale" begin="0" end="9">
+                <c:forEach items="${hotSaleList}" var="hotSale" begin="0" end="7">
             <li>
-            <a href="${hotSale.redirect}" target="_blank">
-            <strong>${hotSale.name}</strong>
-            <img class="imgfilter" src="http://pro.efeiyi.com/${hotSale.img}@!pc-home-hot-sale">
-            </a>
-            <span class="money"><em>￥</em><font>${hotSale.price}</font></span>
-            <span class="fiery">热卖</span>
+                <a href="${hotSale.redirect}" target="_blank">
+                    <strong>${hotSale.name}</strong>
+                    <span class="mask"></span>
+                    <img class="imgfilter" src="http://pro.efeiyi.com/${hotSale.img}">
+                </a>
+                <span class="money"><em>￥</em><font>${hotSale.price}</font></span>
             </li>
-            </c:forEach>
+                </c:forEach>
             </c:if>
-
         </ul>
     </div>
     <!-- 放banner-->

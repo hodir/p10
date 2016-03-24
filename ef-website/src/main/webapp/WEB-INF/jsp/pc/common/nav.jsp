@@ -8,6 +8,8 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
+<!-- //End--topbar-->
 <div class="topbar wh">
     <div class="hd">
         <ul class="ul-item">
@@ -38,15 +40,15 @@
             <%
                 }
             %>
-            <li><a href="http://www.efeiyi.com/document/helpCenter?group=ec.rzlc" title="商家入驻">商家入驻</a></li>
             <li class="btn-top-wechat">
                 <a title="手机e飞蚁">手机e飞蚁</a>
                 <span class="top-wechat"></span>
             </li>
-            <li class="cart">
-                <a href="<c:url value="/cart/view"/> " title="购物车"><i class="icon"></i>购物车</a>
-                <span class="tips"><em id="cartAmount">0</em></span>
-            </li>
+             <li><a href="http://www.efeiyi.com/document/helpCenter?group=ec.rzlc" title="商家入驻">商家入驻</a></li>
+            <%--<li class="cart">--%>
+                <%--<a href="<c:url value="/cart/view"/> " title="购物车"><i class="icon"></i>购物车</a>--%>
+                <%--<span class="tips"><em id="cartAmount">0</em></span>--%>
+            <%--</li>--%>
         </ul>
     </div>
 </div>
@@ -73,6 +75,10 @@
             <%--<a href="">藏药</a>--%>
             <%--<a href="">十全大补丸</a>--%>
             <%--</div>--%>
+            <div class="cart">
+                <a href="<c:url value="/cart/view"/> " title="购物车"><i class="icon"></i>购物车</a>
+                <span class="tips"><em id="cartAmount">0</em></span>
+            </div>
         </form>
     </div>
 </div>

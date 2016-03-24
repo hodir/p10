@@ -124,19 +124,19 @@ $(function(){
         //        $span.text('添加收藏');
         //    }
         //})
-        //
-        //oBiao.find('.icon').toggle(
-        //    function(){
-        //        var $span=$(this).parents('.biao').siblings('span');
-        //        $(this).addClass('icon-active');
-        //        $span.attr('class','txt active').text('取消收藏');
-        //    },
-        //    function(){
-        //        var $span=$(this).parents('.biao').siblings('span');
-        //        $(this).removeClass('icon-active');
-        //        $span.attr('class','txt hover').text('添加收藏');
-        //    }
-        //);
+
+        /*oBiao.find('.icon').toggle(
+            function(){
+                var $span=$(this).parents('.biao').siblings('span');
+                $(this).addClass('icon-active');
+                $span.attr('class','txt active').text('取消收藏');
+            },
+            function(){
+                var $span=$(this).parents('.biao').siblings('span');
+                $(this).removeClass('icon-active');
+                $span.attr('class','txt hover').text('添加收藏');
+            }
+        );*/
         //
         $(window).scroll(function(){
             var d=$(document).scrollTop();
@@ -283,10 +283,12 @@ $(function(){
         allSort.find('.item').hover(function(){
             $(this).find('h3').addClass('hover');
             $(this).find('.i-mc').stop(true,true).fadeIn(10);
+            $(this).find('.links:last-child').css({'border':0})
         },function(){
             $(this).find('h3').removeClass('hover');
             $(this).find('.i-mc').fadeOut(10);
         });
+
 
         //新导航分类展开收起
         var navList=$('.nav-new-list');
