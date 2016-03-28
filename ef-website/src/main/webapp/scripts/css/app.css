@@ -748,7 +748,7 @@ a, .ul-item li, .ul-item li img, .imgfilter {-webkit-transition:all 0.4s;-moz-tr
 .nav-new .cate .allsort .item .i-mc .links a {width:18px;height:120px;line-height:16px;float:left;font-size:14px;font-weight:bold;margin:0 15px 10px 15px;overflow:hidden}
 .nav-new .cate .allsort .item .i-mc .reco {display:none;width:175px;height:374px;padding:28px 30px;float:left;box-sizing:content-box}
 .nav-new .cate .allsort .item .i-mc .reco a {width:175px;height:50px;border:1px solid #ccc;float:left;margin-bottom:30px;background:#fff}
-#cate .allsort {top:39px}
+#cate .allsort {top:48px}
 .nav-new .items {padding-left: 180px;line-height:48px;position:relative;z-index:10}
 .nav-new .items a {
     width:180px;
