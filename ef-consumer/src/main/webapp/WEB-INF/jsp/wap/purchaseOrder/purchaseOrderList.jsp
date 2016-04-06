@@ -167,6 +167,9 @@
 											window.location.href='<c:url value="/order/cancelOrder/${purchaseOrder.id}"/>';
 											})">删除订单</a>
 								</c:when>
+								<c:when test="${purchaseOrder.orderStatus == 51}">
+									<a href="<c:url value="/order/myEfeiyi/view/${spList.id}"/>">查看详情</a>
+								</c:when>
 							</c:choose>
 							<c:choose>
 								<c:when test="${purchaseOrder.orderType == '3'}">
@@ -235,7 +238,7 @@
 												window.location.href='<c:url value="/order/confirmGet/${spList.id}"/>';
 												})">确定收货</a>
 									</c:when>
-									<c:when test="${purchaseOrder.orderStatus == '13'}">
+									<c:when test="${spList.orderStatus == 13}">
 										<a href="<c:url value="/order/myEfeiyi/view/${spList.id}"/>">查看详情</a>
 										<a href="#" onclick="showConfirm('提示','是否确定删除',function(){
 												window.location.href='<c:url value="/order/cancelOrder/${spList.id}"/>';
@@ -248,6 +251,9 @@
 												window.location.href='<c:url value="/order/cancelOrder/${spList.id}"/>';
 												})">删除订单</a>
 									</c:when>
+									<c:when test="${spList.orderStatus == 51}">
+										<a href="<c:url value="/order/myEfeiyi/view/${spList.id}"/>">查看详情</a>
+									</c:when>
 								</c:choose>
 								<c:choose>
 									<c:when test="${spList.orderType == '3'}">
@@ -257,6 +263,7 @@
 									<a href="<c:url value="/order/groupBuyView?orderId=${spList.id}"/>">查看团购</a>
 									</c:when>
 								</c:choose>
+
 							</div>
 						</div>
 						</c:if>
