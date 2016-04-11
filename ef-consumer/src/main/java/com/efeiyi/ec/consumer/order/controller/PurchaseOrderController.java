@@ -151,6 +151,14 @@ public class PurchaseOrderController {
         }
         purchaseOrder.setOrderStatus(PurchaseOrder.ORDER_STATUS_CONSEL);
         baseManager.saveOrUpdate(PurchaseOrder.class.getName(), purchaseOrder);
+        if(purchaseOrder.getSubPurchaseOrder()!=null && purchaseOrder.getSubPurchaseOrder().size()>0){
+            for(PurchaseOrder subPurchaseOrder:purchaseOrder.getSubPurchaseOrder()){
+                subPurchaseOrder.setOrderStatus(PurchaseOrder.ORDER_STATUS_CONSEL);
+                baseManager.saveOrUpdate(PurchaseOrder.class.getName(),subPurchaseOrder);
+
+            }
+        }
+
         return "redirect:/order/myEfeiyi/list.do";
     }
 
